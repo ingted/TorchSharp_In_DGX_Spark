@@ -1,0 +1,37 @@
+The following files/directories were removed because they are redundant in the nvcr.io/nvidia/pytorch:25.01-py3 environment. This image already provides the necessary PyTorch (LibTorch) and CUDA libraries.
+
+Removed items:
+4.2G	TorchSharp/libtorch-x64
+1.1G	TorchSharp/libtorch-arm64
+6.6G	TorchSharp/bin/obj
+Cleaning up large files in TorchSharp/bin/arm64.Release...
+TorchSharp/bin/arm64.Release/Native/libtorchbind_test.so
+TorchSharp/bin/arm64.Release/Native/libtorch_cpu.so
+TorchSharp/bin/arm64.Release/Native/libtorch_global_deps.so
+TorchSharp/bin/arm64.Release/Native/libc10.so
+TorchSharp/bin/arm64.Release/Native/libtorch_python.so
+TorchSharp/bin/arm64.Release/Native/libtorch.so
+TorchSharp/bin/arm64.Release/Native/cuda/libcudnn.so.9
+TorchSharp/bin/arm64.Release/Native/cuda/libc10_cuda.so
+TorchSharp/bin/arm64.Release/Native/cuda/libtorchbind_test.so
+TorchSharp/bin/arm64.Release/Native/cuda/libcudnn_cnn.so.9
+TorchSharp/bin/arm64.Release/Native/cuda/libcudnn_engines_runtime_compiled.so.9
+TorchSharp/bin/arm64.Release/Native/cuda/libnvrtc-builtins.so
+TorchSharp/bin/arm64.Release/Native/cuda/libtorch_cpu.so
+TorchSharp/bin/arm64.Release/Native/cuda/libtorch_global_deps.so
+TorchSharp/bin/arm64.Release/Native/cuda/libcudnn_ops.so.9
+TorchSharp/bin/arm64.Release/Native/cuda/libcudnn_engines_precompiled.so.9
+TorchSharp/bin/arm64.Release/Native/cuda/libc10.so
+TorchSharp/bin/arm64.Release/Native/cuda/libnvrtc-c8f577df.so.12
+TorchSharp/bin/arm64.Release/Native/cuda/libcudnn_graph.so.9
+TorchSharp/bin/arm64.Release/Native/cuda/libc10d_cuda_test.so
+TorchSharp/bin/arm64.Release/Native/cuda/libtorch_python.so
+TorchSharp/bin/arm64.Release/Native/cuda/libtorch.so
+TorchSharp/bin/arm64.Release/Native/cuda/libtorch_cuda.so
+TorchSharp/bin/arm64.Release/Native/cuda/libcudnn_heuristic.so.9
+TorchSharp/bin/arm64.Release/Native/cuda/libtorch_cuda_linalg.so
+TorchSharp/bin/arm64.Release/Native/cuda/libcudnn_adv.so.9
+Cleanup complete.
+Aggressive cleanup: Removed all .so files except libLibTorchSharp.so from Native directory.
+Final cleanup: Preserved only our built TorchSharp.dll and libLibTorchSharp.so.
+Deep cleanup: Removed .git and non-essential build artifacts.

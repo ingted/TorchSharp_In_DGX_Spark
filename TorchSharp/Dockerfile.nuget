@@ -1,0 +1,14 @@
+# Dockerfile.nuget
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS builder
+ARG TARGETARCH=arm64
+WORKDIR /src
+COPY . .
+RUN dotnet pack src/Redist/libtorch-cuda/libtorch-cuda.csproj \
+    /p:TargetArchitecture=${TARGETARCH} \
+    /p:TargetOS=linux \
+    /p:Configuration=Release \
+    /p:LibTorchDir=./libtorch-arm64 \
+    -o /out
+
+FROM scratch
+COPY --from=builder /out ./
