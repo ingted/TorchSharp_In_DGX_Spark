@@ -114,7 +114,24 @@ cd ../net10.0/
 dotnet TestApp.dll
 ```
 
-## 6. Summary of Build Artifacts
+## 6. Using `test.sh`
+
+The provided `test.sh` script automates the environment variable setup and execution. To run it correctly, ensure `dotnet` is in your `PATH`.
+
+```bash
+# Add dotnet to PATH if not already done
+export PATH=$PATH:/usr/local/bin/dotnet-sdk
+
+# Execute from the repository root
+bash test.sh
+```
+
+To test the **.NET 10** version using the script, you can either modify `APP_DIR` in `test.sh` or run:
+```bash
+APP_DIR="./TestApp/bin/Release/net10.0" bash test.sh
+```
+
+## 7. Summary of Build Artifacts
 
 *   **Native Library:**
     *   `/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/arm64.Release/Native/libLibTorchSharp.so`
