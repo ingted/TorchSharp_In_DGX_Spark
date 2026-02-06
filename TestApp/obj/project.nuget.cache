@@ -1,16 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "GKLCG/zzk6t+ocoPGekOQub0cH+rUbjWmoSRWbu7+pGhzOnxLvfFXwRF85VtrPYzM6PyQQ0+sJn8I5DIhTZX7w==",
+  "dgSpecHash": "tozw1fZdiWg=",
   "success": true,
-  "projectFilePath": "/workspace/TestApp/TestApp.csproj",
+  "projectFilePath": "/workspace/TorchSharp_In_DGX_Spark/TestApp/TestApp.csproj",
   "expectedPackageFiles": [
     "/root/.nuget/packages/google.protobuf/3.21.9/google.protobuf.3.21.9.nupkg.sha512",
     "/root/.nuget/packages/sharpziplib/1.4.0/sharpziplib.1.4.0.nupkg.sha512",
     "/root/.nuget/packages/skiasharp/2.88.6/skiasharp.2.88.6.nupkg.sha512",
     "/root/.nuget/packages/skiasharp.nativeassets.linux.nodependencies/2.88.6/skiasharp.nativeassets.linux.nodependencies.2.88.6.nupkg.sha512",
     "/root/.nuget/packages/skiasharp.nativeassets.macos/2.88.6/skiasharp.nativeassets.macos.2.88.6.nupkg.sha512",
-    "/root/.nuget/packages/skiasharp.nativeassets.win32/2.88.6/skiasharp.nativeassets.win32.2.88.6.nupkg.sha512",
-    "/root/.nuget/packages/system.memory/4.5.5/system.memory.4.5.5.nupkg.sha512"
+    "/root/.nuget/packages/skiasharp.nativeassets.win32/2.88.6/skiasharp.nativeassets.win32.2.88.6.nupkg.sha512"
   ],
   "logs": []
 }

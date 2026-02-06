@@ -3,13 +3,14 @@
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 
   <PropertyGroup>
-      <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
-      <LangVersion>9.0</LangVersion>
+      <TargetFrameworks>net10.0;net8.0;net6.0;netstandard2.0</TargetFrameworks>
+      <LangVersion>latest</LangVersion>
       <IncludeInPackage>TorchSharp</IncludeInPackage>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <UseMLCodeAnalyzer>false</UseMLCodeAnalyzer>
       <UseStyleCopAnalyzer>false</UseStyleCopAnalyzer>
       <IsPackable>false</IsPackable>
+      <NoWarn>$(NoWarn);CS8981</NoWarn>
       <DefineConstants>$(DefineConstants);LIBTORCH_$(LibTorchPackageVersion.Replace('.', '_'));CUDA_$(CudaVersionDot.Replace('.', '_'))</DefineConstants>
   </PropertyGroup>
 
