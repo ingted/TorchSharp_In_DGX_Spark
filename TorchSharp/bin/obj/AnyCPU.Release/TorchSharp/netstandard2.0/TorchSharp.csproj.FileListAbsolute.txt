@@ -1,0 +1,13 @@
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.deps.json
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.dll
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.pdb
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.xml
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.csproj.AssemblyReference.cache
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.GeneratedMSBuildEditorConfig.editorconfig
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.AssemblyInfoInputs.cache
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.AssemblyInfo.cs
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.csproj.CoreCompileInputs.cache
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.sourcelink.json
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.dll
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.xml
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/netstandard2.0/TorchSharp.pdb

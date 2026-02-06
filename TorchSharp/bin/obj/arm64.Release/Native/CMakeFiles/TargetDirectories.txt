@@ -1,0 +1,13 @@
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/edit_cache.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/rebuild_cache.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/list_install_components.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/install.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/install/local.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/install/strip.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/LibTorchSharp.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/edit_cache.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/rebuild_cache.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/list_install_components.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/install.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/install/local.dir
+/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/install/strip.dir

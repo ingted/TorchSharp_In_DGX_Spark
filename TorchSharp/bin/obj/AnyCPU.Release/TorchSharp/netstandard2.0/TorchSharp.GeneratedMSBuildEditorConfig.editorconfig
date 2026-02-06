@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = TorchSharp
+build_property.ProjectDir = /workspace/TorchSharp_In_DGX_Spark/TorchSharp/src/TorchSharp/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 
