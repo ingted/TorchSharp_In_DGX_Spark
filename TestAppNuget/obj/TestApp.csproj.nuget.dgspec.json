@@ -52,7 +52,7 @@
           "dependencies": {
             "FAkka.TorchSharp.DGX": {
               "target": "Package",
-              "version": "[26.1.0-py3, )"
+              "version": "[26.1.0-py3.1, )"
             }
           },
           "imports": [
@@ -360,7 +360,7 @@
           "dependencies": {
             "FAkka.TorchSharp.DGX": {
               "target": "Package",
-              "version": "[26.1.0-py3, )"
+              "version": "[26.1.0-py3.1, )"
             }
           },
           "imports": [

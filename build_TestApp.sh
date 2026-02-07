@@ -16,8 +16,10 @@ NATIVE_SO="$REPO_ROOT/TorchSharp/bin/arm64.Release/Native/libLibTorchSharp.so"
 
 if [ -f "$NATIVE_SO" ]; then
     echo "Copying native library to app bin directories..."
-    cp "$NATIVE_SO" bin/Release/net8.0/
-    cp "$NATIVE_SO" bin/Release/net10.0/
+    mkdir -p bin/Release/net8.0/linux-arm64/
+    mkdir -p bin/Release/net10.0/linux-arm64/
+    cp "$NATIVE_SO" bin/Release/net8.0/linux-arm64/
+    cp "$NATIVE_SO" bin/Release/net10.0/linux-arm64/
 else
     echo "WARNING: libLibTorchSharp.so not found at $NATIVE_SO"
     echo "Please run build_TorchSharp.Native.sh first."
@@ -25,6 +27,6 @@ fi
 
 echo "------------------------------------------------"
 echo "TestApp build complete."
-echo "To run (.NET 8):  bash ../test.sh"
-echo "To run (.NET 10): APP_DIR="$REPO_ROOT/TestApp/bin/Release/net10.0" bash ../test.sh"
+echo "To run (.NET 8):  APP_DIR=\"$REPO_ROOT/TestApp/bin/Release/net8.0/linux-arm64\" bash ../test.sh"
+echo "To run (.NET 10): APP_DIR=\"$REPO_ROOT/TestApp/bin/Release/net10.0/linux-arm64\" bash ../test.sh"
 echo "------------------------------------------------"

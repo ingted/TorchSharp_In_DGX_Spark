@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net10.0": {
-      "FAkka.TorchSharp.DGX/26.1.0-py3": {
+      "FAkka.TorchSharp.DGX/26.1.0-py3.1": {
         "type": "package",
         "dependencies": {
           "Google.Protobuf": "3.21.9",
@@ -11,12 +11,12 @@
         },
         "compile": {
           "lib/net10.0/TorchSharp.dll": {
-            "related": ".xml"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net10.0/TorchSharp.dll": {
-            "related": ".xml"
+            "related": ".pdb;.xml"
           }
         },
         "runtimeTargets": {
@@ -109,7 +109,7 @@
       }
     },
     "net10.0/linux-arm64": {
-      "FAkka.TorchSharp.DGX/26.1.0-py3": {
+      "FAkka.TorchSharp.DGX/26.1.0-py3.1": {
         "type": "package",
         "dependencies": {
           "Google.Protobuf": "3.21.9",
@@ -118,12 +118,12 @@
         },
         "compile": {
           "lib/net10.0/TorchSharp.dll": {
-            "related": ".xml"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net10.0/TorchSharp.dll": {
-            "related": ".xml"
+            "related": ".pdb;.xml"
           }
         },
         "native": {
@@ -193,7 +193,7 @@
       }
     },
     "net8.0": {
-      "FAkka.TorchSharp.DGX/26.1.0-py3": {
+      "FAkka.TorchSharp.DGX/26.1.0-py3.1": {
         "type": "package",
         "dependencies": {
           "Google.Protobuf": "3.21.9",
@@ -202,12 +202,12 @@
         },
         "compile": {
           "lib/net8.0/TorchSharp.dll": {
-            "related": ".xml"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net8.0/TorchSharp.dll": {
-            "related": ".xml"
+            "related": ".pdb;.xml"
           }
         },
         "runtimeTargets": {
@@ -300,7 +300,7 @@
       }
     },
     "net8.0/linux-arm64": {
-      "FAkka.TorchSharp.DGX/26.1.0-py3": {
+      "FAkka.TorchSharp.DGX/26.1.0-py3.1": {
         "type": "package",
         "dependencies": {
           "Google.Protobuf": "3.21.9",
@@ -309,12 +309,12 @@
         },
         "compile": {
           "lib/net8.0/TorchSharp.dll": {
-            "related": ".xml"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net8.0/TorchSharp.dll": {
-            "related": ".xml"
+            "related": ".pdb;.xml"
           }
         },
         "native": {
@@ -385,23 +385,26 @@
     }
   },
   "libraries": {
-    "FAkka.TorchSharp.DGX/26.1.0-py3": {
-      "sha512": "ljOMSLnzEOyBVAYpYLyqz6p5hX0zNunEdQM/KFmA/qIfKsV1cE+pwWFb1gbw6z4UjwP8ISqT78bYJgmet5UU7w==",
+    "FAkka.TorchSharp.DGX/26.1.0-py3.1": {
+      "sha512": "33f3684c3134a5f5cc99cbf6bbed4ac321d0c8a0296c10d708dc00505e132c68ccd3ca9500c92e22f08437edfe72ee5026dc83bb401d24367cd3dadc9bc97641\n",
       "type": "package",
-      "path": "fakka.torchsharp.dgx/26.1.0-py3",
+      "path": "fakka.torchsharp.dgx/26.1.0-py3.1",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
+        "FAkka.TorchSharp.DGX.nuspec",
         "LICENSE.txt",
-        "fakka.torchsharp.dgx.26.1.0-py3.nupkg.sha512",
-        "fakka.torchsharp.dgx.nuspec",
+        "fakka.torchsharp.dgx.26.1.0-py3.1.nupkg.sha512",
         "lib/net10.0/TorchSharp.dll",
+        "lib/net10.0/TorchSharp.pdb",
         "lib/net10.0/TorchSharp.xml",
         "lib/net6.0/TorchSharp.dll",
+        "lib/net6.0/TorchSharp.pdb",
         "lib/net6.0/TorchSharp.xml",
         "lib/net8.0/TorchSharp.dll",
+        "lib/net8.0/TorchSharp.pdb",
         "lib/net8.0/TorchSharp.xml",
         "lib/netstandard2.0/TorchSharp.dll",
+        "lib/netstandard2.0/TorchSharp.pdb",
         "lib/netstandard2.0/TorchSharp.xml",
         "runtimes/linux-arm64/native/libLibTorchSharp.so"
       ]
@@ -575,10 +578,10 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
-      "FAkka.TorchSharp.DGX >= 26.1.0-py3"
+      "FAkka.TorchSharp.DGX >= 26.1.0-py3.1"
     ],
     "net8.0": [
-      "FAkka.TorchSharp.DGX >= 26.1.0-py3"
+      "FAkka.TorchSharp.DGX >= 26.1.0-py3.1"
     ]
   },
   "packageFolders": {
@@ -632,7 +635,7 @@
         "dependencies": {
           "FAkka.TorchSharp.DGX": {
             "target": "Package",
-            "version": "[26.1.0-py3, )"
+            "version": "[26.1.0-py3.1, )"
           }
         },
         "imports": [
@@ -940,7 +943,7 @@
         "dependencies": {
           "FAkka.TorchSharp.DGX": {
             "target": "Package",
-            "version": "[26.1.0-py3, )"
+            "version": "[26.1.0-py3.1, )"
           }
         },
         "imports": [

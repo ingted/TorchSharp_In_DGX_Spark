@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FAkka.TorchSharp.DGX" Version="26.1.0-py3" />
+    <PackageReference Include="FAkka.TorchSharp.DGX" Version="26.1.0-py3.1" />
   </ItemGroup>
 
 </Project>

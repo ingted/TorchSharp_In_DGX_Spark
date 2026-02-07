@@ -1,17 +1,34 @@
 <Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Pack">
 
   <PropertyGroup>
-    <PackageIdFolderName>TorchSharp</PackageIdFolderName>
+    <PackageIdFolderName>FAkka.TorchSharp.DGX</PackageIdFolderName>
     <PackageId>FAkka.TorchSharp.DGX</PackageId>
-    <Version>26.01-py3</Version>
+    <Version>26.1.0-py3.1</Version>
     <TargetFrameworks>net10.0;net8.0;net6.0;netstandard2.0</TargetFrameworks>
-    <PackageDescription>FAkka DGX optimized TorchSharp package. Native libtorch libraries must be provided by the environment (e.g. LD_LIBRARY_PATH).</PackageDescription>
+    <PackageDescription>FAkka DGX optimized TorchSharp package. Native libtorch libraries must be provided by the environment (e.g. LD_LIBRARY_PATH). Bundles libLibTorchSharp.so for linux-arm64.</PackageDescription>
     <AssemblyName>TorchSharp</AssemblyName>
     <EnablePackageValidation>false</EnablePackageValidation>
   </PropertyGroup>
 
   <ItemGroup>
     <!-- We no longer bundle the massive /usr/local/lib/python3.12/dist-packages/torch/lib/*.so files -->
+    <Content Include="$(RepoRoot)bin\arm64.Release\Native\libLibTorchSharp.so" Pack="true" PackagePath="runtimes\linux-arm64\native" />
+
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\net10.0\TorchSharp.dll" Pack="true" PackagePath="lib\net10.0" />
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\net10.0\TorchSharp.pdb" Pack="true" PackagePath="lib\net10.0" />
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\net10.0\TorchSharp.xml" Pack="true" PackagePath="lib\net10.0" />
+
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\net8.0\TorchSharp.dll" Pack="true" PackagePath="lib\net8.0" />
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\net8.0\TorchSharp.pdb" Pack="true" PackagePath="lib\net8.0" />
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\net8.0\TorchSharp.xml" Pack="true" PackagePath="lib\net8.0" />
+
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\net6.0\TorchSharp.dll" Pack="true" PackagePath="lib\net6.0" />
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\net6.0\TorchSharp.pdb" Pack="true" PackagePath="lib\net6.0" />
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\net6.0\TorchSharp.xml" Pack="true" PackagePath="lib\net6.0" />
+
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\netstandard2.0\TorchSharp.dll" Pack="true" PackagePath="lib\netstandard2.0" />
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\netstandard2.0\TorchSharp.pdb" Pack="true" PackagePath="lib\netstandard2.0" />
+    <Content Include="$(RepoRoot)bin\AnyCPU.Release\TorchSharp\netstandard2.0\TorchSharp.xml" Pack="true" PackagePath="lib\netstandard2.0" />
     
     <Content Include="$(RepoRoot)\LICENSE.txt" Pack="true" PackagePath="" />
     

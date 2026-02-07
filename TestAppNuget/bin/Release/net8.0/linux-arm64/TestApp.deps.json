@@ -9,13 +9,13 @@
     ".NETCoreApp,Version=v8.0/linux-arm64": {
       "TestApp/1.0.0": {
         "dependencies": {
-          "FAkka.TorchSharp.DGX": "26.1.0-py3"
+          "FAkka.TorchSharp.DGX": "26.1.0-py3.1"
         },
         "runtime": {
           "TestApp.dll": {}
         }
       },
-      "FAkka.TorchSharp.DGX/26.1.0-py3": {
+      "FAkka.TorchSharp.DGX/26.1.0-py3.1": {
         "dependencies": {
           "Google.Protobuf": "3.21.9",
           "SharpZipLib": "1.4.0",
@@ -65,12 +65,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "FAkka.TorchSharp.DGX/26.1.0-py3": {
+    "FAkka.TorchSharp.DGX/26.1.0-py3.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ljOMSLnzEOyBVAYpYLyqz6p5hX0zNunEdQM/KFmA/qIfKsV1cE+pwWFb1gbw6z4UjwP8ISqT78bYJgmet5UU7w==",
-      "path": "fakka.torchsharp.dgx/26.1.0-py3",
-      "hashPath": "fakka.torchsharp.dgx.26.1.0-py3.nupkg.sha512"
+      "sha512": "sha512-33f3684c3134a5f5cc99cbf6bbed4ac321d0c8a0296c10d708dc00505e132c68ccd3ca9500c92e22f08437edfe72ee5026dc83bb401d24367cd3dadc9bc97641\n",
+      "path": "fakka.torchsharp.dgx/26.1.0-py3.1",
+      "hashPath": "fakka.torchsharp.dgx.26.1.0-py3.1.nupkg.sha512"
     },
     "Google.Protobuf/3.21.9": {
       "type": "package",
