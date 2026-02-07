@@ -651,6 +651,11 @@
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
         }
+      },
+      "runtimes": {
+        "linux-arm64": {
+          "#import": []
+        }
       }
     },
     "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/src/TorchSharp/TorchSharp.csproj": {

@@ -33,6 +33,7 @@ namespace TestApp
                         Console.WriteLine(t.ToString());
                         
                         var sum = t.sum();
+			sum.cpu();
                         Console.WriteLine($"Sum of tensor: {sum.item<float>()}");
                     }
                     Console.WriteLine("GPU tensor operation successful!");
