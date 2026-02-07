@@ -60,7 +60,7 @@ set(CMAKE_CUDA_COMPILER_LIBRARY_ROOT "/usr/local/cuda")
 
 set(CMAKE_CUDA_ARCHITECTURES_ALL "50-real;52-real;53-real;60-real;61-real;62-real;70-real;72-real;75-real;80-real;86-real;87-real;89-real;90")
 set(CMAKE_CUDA_ARCHITECTURES_ALL_MAJOR "50-real;60-real;70-real;80-real;90")
-set(CMAKE_CUDA_ARCHITECTURES_NATIVE "121-real")
+set(CMAKE_CUDA_ARCHITECTURES_NATIVE "No CUDA devices found.-real")
 
 set(CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES "/usr/local/cuda/targets/sbsa-linux/include")
 

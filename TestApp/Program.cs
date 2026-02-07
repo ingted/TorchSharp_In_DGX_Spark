@@ -16,36 +16,39 @@ namespace TestApp
                 Console.WriteLine($"Manually loading {nativeLibPath}...");
                 NativeLibrary.Load(nativeLibPath);
 
-                // This will fail if native lib is missing
-                torch.InitializeDeviceType(DeviceType.CUDA);
-                
-                Console.WriteLine($"CUDA Available: {torch.cuda.is_available()}");
-                if (torch.cuda.is_available())
+                // Check availability first to avoid crashing on init
+                bool cudaAvailable = torch.cuda.is_available();
+                Console.WriteLine($"CUDA Available (via torch.cuda): {cudaAvailable}");
+
+                if (cudaAvailable)
                 {
-                    Console.WriteLine($"Device Count: {torch.cuda.device_count()}");
-                    
+                    Console.WriteLine("Initializing CUDA device...");
+                    torch.InitializeDeviceType(DeviceType.CUDA);
                     var device = torch.CUDA; 
-                    Console.WriteLine($"Testing tensor allocation on {device}...");
-                    
                     using (var t = torch.randn(new long[] { 3, 3 }, device: device))
                     {
-                        Console.WriteLine("Tensor on GPU:");
+                        Console.WriteLine("Tensor on GPU success!");
                         Console.WriteLine(t.ToString());
-                        
-                        var sum = t.sum();
-                        Console.WriteLine($"Sum of tensor: {sum.item<float>()}");
                     }
-                    Console.WriteLine("GPU tensor operation successful!");
                 }
                 else
                 {
-                    Console.WriteLine("CUDA is NOT available (native backend might be CPU-only or CUDA missing).");
+                    Console.WriteLine("!!! CUDA is NOT reachable. Falling back to CPU test...");
+                    torch.InitializeDeviceType(DeviceType.CPU);
+                    using (var t = torch.randn(new long[] { 3, 3 })) 
+                    {
+                        Console.WriteLine("Tensor on CPU success!");
+                        Console.WriteLine(t.ToString());
+                    }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine($"\n[ERROR] Initialization failed:");
+                Console.WriteLine($"Message: {ex.Message}");
+                if (ex.InnerException != null)
+                    Console.WriteLine($"Inner: {ex.InnerException.Message}");
+                Console.WriteLine($"\nStack Trace:\n{ex.StackTrace}");
             }
         }
     }

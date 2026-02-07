@@ -61,8 +61,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ARsvgr"
-      binary: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ARsvgr"
+      source: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-thhWIu"
+      binary: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-thhWIu"
     cmakeVariables:
       CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
       CMAKE_C_FLAGS: ""
@@ -70,13 +70,13 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ARsvgr'
+        Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-thhWIu'
         
-        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_56564/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_56564.dir/build.make CMakeFiles/cmTC_56564.dir/build
-        gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ARsvgr'
-        Building C object CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o
-        /usr/bin/clang   -v -MD -MT CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_6be74/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_6be74.dir/build.make CMakeFiles/cmTC_6be74.dir/build
+        gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-thhWIu'
+        Building C object CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o
+        /usr/bin/clang   -v -MD -MT CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCCompilerABI.c
         Ubuntu clang version 18.1.3 (1ubuntu1)
         Target: aarch64-unknown-linux-gnu
         Thread model: posix
@@ -87,7 +87,7 @@ events:
         Selected multilib: .;@m64
         Found CUDA installation: /usr/local/cuda-13.1, version 
          (in-process)
-         "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ARsvgr -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ARsvgr -resource-dir /usr/lib/llvm-18/lib/clang/18 -dependency-file CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o -x c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCCompilerABI.c
+         "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-thhWIu -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-thhWIu -resource-dir /usr/lib/llvm-18/lib/clang/18 -dependency-file CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o -x c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCCompilerABI.c
         clang -cc1 version 18.1.3 based upon LLVM 18.1.3 default target aarch64-unknown-linux-gnu
         ignoring nonexistent directory "/usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include"
         ignoring nonexistent directory "/include"
@@ -98,8 +98,8 @@ events:
          /usr/include/aarch64-linux-gnu
          /usr/include
         End of search list.
-        Linking C executable cmTC_56564
-        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_56564.dir/link.txt --verbose=1
+        Linking C executable cmTC_6be74
+        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6be74.dir/link.txt --verbose=1
         Ubuntu clang version 18.1.3 (1ubuntu1)
         Target: aarch64-unknown-linux-gnu
         Thread model: posix
@@ -109,10 +109,10 @@ events:
         Candidate multilib: .;@m64
         Selected multilib: .;@m64
         Found CUDA installation: /usr/local/cuda-13.1, version 
-         "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -export-dynamic -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_56564 /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. -v CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o
+         "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -export-dynamic -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_6be74 /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. -v CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Ubuntu) 2.42
-        /usr/bin/clang  -v -Wl,-v -rdynamic CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o -o cmTC_56564
-        gmake[1]: Leaving directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ARsvgr'
+        /usr/bin/clang  -v -Wl,-v -rdynamic CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o -o cmTC_6be74
+        gmake[1]: Leaving directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-thhWIu'
         
       exitCode: 0
   -
@@ -147,13 +147,13 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
-        ignore line: [Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ARsvgr']
+        ignore line: [Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-thhWIu']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_56564/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_56564.dir/build.make CMakeFiles/cmTC_56564.dir/build]
-        ignore line: [gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ARsvgr']
-        ignore line: [Building C object CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/clang   -v -MD -MT CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_6be74/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_6be74.dir/build.make CMakeFiles/cmTC_6be74.dir/build]
+        ignore line: [gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-thhWIu']
+        ignore line: [Building C object CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/clang   -v -MD -MT CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
         ignore line: [Ubuntu clang version 18.1.3 (1ubuntu1)]
         ignore line: [Target: aarch64-unknown-linux-gnu]
         ignore line: [Thread model: posix]
@@ -166,7 +166,7 @@ events:
         ignore line: [@m64]
         ignore line: [Found CUDA installation: /usr/local/cuda-13.1  version ]
         ignore line: [ (in-process)]
-        ignore line: [ "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ARsvgr -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ARsvgr -resource-dir /usr/lib/llvm-18/lib/clang/18 -dependency-file CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o -x c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
+        ignore line: [ "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-thhWIu -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-thhWIu -resource-dir /usr/lib/llvm-18/lib/clang/18 -dependency-file CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o -x c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
         ignore line: [clang -cc1 version 18.1.3 based upon LLVM 18.1.3 default target aarch64-unknown-linux-gnu]
         ignore line: [ignoring nonexistent directory "/usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include"]
         ignore line: [ignoring nonexistent directory "/include"]
@@ -177,8 +177,8 @@ events:
         ignore line: [ /usr/include/aarch64-linux-gnu]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
-        ignore line: [Linking C executable cmTC_56564]
-        ignore line: [/usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_56564.dir/link.txt --verbose=1]
+        ignore line: [Linking C executable cmTC_6be74]
+        ignore line: [/usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6be74.dir/link.txt --verbose=1]
         ignore line: [Ubuntu clang version 18.1.3 (1ubuntu1)]
         ignore line: [Target: aarch64-unknown-linux-gnu]
         ignore line: [Thread model: posix]
@@ -190,7 +190,7 @@ events:
         ignore line: [Selected multilib: .]
         ignore line: [@m64]
         ignore line: [Found CUDA installation: /usr/local/cuda-13.1  version ]
-        link line: [ "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -export-dynamic -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_56564 /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. -v CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o]
+        link line: [ "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -export-dynamic -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_6be74 /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. -v CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o]
           arg [/usr/bin/ld] ==> ignore
           arg [-EL] ==> ignore
           arg [-zrelro] ==> ignore
@@ -204,7 +204,7 @@ events:
           arg [-dynamic-linker] ==> ignore
           arg [/lib/ld-linux-aarch64.so.1] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_56564] ==> ignore
+          arg [cmTC_6be74] ==> ignore
           arg [/lib/aarch64-linux-gnu/Scrt1.o] ==> obj [/lib/aarch64-linux-gnu/Scrt1.o]
           arg [/lib/aarch64-linux-gnu/crti.o] ==> obj [/lib/aarch64-linux-gnu/crti.o]
           arg [/usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o] ==> obj [/usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o]
@@ -217,7 +217,7 @@ events:
           arg [-L/usr/local/cuda/lib64/stubs] ==> dir [/usr/local/cuda/lib64/stubs]
           arg [-L.] ==> ignore
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_56564.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_6be74.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--as-needed] ==> ignore
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -264,8 +264,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-clEPZt"
-      binary: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-clEPZt"
+      source: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ymIskj"
+      binary: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ymIskj"
     cmakeVariables:
       CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
       CMAKE_CXX_FLAGS: ""
@@ -274,13 +274,13 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-clEPZt'
+        Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ymIskj'
         
-        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a7cab/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_a7cab.dir/build.make CMakeFiles/cmTC_a7cab.dir/build
-        gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-clEPZt'
-        Building CXX object CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/clang++   -v -MD -MT CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3343e/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_3343e.dir/build.make CMakeFiles/cmTC_3343e.dir/build
+        gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ymIskj'
+        Building CXX object CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/clang++   -v -MD -MT CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
         Ubuntu clang version 18.1.3 (1ubuntu1)
         Target: aarch64-unknown-linux-gnu
         Thread model: posix
@@ -291,7 +291,7 @@ events:
         Selected multilib: .;@m64
         Found CUDA installation: /usr/local/cuda-13.1, version 
          (in-process)
-         "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-clEPZt -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-clEPZt -resource-dir /usr/lib/llvm-18/lib/clang/18 -dependency-file CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
+         "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ymIskj -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ymIskj -resource-dir /usr/lib/llvm-18/lib/clang/18 -dependency-file CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
         clang -cc1 version 18.1.3 based upon LLVM 18.1.3 default target aarch64-unknown-linux-gnu
         ignoring nonexistent directory "/usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include"
         ignoring nonexistent directory "/include"
@@ -305,8 +305,8 @@ events:
          /usr/include/aarch64-linux-gnu
          /usr/include
         End of search list.
-        Linking CXX executable cmTC_a7cab
-        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a7cab.dir/link.txt --verbose=1
+        Linking CXX executable cmTC_3343e
+        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3343e.dir/link.txt --verbose=1
         Ubuntu clang version 18.1.3 (1ubuntu1)
         Target: aarch64-unknown-linux-gnu
         Thread model: posix
@@ -316,10 +316,10 @@ events:
         Candidate multilib: .;@m64
         Selected multilib: .;@m64
         Found CUDA installation: /usr/local/cuda-13.1, version 
-         "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -export-dynamic -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_a7cab /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. -v CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o
+         "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -export-dynamic -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_3343e /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. -v CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Ubuntu) 2.42
-        /usr/bin/clang++  -v -Wl,-v -rdynamic CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_a7cab
-        gmake[1]: Leaving directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-clEPZt'
+        /usr/bin/clang++  -v -Wl,-v -rdynamic CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_3343e
+        gmake[1]: Leaving directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ymIskj'
         
       exitCode: 0
   -
@@ -360,13 +360,13 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
-        ignore line: [Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-clEPZt']
+        ignore line: [Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ymIskj']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a7cab/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_a7cab.dir/build.make CMakeFiles/cmTC_a7cab.dir/build]
-        ignore line: [gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-clEPZt']
-        ignore line: [Building CXX object CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/clang++   -v -MD -MT CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3343e/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_3343e.dir/build.make CMakeFiles/cmTC_3343e.dir/build]
+        ignore line: [gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ymIskj']
+        ignore line: [Building CXX object CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/clang++   -v -MD -MT CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Ubuntu clang version 18.1.3 (1ubuntu1)]
         ignore line: [Target: aarch64-unknown-linux-gnu]
         ignore line: [Thread model: posix]
@@ -379,7 +379,7 @@ events:
         ignore line: [@m64]
         ignore line: [Found CUDA installation: /usr/local/cuda-13.1  version ]
         ignore line: [ (in-process)]
-        ignore line: [ "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-clEPZt -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-clEPZt -resource-dir /usr/lib/llvm-18/lib/clang/18 -dependency-file CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [ "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ymIskj -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-ymIskj -resource-dir /usr/lib/llvm-18/lib/clang/18 -dependency-file CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [clang -cc1 version 18.1.3 based upon LLVM 18.1.3 default target aarch64-unknown-linux-gnu]
         ignore line: [ignoring nonexistent directory "/usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include"]
         ignore line: [ignoring nonexistent directory "/include"]
@@ -393,8 +393,8 @@ events:
         ignore line: [ /usr/include/aarch64-linux-gnu]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
-        ignore line: [Linking CXX executable cmTC_a7cab]
-        ignore line: [/usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a7cab.dir/link.txt --verbose=1]
+        ignore line: [Linking CXX executable cmTC_3343e]
+        ignore line: [/usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3343e.dir/link.txt --verbose=1]
         ignore line: [Ubuntu clang version 18.1.3 (1ubuntu1)]
         ignore line: [Target: aarch64-unknown-linux-gnu]
         ignore line: [Thread model: posix]
@@ -406,7 +406,7 @@ events:
         ignore line: [Selected multilib: .]
         ignore line: [@m64]
         ignore line: [Found CUDA installation: /usr/local/cuda-13.1  version ]
-        link line: [ "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -export-dynamic -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_a7cab /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. -v CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o]
+        link line: [ "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -export-dynamic -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_3343e /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. -v CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o]
           arg [/usr/bin/ld] ==> ignore
           arg [-EL] ==> ignore
           arg [-zrelro] ==> ignore
@@ -420,7 +420,7 @@ events:
           arg [-dynamic-linker] ==> ignore
           arg [/lib/ld-linux-aarch64.so.1] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_a7cab] ==> ignore
+          arg [cmTC_3343e] ==> ignore
           arg [/lib/aarch64-linux-gnu/Scrt1.o] ==> obj [/lib/aarch64-linux-gnu/Scrt1.o]
           arg [/lib/aarch64-linux-gnu/crti.o] ==> obj [/lib/aarch64-linux-gnu/crti.o]
           arg [/usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o] ==> obj [/usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o]
@@ -433,7 +433,7 @@ events:
           arg [-L/usr/local/cuda/lib64/stubs] ==> dir [/usr/local/cuda/lib64/stubs]
           arg [-L.] ==> ignore
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_a7cab.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_3343e.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -515,7 +515,7 @@ events:
       #$ CICC_PATH=/usr/local/cuda/bin/../nvvm/bin
       #$ NVVMIR_LIBRARY_DIR=/usr/local/cuda/bin/../nvvm/libdevice
       #$ LD_LIBRARY_PATH=/usr/local/cuda/bin/../lib:/usr/local/lib/python3.12/dist-packages/torch/lib:/usr/local/lib/python3.12/dist-packages/torch_tensorrt/lib:/usr/local/cuda/compat/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64
-      #$ PATH=/usr/local/cuda/bin/../nvvm/bin:/usr/local/cuda/bin:/usr/local/lib/python3.12/dist-packages/torch_tensorrt/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/mpi/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ucx/bin:/opt/amazon/efa/bin:/opt/tensorrt/bin
+      #$ PATH=/usr/local/cuda/bin/../nvvm/bin:/usr/local/cuda/bin:/usr/local/lib/python3.12/dist-packages/torch_tensorrt/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/mpi/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ucx/bin:/opt/amazon/efa/bin:/opt/tensorrt/bin:/usr/local/bin/dotnet-sdk
       #$ INCLUDES="-I/usr/local/cuda/bin/../targets/sbsa-linux/include"  
       #$ SYSTEM_INCLUDES="-isystem" "/usr/local/cuda/bin/../targets/sbsa-linux/include/cccl"  
       #$ LIBRARIES=  "-L/usr/local/cuda/bin/../targets/sbsa-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/sbsa-linux/lib"
@@ -552,7 +552,7 @@ events:
       - "LibTorchSharp/CMakeLists.txt:7 (find_package)"
     message: |
       Parsed CUDA nvcc implicit link information:
-        found 'PATH=' string: [/usr/local/cuda/bin/../nvvm/bin:/usr/local/cuda/bin:/usr/local/lib/python3.12/dist-packages/torch_tensorrt/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/mpi/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ucx/bin:/opt/amazon/efa/bin:/opt/tensorrt/bin]
+        found 'PATH=' string: [/usr/local/cuda/bin/../nvvm/bin:/usr/local/cuda/bin:/usr/local/lib/python3.12/dist-packages/torch_tensorrt/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/mpi/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ucx/bin:/opt/amazon/efa/bin:/opt/tensorrt/bin:/usr/local/bin/dotnet-sdk]
         found 'LIBRARIES=' string: ["-L/usr/local/cuda/bin/../targets/sbsa-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/sbsa-linux/lib"]
         found 'INCLUDES=' string: ["-I/usr/local/cuda/bin/../targets/sbsa-linux/include"  ]
         considering line: [#$ rm tmp/a_dlink.reg.c]
@@ -609,7 +609,7 @@ events:
       - "LibTorchSharp/CMakeLists.txt:7 (find_package)"
     message: |
       Parsed CUDA nvcc include information:
-        found 'PATH=' string: [/usr/local/cuda/bin/../nvvm/bin:/usr/local/cuda/bin:/usr/local/lib/python3.12/dist-packages/torch_tensorrt/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/mpi/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ucx/bin:/opt/amazon/efa/bin:/opt/tensorrt/bin]
+        found 'PATH=' string: [/usr/local/cuda/bin/../nvvm/bin:/usr/local/cuda/bin:/usr/local/lib/python3.12/dist-packages/torch_tensorrt/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/mpi/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ucx/bin:/opt/amazon/efa/bin:/opt/tensorrt/bin:/usr/local/bin/dotnet-sdk]
         found 'LIBRARIES=' string: ["-L/usr/local/cuda/bin/../targets/sbsa-linux/lib/stubs" "-L/usr/local/cuda/bin/../targets/sbsa-linux/lib"]
         found 'INCLUDES=' string: ["-I/usr/local/cuda/bin/../targets/sbsa-linux/include"  ]
         considering line: [#$ rm tmp/a_dlink.reg.c]
@@ -667,8 +667,8 @@ events:
     checks:
       - "Detecting CUDA compiler ABI info"
     directories:
-      source: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw"
-      binary: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw"
+      source: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF"
+      binary: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF"
     cmakeVariables:
       CMAKE_CUDA_FLAGS: ""
       CMAKE_CUDA_RUNTIME_LIBRARY: "Static"
@@ -679,13 +679,13 @@ events:
       variable: "CMAKE_CUDA_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw'
+        Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF'
         
-        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3b387/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_3b387.dir/build.make CMakeFiles/cmTC_3b387.dir/build
-        gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw'
-        Building CUDA object CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o
-        /usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/usr/bin/clang++   -Xcompiler=-v -MD -MT CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o -MF CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o.d -x cu -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu -o CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o
+        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9d36a/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_9d36a.dir/build.make CMakeFiles/cmTC_9d36a.dir/build
+        gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF'
+        Building CUDA object CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o
+        /usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/usr/bin/clang++   -Xcompiler=-v -MD -MT CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o -MF CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o.d -x cu -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu -o CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o
         Ubuntu clang version 18.1.3 (1ubuntu1)
         Target: aarch64-unknown-linux-gnu
         Thread model: posix
@@ -696,7 +696,7 @@ events:
         Selected multilib: .;@m64
         Found CUDA installation: /usr/local/cuda-13.1, version 
          (in-process)
-         "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -E -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCUDACompilerABI.cu -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -include cuda_runtime.h -D __CUDA_ARCH__=750 -D __CUDA_ARCH_LIST__=750 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -I /usr/local/cuda/bin/../targets/sbsa-linux/include -D __CUDACC_VER_MAJOR__=13 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=115 -D __CUDA_API_VER_MAJOR__=13 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -D __CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o /tmp/tmpxft_00000e77_00000000-7_CMakeCUDACompilerABI.cpp1.ii -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu
+         "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -E -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCUDACompilerABI.cu -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -include cuda_runtime.h -D __CUDA_ARCH__=750 -D __CUDA_ARCH_LIST__=750 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -I /usr/local/cuda/bin/../targets/sbsa-linux/include -D __CUDACC_VER_MAJOR__=13 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=115 -D __CUDA_API_VER_MAJOR__=13 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -D __CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o /tmp/tmpxft_00001daf_00000000-7_CMakeCUDACompilerABI.cpp1.ii -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu
         clang -cc1 version 18.1.3 based upon LLVM 18.1.3 default target aarch64-unknown-linux-gnu
         ignoring nonexistent directory "/usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include"
         ignoring nonexistent directory "/include"
@@ -722,7 +722,7 @@ events:
         Selected multilib: .;@m64
         Found CUDA installation: /usr/local/cuda-13.1, version 
          (in-process)
-         "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -E -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCUDACompilerABI.cu -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -include cuda_runtime.h -D __CUDA_ARCH_LIST__=750 -D __CUDACC__ -D __NVCC__ -I /usr/local/cuda/bin/../targets/sbsa-linux/include -D __CUDACC_VER_MAJOR__=13 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=115 -D __CUDA_API_VER_MAJOR__=13 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -D __CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o /tmp/tmpxft_00000e77_00000000-5_CMakeCUDACompilerABI.cpp4.ii -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu
+         "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -E -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCUDACompilerABI.cu -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -include cuda_runtime.h -D __CUDA_ARCH_LIST__=750 -D __CUDACC__ -D __NVCC__ -I /usr/local/cuda/bin/../targets/sbsa-linux/include -D __CUDACC_VER_MAJOR__=13 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=115 -D __CUDA_API_VER_MAJOR__=13 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -D __CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o /tmp/tmpxft_00001daf_00000000-5_CMakeCUDACompilerABI.cpp4.ii -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu
         clang -cc1 version 18.1.3 based upon LLVM 18.1.3 default target aarch64-unknown-linux-gnu
         ignoring nonexistent directory "/usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include"
         ignoring nonexistent directory "/include"
@@ -748,7 +748,7 @@ events:
         Selected multilib: .;@m64
         Found CUDA installation: /usr/local/cuda-13.1, version 
          (in-process)
-         "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name tmpxft_00000e77_00000000-6_CMakeCUDACompilerABI.cudafe1.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -D __CUDA_ARCH__=750 -D __CUDA_ARCH_LIST__=750 -D CUDA_DOUBLE_MATH_FUNCTIONS -I /usr/local/cuda/bin/../targets/sbsa-linux/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o -x c++ /tmp/tmpxft_00000e77_00000000-6_CMakeCUDACompilerABI.cudafe1.cpp
+         "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name tmpxft_00001daf_00000000-6_CMakeCUDACompilerABI.cudafe1.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -D __CUDA_ARCH__=750 -D __CUDA_ARCH_LIST__=750 -D CUDA_DOUBLE_MATH_FUNCTIONS -I /usr/local/cuda/bin/../targets/sbsa-linux/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o -x c++ /tmp/tmpxft_00001daf_00000000-6_CMakeCUDACompilerABI.cudafe1.cpp
         clang -cc1 version 18.1.3 based upon LLVM 18.1.3 default target aarch64-unknown-linux-gnu
         ignoring nonexistent directory "/usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include"
         ignoring nonexistent directory "/include"
@@ -764,8 +764,8 @@ events:
          /usr/include/aarch64-linux-gnu
          /usr/include
         End of search list.
-        Linking CUDA executable cmTC_3b387
-        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3b387.dir/link.txt --verbose=1
+        Linking CUDA executable cmTC_9d36a
+        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9d36a.dir/link.txt --verbose=1
         Ubuntu clang version 18.1.3 (1ubuntu1)
         Target: aarch64-unknown-linux-gnu
         Thread model: posix
@@ -775,10 +775,10 @@ events:
         Candidate multilib: .;@m64
         Selected multilib: .;@m64
         Found CUDA installation: /usr/local/cuda-13.1, version 
-         "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_3b387 /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/local/cuda/targets/sbsa-linux/lib/stubs -L/usr/local/cuda/targets/sbsa-linux/lib -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. --build-id=sha1 -v CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o -lcudadevrt -lcudart_static -lrt -lpthread -ldl -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o
+         "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_9d36a /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/local/cuda/targets/sbsa-linux/lib/stubs -L/usr/local/cuda/targets/sbsa-linux/lib -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. --build-id=sha1 -v CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o -lcudadevrt -lcudart_static -lrt -lpthread -ldl -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Ubuntu) 2.42
-        /usr/bin/clang++  -Wl,--build-id=sha1 -v -Wl,-v CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o -o cmTC_3b387  -lcudadevrt -lcudart_static -lrt -lpthread -ldl  -L"/usr/local/cuda/targets/sbsa-linux/lib/stubs" -L"/usr/local/cuda/targets/sbsa-linux/lib"
-        gmake[1]: Leaving directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw'
+        /usr/bin/clang++  -Wl,--build-id=sha1 -v -Wl,-v CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o -o cmTC_9d36a  -lcudadevrt -lcudart_static -lrt -lpthread -ldl  -L"/usr/local/cuda/targets/sbsa-linux/lib/stubs" -L"/usr/local/cuda/targets/sbsa-linux/lib"
+        gmake[1]: Leaving directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF'
         
       exitCode: 0
   -
@@ -829,13 +829,13 @@ events:
       Parsed CUDA implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
-        ignore line: [Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw']
+        ignore line: [Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3b387/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_3b387.dir/build.make CMakeFiles/cmTC_3b387.dir/build]
-        ignore line: [gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw']
-        ignore line: [Building CUDA object CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o]
-        ignore line: [/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/usr/bin/clang++   -Xcompiler=-v -MD -MT CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o -MF CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o.d -x cu -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu -o CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o]
+        ignore line: [Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9d36a/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_9d36a.dir/build.make CMakeFiles/cmTC_9d36a.dir/build]
+        ignore line: [gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF']
+        ignore line: [Building CUDA object CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o]
+        ignore line: [/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -ccbin=/usr/bin/clang++   -Xcompiler=-v -MD -MT CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o -MF CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o.d -x cu -c /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu -o CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o]
         ignore line: [Ubuntu clang version 18.1.3 (1ubuntu1)]
         ignore line: [Target: aarch64-unknown-linux-gnu]
         ignore line: [Thread model: posix]
@@ -848,7 +848,7 @@ events:
         ignore line: [@m64]
         ignore line: [Found CUDA installation: /usr/local/cuda-13.1  version ]
         ignore line: [ (in-process)]
-        ignore line: [ "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -E -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCUDACompilerABI.cu -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -include cuda_runtime.h -D __CUDA_ARCH__=750 -D __CUDA_ARCH_LIST__=750 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -I /usr/local/cuda/bin/../targets/sbsa-linux/include -D __CUDACC_VER_MAJOR__=13 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=115 -D __CUDA_API_VER_MAJOR__=13 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -D __CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o /tmp/tmpxft_00000e77_00000000-7_CMakeCUDACompilerABI.cpp1.ii -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu]
+        ignore line: [ "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -E -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCUDACompilerABI.cu -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -include cuda_runtime.h -D __CUDA_ARCH__=750 -D __CUDA_ARCH_LIST__=750 -D CUDA_DOUBLE_MATH_FUNCTIONS -D __CUDACC__ -D __NVCC__ -I /usr/local/cuda/bin/../targets/sbsa-linux/include -D __CUDACC_VER_MAJOR__=13 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=115 -D __CUDA_API_VER_MAJOR__=13 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -D __CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o /tmp/tmpxft_00001daf_00000000-7_CMakeCUDACompilerABI.cpp1.ii -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu]
         ignore line: [clang -cc1 version 18.1.3 based upon LLVM 18.1.3 default target aarch64-unknown-linux-gnu]
         ignore line: [ignoring nonexistent directory "/usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include"]
         ignore line: [ignoring nonexistent directory "/include"]
@@ -876,7 +876,7 @@ events:
         ignore line: [@m64]
         ignore line: [Found CUDA installation: /usr/local/cuda-13.1  version ]
         ignore line: [ (in-process)]
-        ignore line: [ "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -E -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCUDACompilerABI.cu -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -include cuda_runtime.h -D __CUDA_ARCH_LIST__=750 -D __CUDACC__ -D __NVCC__ -I /usr/local/cuda/bin/../targets/sbsa-linux/include -D __CUDACC_VER_MAJOR__=13 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=115 -D __CUDA_API_VER_MAJOR__=13 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -D __CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o /tmp/tmpxft_00000e77_00000000-5_CMakeCUDACompilerABI.cpp4.ii -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu]
+        ignore line: [ "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -E -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCUDACompilerABI.cu -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -include cuda_runtime.h -D __CUDA_ARCH_LIST__=750 -D __CUDACC__ -D __NVCC__ -I /usr/local/cuda/bin/../targets/sbsa-linux/include -D __CUDACC_VER_MAJOR__=13 -D __CUDACC_VER_MINOR__=1 -D __CUDACC_VER_BUILD__=115 -D __CUDA_API_VER_MAJOR__=13 -D __CUDA_API_VER_MINOR__=1 -D __NVCC_DIAG_PRAGMA_SUPPORT__=1 -D __CUDACC_DEVICE_ATOMIC_BUILTINS__=1 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o /tmp/tmpxft_00001daf_00000000-5_CMakeCUDACompilerABI.cpp4.ii -x c++ /usr/local/lib/python3.12/dist-packages/cmake/data/share/cmake-3.31/Modules/CMakeCUDACompilerABI.cu]
         ignore line: [clang -cc1 version 18.1.3 based upon LLVM 18.1.3 default target aarch64-unknown-linux-gnu]
         ignore line: [ignoring nonexistent directory "/usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include"]
         ignore line: [ignoring nonexistent directory "/include"]
@@ -904,7 +904,7 @@ events:
         ignore line: [@m64]
         ignore line: [Found CUDA installation: /usr/local/cuda-13.1  version ]
         ignore line: [ (in-process)]
-        ignore line: [ "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name tmpxft_00000e77_00000000-6_CMakeCUDACompilerABI.cudafe1.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-vNuLKw -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -D __CUDA_ARCH__=750 -D __CUDA_ARCH_LIST__=750 -D CUDA_DOUBLE_MATH_FUNCTIONS -I /usr/local/cuda/bin/../targets/sbsa-linux/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o -x c++ /tmp/tmpxft_00000e77_00000000-6_CMakeCUDACompilerABI.cudafe1.cpp]
+        ignore line: [ "/usr/lib/llvm-18/bin/clang" -cc1 -triple aarch64-unknown-linux-gnu -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name tmpxft_00001daf_00000000-6_CMakeCUDACompilerABI.cudafe1.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=non-leaf -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu generic -target-feature +v8a -target-feature +fp-armv8 -target-feature +neon -target-abi aapcs -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -v -fcoverage-compilation-dir=/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-XxceBF -resource-dir /usr/lib/llvm-18/lib/clang/18 -isystem /usr/local/cuda/bin/../targets/sbsa-linux/include/cccl -D __CUDA_ARCH__=750 -D __CUDA_ARCH_LIST__=750 -D CUDA_DOUBLE_MATH_FUNCTIONS -I /usr/local/cuda/bin/../targets/sbsa-linux/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/aarch64-linux-gnu/c++/13 -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../include/c++/13/backward -internal-isystem /usr/lib/llvm-18/lib/clang/18/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include -internal-externc-isystem /usr/include/aarch64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -target-feature +outline-atomics -target-feature -fmv -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o -x c++ /tmp/tmpxft_00001daf_00000000-6_CMakeCUDACompilerABI.cudafe1.cpp]
         ignore line: [clang -cc1 version 18.1.3 based upon LLVM 18.1.3 default target aarch64-unknown-linux-gnu]
         ignore line: [ignoring nonexistent directory "/usr/bin/../lib/gcc/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/include"]
         ignore line: [ignoring nonexistent directory "/include"]
@@ -920,8 +920,8 @@ events:
         ignore line: [ /usr/include/aarch64-linux-gnu]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
-        ignore line: [Linking CUDA executable cmTC_3b387]
-        ignore line: [/usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3b387.dir/link.txt --verbose=1]
+        ignore line: [Linking CUDA executable cmTC_9d36a]
+        ignore line: [/usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9d36a.dir/link.txt --verbose=1]
         ignore line: [Ubuntu clang version 18.1.3 (1ubuntu1)]
         ignore line: [Target: aarch64-unknown-linux-gnu]
         ignore line: [Thread model: posix]
@@ -933,7 +933,7 @@ events:
         ignore line: [Selected multilib: .]
         ignore line: [@m64]
         ignore line: [Found CUDA installation: /usr/local/cuda-13.1  version ]
-        link line: [ "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_3b387 /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/local/cuda/targets/sbsa-linux/lib/stubs -L/usr/local/cuda/targets/sbsa-linux/lib -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. --build-id=sha1 -v CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o -lcudadevrt -lcudart_static -lrt -lpthread -ldl -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o]
+        link line: [ "/usr/bin/ld" -EL -z relro --hash-style=gnu --build-id --eh-frame-hdr -m aarch64linux -pie -dynamic-linker /lib/ld-linux-aarch64.so.1 -o cmTC_9d36a /lib/aarch64-linux-gnu/Scrt1.o /lib/aarch64-linux-gnu/crti.o /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o -L/usr/local/cuda/targets/sbsa-linux/lib/stubs -L/usr/local/cuda/targets/sbsa-linux/lib -L/usr/bin/../lib/gcc/aarch64-linux-gnu/13 -L/lib/aarch64-linux-gnu -L/usr/lib/aarch64-linux-gnu -L/lib -L/usr/lib -L/usr/local/cuda/lib64/stubs -L/usr/local/cuda/lib64/stubs -L. --build-id=sha1 -v CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o -lcudadevrt -lcudart_static -lrt -lpthread -ldl -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtendS.o /lib/aarch64-linux-gnu/crtn.o]
           arg [/usr/bin/ld] ==> ignore
           arg [-EL] ==> ignore
           arg [-zrelro] ==> ignore
@@ -946,7 +946,7 @@ events:
           arg [-dynamic-linker] ==> ignore
           arg [/lib/ld-linux-aarch64.so.1] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_3b387] ==> ignore
+          arg [cmTC_9d36a] ==> ignore
           arg [/lib/aarch64-linux-gnu/Scrt1.o] ==> obj [/lib/aarch64-linux-gnu/Scrt1.o]
           arg [/lib/aarch64-linux-gnu/crti.o] ==> obj [/lib/aarch64-linux-gnu/crti.o]
           arg [/usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o] ==> obj [/usr/bin/../lib/gcc/aarch64-linux-gnu/13/crtbeginS.o]
@@ -962,7 +962,7 @@ events:
           arg [-L.] ==> ignore
           arg [--build-id=sha1] ==> ignore
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_3b387.dir/CMakeCUDACompilerABI.cu.o] ==> ignore
+          arg [CMakeFiles/cmTC_9d36a.dir/CMakeCUDACompilerABI.cu.o] ==> ignore
           arg [-lcudadevrt] ==> lib [cudadevrt]
           arg [-lcudart_static] ==> lib [cudart_static]
           arg [-lrt] ==> lib [rt]
@@ -1023,8 +1023,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-xMjRgj"
-      binary: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-xMjRgj"
+      source: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-oYUeSA"
+      binary: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-oYUeSA"
     cmakeVariables:
       CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
       CMAKE_C_FLAGS: ""
@@ -1034,17 +1034,17 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-xMjRgj'
+        Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-oYUeSA'
         
-        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b8f0e/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_b8f0e.dir/build.make CMakeFiles/cmTC_b8f0e.dir/build
-        gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-xMjRgj'
-        Building C object CMakeFiles/cmTC_b8f0e.dir/src.c.o
-        /usr/bin/clang -DCMAKE_HAVE_LIBC_PTHREAD   -MD -MT CMakeFiles/cmTC_b8f0e.dir/src.c.o -MF CMakeFiles/cmTC_b8f0e.dir/src.c.o.d -o CMakeFiles/cmTC_b8f0e.dir/src.c.o -c /workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-xMjRgj/src.c
-        Linking C executable cmTC_b8f0e
-        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b8f0e.dir/link.txt --verbose=1
-        /usr/bin/clang  -Wl,--build-id=sha1  CMakeFiles/cmTC_b8f0e.dir/src.c.o -o cmTC_b8f0e
-        gmake[1]: Leaving directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-xMjRgj'
+        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f1c28/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_f1c28.dir/build.make CMakeFiles/cmTC_f1c28.dir/build
+        gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-oYUeSA'
+        Building C object CMakeFiles/cmTC_f1c28.dir/src.c.o
+        /usr/bin/clang -DCMAKE_HAVE_LIBC_PTHREAD   -MD -MT CMakeFiles/cmTC_f1c28.dir/src.c.o -MF CMakeFiles/cmTC_f1c28.dir/src.c.o.d -o CMakeFiles/cmTC_f1c28.dir/src.c.o -c /workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-oYUeSA/src.c
+        Linking C executable cmTC_f1c28
+        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f1c28.dir/link.txt --verbose=1
+        /usr/bin/clang  -Wl,--build-id=sha1  CMakeFiles/cmTC_f1c28.dir/src.c.o -o cmTC_f1c28
+        gmake[1]: Leaving directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/CMakeFiles/CMakeScratch/TryCompile-oYUeSA'
         
       exitCode: 0
   -
@@ -1068,98 +1068,14 @@ events:
       stdout: |
         Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp'
         
-        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f62c5/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_f62c5.dir/build.make CMakeFiles/cmTC_f62c5.dir/build
+        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_94364/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_94364.dir/build.make CMakeFiles/cmTC_94364.dir/build
         gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp'
-        Building CXX object CMakeFiles/cmTC_f62c5.dir/detect_cuda_version.cc.o
-        /usr/bin/clang++  -I/usr/local/cuda/include  -MD -MT CMakeFiles/cmTC_f62c5.dir/detect_cuda_version.cc.o -MF CMakeFiles/cmTC_f62c5.dir/detect_cuda_version.cc.o.d -o CMakeFiles/cmTC_f62c5.dir/detect_cuda_version.cc.o -c /workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/detect_cuda_version.cc
-        Linking CXX executable cmTC_f62c5
-        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f62c5.dir/link.txt --verbose=1
-        /usr/bin/clang++  -Wl,--build-id=sha1  CMakeFiles/cmTC_f62c5.dir/detect_cuda_version.cc.o -o cmTC_f62c5  -Wl,-rpath,/usr/local/cuda/lib64 /usr/local/cuda/lib64/libcudart.so
-        gmake[1]: Leaving directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp'
-        
-      exitCode: 0
-    runResult:
-      variable: "run_result"
-      cached: true
-      stdout: |
-        13.1
-      exitCode: 0
-...
-
----
-events:
-  -
-    kind: "try_run-v1"
-    backtrace:
-      - "/usr/local/lib/python3.12/dist-packages/torch/share/cmake/Caffe2/public/cuda.cmake:108 (try_run)"
-      - "/usr/local/lib/python3.12/dist-packages/torch/share/cmake/Caffe2/Caffe2Config.cmake:86 (include)"
-      - "/usr/local/lib/python3.12/dist-packages/torch/share/cmake/Torch/TorchConfig.cmake:68 (find_package)"
-      - "LibTorchSharp/CMakeLists.txt:7 (find_package)"
-    directories:
-      source: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp"
-      binary: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp"
-    cmakeVariables:
-      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
-      CMAKE_CXX_FLAGS: ""
-      CMAKE_EXE_LINKER_FLAGS: " -Wl,--build-id=sha1"
-      CMAKE_MODULE_PATH: "/usr/local/lib/python3.12/dist-packages/torch/share/cmake/Caffe2;/usr/local/lib/python3.12/dist-packages/torch/share/cmake/Caffe2/public/../Modules_CUDA_fix"
-    buildResult:
-      variable: "compile_result"
-      cached: true
-      stdout: |
-        Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp'
-        
-        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7bb97/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_7bb97.dir/build.make CMakeFiles/cmTC_7bb97.dir/build
-        gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp'
-        Building CXX object CMakeFiles/cmTC_7bb97.dir/detect_cuda_version.cc.o
-        /usr/bin/clang++  -I/usr/local/cuda/include  -MD -MT CMakeFiles/cmTC_7bb97.dir/detect_cuda_version.cc.o -MF CMakeFiles/cmTC_7bb97.dir/detect_cuda_version.cc.o.d -o CMakeFiles/cmTC_7bb97.dir/detect_cuda_version.cc.o -c /workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/detect_cuda_version.cc
-        Linking CXX executable cmTC_7bb97
-        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7bb97.dir/link.txt --verbose=1
-        /usr/bin/clang++  -Wl,--build-id=sha1  CMakeFiles/cmTC_7bb97.dir/detect_cuda_version.cc.o -o cmTC_7bb97  -Wl,-rpath,/usr/local/cuda/lib64 /usr/local/cuda/lib64/libcudart.so
-        gmake[1]: Leaving directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp'
-        
-      exitCode: 0
-    runResult:
-      variable: "run_result"
-      cached: true
-      stdout: |
-        13.1
-      exitCode: 0
-...
-
----
-events:
-  -
-    kind: "try_run-v1"
-    backtrace:
-      - "/usr/local/lib/python3.12/dist-packages/torch/share/cmake/Caffe2/public/cuda.cmake:108 (try_run)"
-      - "/usr/local/lib/python3.12/dist-packages/torch/share/cmake/Caffe2/Caffe2Config.cmake:86 (include)"
-      - "/usr/local/lib/python3.12/dist-packages/torch/share/cmake/Torch/TorchConfig.cmake:68 (find_package)"
-      - "LibTorchSharp/CMakeLists.txt:7 (find_package)"
-    directories:
-      source: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp"
-      binary: "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp"
-    cmakeVariables:
-      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-NOTFOUND"
-      CMAKE_CXX_FLAGS: ""
-      CMAKE_EXE_LINKER_FLAGS: " -Wl,--build-id=sha1"
-      CMAKE_MODULE_PATH: "/usr/local/lib/python3.12/dist-packages/torch/share/cmake/Caffe2;/usr/local/lib/python3.12/dist-packages/torch/share/cmake/Caffe2/public/../Modules_CUDA_fix"
-    buildResult:
-      variable: "compile_result"
-      cached: true
-      stdout: |
-        Change Dir: '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp'
-        
-        Run Build Command(s): /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_eb03c/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_eb03c.dir/build.make CMakeFiles/cmTC_eb03c.dir/build
-        gmake[1]: Entering directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp'
-        Building CXX object CMakeFiles/cmTC_eb03c.dir/detect_cuda_version.cc.o
-        /usr/bin/clang++  -I/usr/local/cuda/include  -MD -MT CMakeFiles/cmTC_eb03c.dir/detect_cuda_version.cc.o -MF CMakeFiles/cmTC_eb03c.dir/detect_cuda_version.cc.o.d -o CMakeFiles/cmTC_eb03c.dir/detect_cuda_version.cc.o -c /workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/detect_cuda_version.cc
-        Linking CXX executable cmTC_eb03c
-        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_eb03c.dir/link.txt --verbose=1
-        /usr/bin/clang++  -Wl,--build-id=sha1  CMakeFiles/cmTC_eb03c.dir/detect_cuda_version.cc.o -o cmTC_eb03c  -Wl,-rpath,/usr/local/cuda/lib64 /usr/local/cuda/lib64/libcudart.so
+        Building CXX object CMakeFiles/cmTC_94364.dir/detect_cuda_version.cc.o
+        /usr/bin/clang++  -I/usr/local/cuda/include  -MD -MT CMakeFiles/cmTC_94364.dir/detect_cuda_version.cc.o -MF CMakeFiles/cmTC_94364.dir/detect_cuda_version.cc.o.d -o CMakeFiles/cmTC_94364.dir/detect_cuda_version.cc.o -c /workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/detect_cuda_version.cc
+        Linking CXX executable cmTC_94364
+        /usr/local/lib/python3.12/dist-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_94364.dir/link.txt --verbose=1
+        /usr/bin/clang++  -Wl,--build-id=sha1  CMakeFiles/cmTC_94364.dir/detect_cuda_version.cc.o -o cmTC_94364  -Wl,-rpath,/usr/local/cuda/lib64 /usr/local/cuda/lib64/libcudart.so
         gmake[1]: Leaving directory '/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/arm64.Release/Native/LibTorchSharp/CMakeFiles/CMakeTmp'
         
       exitCode: 0
