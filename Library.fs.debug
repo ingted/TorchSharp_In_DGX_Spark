@@ -1,0 +1,43 @@
+namespace Qwen3.FP4.Extension
+
+open System
+open System.Runtime.InteropServices
+open TorchSharp
+open type torch
+open Qwen3.FP4.Extension.CSharp
+
+module Fp4Ops =
+    let scaled_mm (mat1: Tensor) (mat2: Tensor) (scale_a: Tensor) (scale_b: Tensor) (out_dtype: ScalarType) =
+        let resPtr = NativeMethods.THSTensor_scaled_mm(mat1.Handle, mat2.Handle, scale_a.Handle, scale_b.Handle, sbyte out_dtype)
+        if resPtr = IntPtr.Zero then 
+            let err = TensorHelper.GetLastError()
+            failwithf "THSTensor_scaled_mm failed: %s" err
+        TensorHelper.FromPointer(resPtr)
+
+    let quantize (input: Tensor) =
+        let mutable qdataPtr = IntPtr.Zero
+        let mutable scalePtr = IntPtr.Zero
+        NativeMethods.THSFP4_quantize(input.Handle, &qdataPtr, &scalePtr)
+        if qdataPtr = IntPtr.Zero || scalePtr = IntPtr.Zero then 
+            let err = TensorHelper.GetLastError()
+            failwithf "THSFP4_quantize failed: %s" err
+        (TensorHelper.FromPointer(qdataPtr), TensorHelper.FromPointer(scalePtr))
+
+type LinearNVFP4(inFeatures: int64, outFeatures: int64, device: string) =
+    inherit torch.nn.Module<Tensor, Tensor>("LinearNVFP4")
+    
+    let mutable _qweight : Tensor = null
+    let mutable _scale : Tensor = null
+    
+    member this.LoadQuantized(qweight: Tensor, scale: Tensor) =
+        _qweight <- qweight.detach().``to``(Device(device))
+        _scale <- scale.detach().``to``(Device(device))
+        
+    override this.forward(input: Tensor) =
+        use _ = torch.NewDisposeScope()
+        // Console.WriteLine("[debug] LinearNVFP4.forward start")
+        let qinput, iscale = Fp4Ops.quantize (input.contiguous())
+        // Console.WriteLine("[debug] quantize success")
+        let res = Fp4Ops.scaled_mm qinput (_qweight.t().contiguous()) (iscale.contiguous()) (_scale.t().contiguous()) input.dtype
+        // Console.WriteLine("[debug] scaled_mm success")
+        res.MoveToOuterDisposeScope()

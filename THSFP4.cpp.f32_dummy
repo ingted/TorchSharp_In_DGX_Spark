@@ -1,0 +1,27 @@
+#include "THSTensor.h"
+#include <ATen/ATen.h>
+#include <ATen/cuda/CUDAConfig.h>
+#include <iostream>
+#include <vector>
+
+extern "C"
+{
+    EXPORT_API(Tensor) THSTensor_scaled_mm(const Tensor mat1, const Tensor mat2, const Tensor scale_a, const Tensor scale_b, const int8_t out_dtype)
+    {
+        CATCH_TENSOR(
+            at::zeros({(*mat1).size(0), (*mat2).size(1)}, (*mat1).options().dtype((c10::ScalarType)out_dtype))
+        )
+    }
+
+    EXPORT_API(void) THSFP4_quantize(const Tensor input, Tensor* qdata, Tensor* scale)
+    {
+        CATCH(
+            at::Tensor in = *input;
+            int64_t K = in.size(-1);
+            int64_t M = in.numel() / K;
+            // Return Float32 dummies
+            *qdata = new torch::Tensor(at::zeros({M, K}, in.options().dtype(at::kFloat)));
+            *scale = new torch::Tensor(at::ones({M, 1}, in.options().dtype(at::kFloat)));
+        )
+    }
+}
