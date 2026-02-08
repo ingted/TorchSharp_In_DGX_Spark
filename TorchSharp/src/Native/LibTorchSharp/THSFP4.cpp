@@ -12,18 +12,6 @@ extern thread_local char *torch_last_err;
 #define kFloat8_e4m3fn (at::ScalarType)24
 #endif
 
-static at::Tensor to_blocked(at::Tensor input) {
-    int64_t rows = input.size(0);
-    int64_t cols = input.size(1);
-    int64_t n_row_blocks = (rows + 127) / 128;
-    int64_t n_col_blocks = (cols + 3) / 4;
-    at::Tensor padded = at::zeros({n_row_blocks * 128, n_col_blocks * 4}, input.options());
-    padded.narrow(0, 0, rows).narrow(1, 0, cols).copy_(input);
-    auto blocks = padded.view({n_row_blocks, 128, n_col_blocks, 4}).permute({0, 2, 1, 3});
-    auto rearranged = blocks.reshape({-1, 4, 32, 4}).transpose(1, 2).reshape({-1, 32, 16});
-    return rearranged.reshape({n_row_blocks * 32, n_col_blocks * 16}).contiguous();
-}
-
 extern "C"
 {
     __attribute__((visibility("default")))
@@ -39,8 +27,8 @@ extern "C"
             
             auto av = at::from_blob(a_byte.data_ptr(), a_byte.sizes(), a_byte.strides(), a_byte.options().dtype(kFloat4_e2m1fn_x2));
             auto bv = at::from_blob(b_byte.data_ptr(), b_byte.sizes(), b_byte.strides(), b_byte.options().dtype(kFloat4_e2m1fn_x2));
-            auto sav = to_blocked(at::from_blob(sa_byte.data_ptr(), sa_byte.sizes(), sa_byte.strides(), sa_byte.options().dtype(kFloat8_e4m3fn)));
-            auto sbv = to_blocked(at::from_blob(sb_byte.data_ptr(), sb_byte.sizes(), sb_byte.strides(), sb_byte.options().dtype(kFloat8_e4m3fn)));
+            auto sav = at::from_blob(sa_byte.data_ptr(), sa_byte.sizes(), sa_byte.strides(), sa_byte.options().dtype(kFloat8_e4m3fn));
+            auto sbv = at::from_blob(sb_byte.data_ptr(), sb_byte.sizes(), sb_byte.strides(), sb_byte.options().dtype(kFloat8_e4m3fn));
 
             auto st = (c10::ScalarType)out_dtype;
             at::Tensor res = at::_scaled_mm(av, bv, sav, sbv, std::nullopt, std::nullopt, st, false);
