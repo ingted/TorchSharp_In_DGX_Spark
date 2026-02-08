@@ -40,6 +40,7 @@ set(SOURCES
 	THSTensorMath.cpp
     THSTorch.cpp
 	THSVision.cpp
+        THSFP4.cpp
     Utils.cpp)
 
 if(NOT WIN32)

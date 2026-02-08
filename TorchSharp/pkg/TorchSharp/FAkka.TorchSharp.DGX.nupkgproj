@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageIdFolderName>FAkka.TorchSharp.DGX</PackageIdFolderName>
     <PackageId>FAkka.TorchSharp.DGX</PackageId>
-    <Version>26.1.0-py3.1</Version>
+    <Version>26.1.0-py3.3</Version>
     <TargetFrameworks>net10.0;net8.0;net6.0;netstandard2.0</TargetFrameworks>
     <PackageDescription>FAkka DGX optimized TorchSharp package. Native libtorch libraries must be provided by the environment (e.g. LD_LIBRARY_PATH). Bundles libLibTorchSharp.so for linux-arm64.</PackageDescription>
     <AssemblyName>TorchSharp</AssemblyName>

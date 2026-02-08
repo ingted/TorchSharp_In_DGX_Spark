@@ -7,20 +7,19 @@ a_hp = torch.randn(M, K, device='cuda', dtype=torch.bfloat16)
 b_hp = torch.randn(N, K, device='cuda', dtype=torch.bfloat16)
 
 a_fp4 = NVFP4Tensor.to_nvfp4(a_hp)
-# Quantize b_hp.t() to get contiguous KxN fp4 weight
-b_fp4_t = NVFP4Tensor.to_nvfp4(b_hp.t().contiguous())
+# b_hp is N x K. Quantizing it gives qdata N x K/2
+b_fp4 = NVFP4Tensor.to_nvfp4(b_hp)
 
 try:
     qa = a_fp4.qdata.view(torch.float4_e2m1fn_x2)
-    qb = b_fp4_t.qdata.view(torch.float4_e2m1fn_x2)
+    # Transpose uint8 qdata and scale before viewing as float4/float8
+    qb = b_fp4.qdata.t().contiguous().view(torch.float4_e2m1fn_x2)
     sa = a_fp4.scale.view(torch.float8_e4m3fn)
-    sb = b_fp4_t.scale.view(torch.float8_e4m3fn)
-    
-    # sa and sb must have 1024 elements total for 128x128 matrix with block size 16
-    # sa shape: [128, 8], sb shape: [8, 128]
+    sb = b_fp4.scale.t().contiguous().view(torch.float8_e4m3fn)
     
     res = torch._scaled_mm(
-        qa, qb, sa, sb,
+        qa, b_fp4.qdata.t().view(torch.float4_e2m1fn_x2), 
+        sa, b_fp4.scale.view(torch.float8_e4m3fn),
         out_dtype=torch.bfloat16
     )
     print('Success')

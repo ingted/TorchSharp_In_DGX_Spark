@@ -12,7 +12,7 @@ cd "$REPO_ROOT/TorchSharp/pkg/TorchSharp"
 dotnet pack FAkka.TorchSharp.DGX.nupkgproj -c Release -p:RepoRoot="$REPO_ROOT/TorchSharp/"
 
 # 3. Local "Publish" (Inject into NuGet cache)
-VERSION="26.1.0-py3.1"
+VERSION="26.1.0-py3.3"
 PACKAGE_NAME="fakka.torchsharp.dgx"
 CACHE_DIR="/root/.nuget/packages/$PACKAGE_NAME/$VERSION"
 NUPKG="$REPO_ROOT/TorchSharp/bin/packages/Release/FAkka.TorchSharp.DGX.$VERSION.nupkg"
