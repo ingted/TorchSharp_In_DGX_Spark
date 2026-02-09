@@ -252,12 +252,16 @@ module private BackendImpl =
     | n when n = Nf4KernelName ->
       if schema.Format <> NF4 then
         Error(sprintf "Backend '%s' does not match schema format %A." n schema.Format)
+      elif not (NativeInterop.isNf4Available()) then
+        Error(sprintf "Backend '%s' requested but NF4 native library is unavailable." n)
       else
         Ok (new RuntimeBackend(n, supportsOnly NF4, NativeInterop.isNf4Available, Some "NF4") :> IQ4Backend)
 
     | n when n = Nvfp4KernelName ->
       if schema.Format <> NVFP4 then
         Error(sprintf "Backend '%s' does not match schema format %A." n schema.Format)
+      elif not (NativeInterop.isNvfp4Available()) then
+        Error(sprintf "Backend '%s' requested but NVFP4 native library is unavailable." n)
       else
         Ok (new RuntimeBackend(n, supportsOnly NVFP4, NativeInterop.isNvfp4Available, Some "NVFP4") :> IQ4Backend)
 

@@ -24,8 +24,8 @@
 | WBS-16 | Implement NF4 backend | `Backend.fs` | UC-01/02/05 | TC-01/04/09/10 | Done (Baseline) |
 | WBS-17 | Implement NVFP4 backend | `Backend.fs` | UC-01/02/05 | TC-02/04/09/10 | Done (Baseline) |
 | WBS-18 | Implement UM policy manager | `UnifiedMemory.fs` | UC-04/07 | TC-07/08/13 | Done (Baseline) |
-| WBS-19 | Build actor-safe mutation contract | code+doc | UC-07 | TC-13 | Pending |
-| WBS-20 | E2E validation and performance baseline | report | UC-01..UC-07 | TC-01..TC-13 | Pending |
+| WBS-19 | Build actor-safe mutation contract | `UnifiedMemory.fs`, `Q4Linear.fs`, `Session.fs` | UC-07 | TC-13 | Done (Baseline) |
+| WBS-20 | E2E validation and performance baseline | `TestCase.fsx`, `doc/E2E_Baseline.md` | UC-01..UC-07 | TC-01..TC-13 | Done (Baseline) |
 
 ### 2. Acceptance Criteria
 - All `Done` items must have readable and traceable documents.
@@ -58,8 +58,8 @@
 | WBS-16 | 實作 NF4 backend | `Backend.fs` | UC-01/02/05 | TC-01/04/09/10 | Done (Baseline) |
 | WBS-17 | 實作 NVFP4 backend | `Backend.fs` | UC-01/02/05 | TC-02/04/09/10 | Done (Baseline) |
 | WBS-18 | 實作 UM policy manager | `UnifiedMemory.fs` | UC-04/07 | TC-07/08/13 | Done (Baseline) |
-| WBS-19 | 建立 actor-safe mutation contract | code+doc | UC-07 | TC-13 | Pending |
-| WBS-20 | E2E 驗證與性能基準 | report | UC-01..UC-07 | TC-01..TC-13 | Pending |
+| WBS-19 | 建立 actor-safe mutation contract | `UnifiedMemory.fs`, `Q4Linear.fs`, `Session.fs` | UC-07 | TC-13 | Done (Baseline) |
+| WBS-20 | E2E 驗證與性能基準 | `TestCase.fsx`, `doc/E2E_Baseline.md` | UC-01..UC-07 | TC-01..TC-13 | Done (Baseline) |
 
 ## 2. 驗收門檻
 - 所有 `Done` 項目文件可讀且可追蹤。
