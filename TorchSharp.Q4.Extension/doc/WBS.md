@@ -20,7 +20,7 @@
 | WBS-12 | Write expected usage script | `UseCase.fsx` | UC-01..UC-07 | N/A | Done |
 | WBS-13 | Write expected test script | `TestCase.fsx` | UC-01..UC-07 | TC-01..TC-13 | Done |
 | WBS-14 | Implement Schema Detector | `Schema.fs` | UC-01/06 | TC-01/02/03/11/12 | Done |
-| WBS-15 | Implement Backend Dispatcher | code | UC-02/06 | TC-04/05/12 | Pending |
+| WBS-15 | Implement Backend Dispatcher | `Backend.fs` | UC-02/06 | TC-04/05/12 | Done |
 | WBS-16 | Implement NF4 backend | code | UC-01/02/05 | TC-01/04/09/10 | Pending |
 | WBS-17 | Implement NVFP4 backend | code | UC-01/02/05 | TC-02/04/09/10 | Pending |
 | WBS-18 | Implement UM policy manager | code | UC-04/07 | TC-07/08/13 | Pending |
@@ -54,7 +54,7 @@
 | WBS-12 | 撰寫預期使用腳本 | `UseCase.fsx` | UC-01..UC-07 | N/A | Done |
 | WBS-13 | 撰寫預期測試腳本 | `TestCase.fsx` | UC-01..UC-07 | TC-01..TC-13 | Done |
 | WBS-14 | 實作 Schema Detector | `Schema.fs` | UC-01/06 | TC-01/02/03/11/12 | Done |
-| WBS-15 | 實作 Backend Dispatcher | code | UC-02/06 | TC-04/05/12 | Pending |
+| WBS-15 | 實作 Backend Dispatcher | `Backend.fs` | UC-02/06 | TC-04/05/12 | Done |
 | WBS-16 | 實作 NF4 backend | code | UC-01/02/05 | TC-01/04/09/10 | Pending |
 | WBS-17 | 實作 NVFP4 backend | code | UC-01/02/05 | TC-02/04/09/10 | Pending |
 | WBS-18 | 實作 UM policy manager | code | UC-04/07 | TC-07/08/13 | Pending |
