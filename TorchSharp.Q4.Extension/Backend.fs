@@ -173,6 +173,20 @@ module private BackendImpl =
   let ensureComputeDtype (tensor: TorchSharp.torch.Tensor) =
     if isFloatingDtype tensor.dtype then tensor.dtype else torch.float32
 
+  let toBlockedScale (input: TorchSharp.torch.Tensor) =
+    let scale = ensureMatrix "scale" input
+    let rows = scale.shape.[0]
+    let cols = scale.shape.[1]
+    let nRowBlocks = (rows + 127L) / 128L
+    let nColBlocks = (cols + 3L) / 4L
+
+    use padded = torch.zeros([| nRowBlocks * 128L; nColBlocks * 4L |], scale.dtype, scale.device)
+    padded.narrow(0L, 0L, rows).narrow(1L, 0L, cols).copy_(scale) |> ignore
+
+    use blocks = padded.view([| nRowBlocks; 128L; nColBlocks; 4L |]).permute([| 0L; 2L; 1L; 3L |])
+    use rearranged = blocks.reshape([| -1L; 4L; 32L; 4L |]).transpose(1L, 2L).reshape([| -1L; 32L; 16L |])
+    rearranged.reshape([| -1L |]).contiguous()
+
   let private runLinearFallback
     (input: TorchSharp.torch.Tensor)
     (prepared: PreparedWeight)
@@ -199,6 +213,80 @@ module private BackendImpl =
 
     let output = torch.nn.functional.linear(inputForCompute, weightForCompute)
     if output.dtype = outDtype then output else output.to_type(outDtype)
+
+  type private PreparedNvfp4KernelWeight
+    (
+      device: string,
+      debugName: string,
+      qweight: TorchSharp.torch.Tensor,
+      scaleBlocked: TorchSharp.torch.Tensor,
+      inFeatures: int64,
+      outFeatures: int64
+    ) =
+    let mutable isDisposed = false
+
+    member _.Qweight =
+      if isDisposed then
+        raise (ObjectDisposedException(debugName))
+      qweight
+
+    member _.ScaleBlocked =
+      if isDisposed then
+        raise (ObjectDisposedException(debugName))
+      scaleBlocked
+
+    member _.InFeatures = inFeatures
+    member _.OutFeatures = outFeatures
+
+    interface IQ4PreparedWeight with
+      member _.Format = QuantFormat.NVFP4
+      member _.Device = device
+      member _.DebugName = debugName
+
+      member _.Dispose() =
+        if not isDisposed then
+          isDisposed <- true
+          qweight.Dispose()
+          scaleBlocked.Dispose()
+
+  let private runLinearNvfp4Kernel
+    (input: TorchSharp.torch.Tensor)
+    (prepared: PreparedNvfp4KernelWeight)
+    (outDtype: TorchSharp.torch.ScalarType)
+    =
+    if input.shape.Length < 1 then
+      raise (InvalidOperationException("Input tensor rank must be >= 1."))
+
+    let qweight = prepared.Qweight
+    let scaleBlocked = prepared.ScaleBlocked
+
+    let inputOnDevice =
+      if sameDevice input qweight then input else input.``to``(qweight.device)
+
+    let inFeatures = inputOnDevice.shape.[inputOnDevice.shape.Length - 1]
+    if inFeatures <> prepared.InFeatures then
+      raise (
+        InvalidOperationException(
+          sprintf "NVFP4 kernel input feature size mismatch: input=%d, weight.in=%d." inFeatures prepared.InFeatures
+        )
+      )
+
+    if inFeatures % 16L <> 0L then
+      raise (InvalidOperationException(sprintf "NVFP4 kernel requires input feature size divisible by 16, got %d." inFeatures))
+
+    let m = inputOnDevice.numel() / inFeatures
+    use input2d = inputOnDevice.reshape([| m; inFeatures |])
+
+    let qInputRaw, inputScaleRaw = NativeInterop.fp4Quantize input2d
+    use qInput = qInputRaw
+    use inputScale = inputScaleRaw
+    use inputScaleBlocked = toBlockedScale inputScale
+    use out2d = NativeInterop.scaledMmFp4 qInput (qweight.t()) inputScaleBlocked scaleBlocked outDtype
+
+    let outShape = inputOnDevice.shape |> Array.copy
+    outShape.[outShape.Length - 1] <- prepared.OutFeatures
+    let reshaped = out2d.reshape(outShape)
+    if reshaped.dtype = outDtype then reshaped else reshaped.to_type(outDtype)
 
   type private RuntimeBackend
     (
@@ -235,6 +323,78 @@ module private BackendImpl =
         | _ ->
           raise (InvalidOperationException("Prepared weight type mismatch for backend implementation."))
 
+  type private Nvfp4KernelBackend(name: string) =
+    interface IQ4Backend with
+      member _.Name = name
+
+      member _.Supports(schema: Q4Schema, _config: Q4SessionConfig) =
+        schema.Format = QuantFormat.NVFP4
+
+      member _.PrepareWeight(schema: Q4Schema, tensors: Q4TensorBundle, device: string) =
+        if schema.Format <> QuantFormat.NVFP4 then
+          raise (InvalidOperationException(sprintf "Backend '%s' only supports format NVFP4." name))
+
+        if not (NativeInterop.hasLibTorchFp4Quantize() && NativeInterop.hasLibTorchScaledMm()) then
+          raise (InvalidOperationException(sprintf "Backend '%s' requires LibTorch FP4 exports." name))
+
+        let q = ensureMatrix "NVFP4 qdata" tensors.Weight
+        let scale =
+          match tensors.Scale with
+          | Some s -> ensureMatrix "NVFP4 scale" s
+          | None -> raise (InvalidOperationException("NVFP4 kernel backend requires Scale tensor."))
+
+        if q.dtype <> torch.uint8 then
+          raise (InvalidOperationException(sprintf "NVFP4 kernel backend expects uint8 packed qdata, got %A." q.dtype))
+
+        if scale.shape.[0] <> q.shape.[0] then
+          raise (
+            InvalidOperationException(
+              sprintf "NVFP4 scale rows must match qdata rows: scale=%d qdata=%d." scale.shape.[0] q.shape.[0]
+            )
+          )
+
+        let inFeatures = q.shape.[1] * 2L
+        let outFeatures = q.shape.[0]
+        let expectedScaleCols = inFeatures / 16L
+
+        if q.shape.[1] % 16L <> 0L then
+          raise (
+            InvalidOperationException(
+              sprintf "NVFP4 packed qdata K/2 must be divisible by 16 for _scaled_mm, got %d." q.shape.[1]
+            )
+          )
+
+        if outFeatures % 16L <> 0L then
+          raise (
+            InvalidOperationException(
+              sprintf "NVFP4 out_features must be divisible by 16 for _scaled_mm, got %d." outFeatures
+            )
+          )
+
+        if scale.shape.[1] <> expectedScaleCols then
+          raise (
+            InvalidOperationException(
+              sprintf
+                "NVFP4 scale column mismatch: expected %d (in_features/16), got %d."
+                expectedScaleCols
+                scale.shape.[1]
+            )
+          )
+
+        let qOnTarget = if q.device.ToString() = device then q else q.``to``(device)
+        let scaleOnTarget = if scale.device.ToString() = device then scale else scale.``to``(device)
+        let packed = qOnTarget.detach().contiguous().clone()
+        let scaleBlocked = toBlockedScale (scaleOnTarget.detach().contiguous())
+        new PreparedNvfp4KernelWeight(device, sprintf "%s:%s" name schema.WeightKey, packed, scaleBlocked, inFeatures, outFeatures)
+        :> IQ4PreparedWeight
+
+      member _.Linear(input: TorchSharp.torch.Tensor, prepared: IQ4PreparedWeight, outDtype: TorchSharp.torch.ScalarType) =
+        match prepared with
+        | :? PreparedNvfp4KernelWeight as p ->
+          runLinearNvfp4Kernel input p outDtype
+        | _ ->
+          raise (InvalidOperationException("Prepared weight type mismatch for NVFP4 kernel backend."))
+
   let normalizeName (name: string) = name.Trim().ToLowerInvariant()
 
   let supportsOnly (format: QuantFormat) = fun x -> x = format
@@ -260,10 +420,10 @@ module private BackendImpl =
     | n when n = Nvfp4KernelName ->
       if schema.Format <> NVFP4 then
         Error(sprintf "Backend '%s' does not match schema format %A." n schema.Format)
-      elif not (NativeInterop.isNvfp4Available()) then
-        Error(sprintf "Backend '%s' requested but NVFP4 native library is unavailable." n)
+      elif not (NativeInterop.hasLibTorchFp4Quantize() && NativeInterop.hasLibTorchScaledMm()) then
+        Error(sprintf "Backend '%s' requested but LibTorch FP4 exports are unavailable." n)
       else
-        Ok (new RuntimeBackend(n, supportsOnly NVFP4, NativeInterop.isNvfp4Available, Some "NVFP4") :> IQ4Backend)
+        Ok (new Nvfp4KernelBackend(n) :> IQ4Backend)
 
     | n when n = DequantFallbackName ->
       Ok (new RuntimeBackend(n, supportsAll, (fun () -> true), None) :> IQ4Backend)
@@ -301,6 +461,16 @@ module private BackendImpl =
       Ok [ kernelNameByFormat schema.Format; DequantFallbackName ]
 
 module Backend =
+  let private renderBoolState (name: string) (ok: bool) =
+    if ok then sprintf "%s=ok" name else sprintf "%s=fail" name
+
+  let private renderLoadResult (name: string) (r: NativeInterop.NativeLoadResult) =
+    if r.Loaded then
+      sprintf "%s=ok(%s)" name r.LibraryPath
+    else
+      let e = r.Error |> Option.defaultValue "unknown error"
+      sprintf "%s=fail(%s)" name e
+
   let tryCreate (schema: Q4Schema) (config: Q4SessionConfig) : Result<IQ4Backend, string> =
     match BackendImpl.candidates schema config with
     | Error err -> Error err
@@ -334,11 +504,43 @@ module Backend =
     | Ok backend -> backend
     | Error err -> raise (InvalidOperationException(err))
 
+  let diagnose (schema: Q4Schema) (config: Q4SessionConfig) : Q4Diagnostics =
+    let nf4 = NativeInterop.loadNf4()
+    let nvfp4 = NativeInterop.loadNvfp4()
+    let hasFp4Quantize = NativeInterop.hasLibTorchFp4Quantize()
+    let hasScaledMm = NativeInterop.hasLibTorchScaledMm()
+    let nativeState =
+      [
+        renderLoadResult "nf4" nf4
+        renderLoadResult "nvfp4" nvfp4
+        renderBoolState "libtorch_fp4_quantize" hasFp4Quantize
+        renderBoolState "libtorch_scaled_mm" hasScaledMm
+      ]
+      |> String.concat "; "
+
+    match tryCreate schema config with
+    | Ok backend ->
+      {
+        Format = schema.Format
+        Backend = backend.Name
+        ComputePath = config.ComputePath
+        NativeLoadState = nativeState
+        FallbackReason = None
+      }
+    | Error err ->
+      {
+        Format = schema.Format
+        Backend = "none"
+        ComputePath = config.ComputePath
+        NativeLoadState = nativeState
+        FallbackReason = Some err
+      }
+
   let listAvailable () : string list =
     let names = ResizeArray<string>()
     if NativeInterop.isNf4Available() then
       names.Add(BackendImpl.Nf4KernelName)
-    if NativeInterop.isNvfp4Available() then
+    if NativeInterop.hasLibTorchFp4Quantize() && NativeInterop.hasLibTorchScaledMm() then
       names.Add(BackendImpl.Nvfp4KernelName)
     names.Add(BackendImpl.DequantFallbackName)
     names |> Seq.distinct |> Seq.toList

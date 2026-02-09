@@ -99,17 +99,17 @@ let tc05 () =
   NativeInterop.configure(Some "/tmp/notfound_nvfp4.so", Some "/tmp/notfound_nf4.so")
   let schema =
     {
-      Format = NVFP4
-      WeightKey = "q"
-      ScaleKey = Some "s"
-      AbsmaxKey = None
-      QuantMapKey = None
+      Format = NF4
+      WeightKey = "w"
+      ScaleKey = None
+      AbsmaxKey = Some "a"
+      QuantMapKey = Some "q"
       ExtraKeys = []
     }
   let r = Backend.tryCreate schema (mkCfg Q4ComputePath.KernelOnly None)
   match r with
   | Error _ -> ()
-  | Ok backend -> failwithf "TC-05 failed: expected error but got backend '%s'" backend.Name
+  | Ok backend -> failwithf "TC-05 failed: expected NF4 kernel error but got backend '%s'" backend.Name
 
 let tc06 () =
   let cfg = mkCfg Q4ComputePath.DequantMatmulOnly (Some "dequant-matmul")
@@ -282,6 +282,36 @@ let tc15 () =
     ensure (Single.IsFinite(relValue)) "TC-15 failed: relative error is not finite"
     ensure (relValue < 1.5f) (sprintf "TC-15 failed: relative error too large (%f)" relValue)
 
+let tc16 () =
+  let cuda = torch.cuda_is_available()
+  let hasQuant = NativeInterop.hasLibTorchFp4Quantize()
+  let hasScaled = NativeInterop.hasLibTorchScaledMm()
+  if not (cuda && hasQuant && hasScaled) then
+    printfn "[TC-16] skipped: CUDA or LibTorch FP4 exports unavailable."
+  else
+    let cfg =
+      {
+        BackendOverride = None
+        ComputePath = Q4ComputePath.KernelOnly
+        RuntimeTarget = Q4RuntimeTarget.Cuda 0
+        UnifiedMemoryPolicy = UnifiedMemoryPolicy.Disabled
+        EnableDiagnostics = true
+      }
+    let schema =
+      {
+        Format = NVFP4
+        WeightKey = "q"
+        ScaleKey = Some "s"
+        AbsmaxKey = None
+        QuantMapKey = None
+        ExtraKeys = []
+      }
+    match Backend.tryCreate schema cfg with
+    | Ok backend ->
+      ensure (backend.Name = "nvfp4-kernel") (sprintf "TC-16 failed: unexpected backend '%s'" backend.Name)
+    | Error err ->
+      failwithf "TC-16 failed: %s" err
+
 let cases =
   [
     "TC-01", tc01
@@ -299,6 +329,7 @@ let cases =
     "TC-13", tc13
     "TC-14", tc14
     "TC-15", tc15
+    "TC-16", tc16
   ]
 
 printfn "[TC] running %d tests" cases.Length
