@@ -4,6 +4,11 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+    <PackageId>FAkka.TorchSharp.Q4.Extension</PackageId>
+    <Version>0.1.0-alpha.1</Version>
+    <Authors>FAkka</Authors>
+    <Description>F#-first Q4 extension for TorchSharp with NF4/NVFP4 dispatch and optional native NVFP4 bridge.</Description>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +18,8 @@
     <Compile Include="Schema.fs" />
     <Compile Include="NativeInterop.fsi" />
     <Compile Include="NativeInterop.fs" />
+    <Compile Include="Nvfp4Training.fsi" />
+    <Compile Include="Nvfp4Training.fs" />
     <Compile Include="Backend.fsi" />
     <Compile Include="Backend.fs" />
     <Compile Include="UnifiedMemory.fsi" />
@@ -24,6 +31,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FAkka.TorchSharp.DGX" Version="26.1.0-py3.5" />
+    <PackageReference Include="FAkka.TorchSharp.DGX" Version="26.1.0-py3.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../nvfp4_native/libNVFP4.so"
+          Pack="true"
+          PackagePath="runtimes/linux-arm64/native"
+          Visible="false"
+          Condition="Exists('../../nvfp4_native/libNVFP4.so')" />
   </ItemGroup>
 </Project>

@@ -337,6 +337,32 @@ let tc17 () =
     failwithf "TC-17 failed: expected failure for CPU kernel-only path, got '%s'" backend.Name
   | Error _ -> ()
 
+let tc18 () =
+  use w = torch.randn([| 16L; 64L |], dtype = torch.float32, device = "cpu")
+  let q, s = Nvfp4Training.quantizePacked w
+  use qd = q
+  use sd = s
+  ensure (qd.dtype = torch.uint8) "TC-18 failed: qdata dtype mismatch"
+  ensure (qd.shape = [| 16L; 32L |]) "TC-18 failed: qdata shape mismatch"
+  ensure (sd.shape = [| 16L; 4L |]) "TC-18 failed: scale shape mismatch"
+  use dq = Nvfp4Training.dequantizePacked qd sd torch.float32
+  ensure (dq.shape = w.shape) "TC-18 failed: dequantized shape mismatch"
+  use rel = (dq - w).abs().mean() / (w.abs().mean() + 1e-6)
+  let relValue = rel.item<float32>()
+  ensure (Single.IsFinite(relValue)) "TC-18 failed: relative error is not finite"
+
+let tc19 () =
+  use x = torch.randn([| 4L; 64L |], dtype = torch.float32, device = "cpu")
+  use w0 = torch.randn([| 16L; 64L |], dtype = torch.float32, device = "cpu")
+  use w = torch.nn.Parameter(w0.clone(), true)
+  use y = Nvfp4Training.linearSte x w torch.float32
+  use loss = (y * y).mean()
+  loss.backward()
+  ensure (not (isNull w.grad)) "TC-19 failed: grad is null"
+  use gradNorm = w.grad.abs().sum()
+  let gradNormValue = gradNorm.item<float32>()
+  ensure (Single.IsFinite(gradNormValue) && gradNormValue > 0.0f) "TC-19 failed: grad norm invalid"
+
 let cases =
   [
     "TC-01", tc01
@@ -356,6 +382,8 @@ let cases =
     "TC-15", tc15
     "TC-16", tc16
     "TC-17", tc17
+    "TC-18", tc18
+    "TC-19", tc19
   ]
 
 printfn "[TC] running %d tests" cases.Length
