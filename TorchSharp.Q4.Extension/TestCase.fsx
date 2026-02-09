@@ -1,5 +1,5 @@
 #if INTERACTIVE
-#r "nuget: FAkka.TorchSharp.DGX, 26.1.0-py3.5"
+#r "nuget: FAkka.TorchSharp.DGX, 26.1.0-py3.6"
 #r "./bin/Release/net10.0/TorchSharp.Q4.Extension.dll"
 #endif
 
@@ -17,6 +17,23 @@ let expectThrows (f: unit -> unit) =
     false
   with _ ->
     true
+
+let canRunFp4Kernel () =
+  torch.cuda_is_available()
+  && NativeInterop.hasLibTorchFp4Quantize()
+  && NativeInterop.hasLibTorchScaledMm()
+
+let toBlocked (input: torch.Tensor) =
+  use _ = torch.NewDisposeScope()
+  let rows = input.shape.[0]
+  let cols = input.shape.[1]
+  let rowBlocks = (rows + 127L) / 128L
+  let colBlocks = (cols + 3L) / 4L
+  use padded = torch.zeros([| rowBlocks * 128L; colBlocks * 4L |], input.dtype, input.device)
+  padded.narrow(0L, 0L, rows).narrow(1L, 0L, cols).copy_(input) |> ignore
+  use blocks = padded.view([| rowBlocks; 128L; colBlocks; 4L |]).permute([| 0L; 2L; 1L; 3L |])
+  use rearranged = blocks.reshape([| -1L; 4L; 32L; 4L |]).transpose(1L, 2L).reshape([| -1L; 32L; 16L |])
+  rearranged.reshape([| -1L |]).contiguous().MoveToOuterDisposeScope()
 
 let mkCfg path backendOverride =
   {
@@ -210,6 +227,61 @@ let tc13 () =
   let t2 = UnifiedMemory.applyMutablePolicy UnifiedMemoryPolicy.PreferUnified t
   ensure (not (Object.ReferenceEquals(t, t2))) "TC-13 failed"
 
+let tc14 () =
+  let cuda = torch.cuda_is_available()
+  let hasQuant = NativeInterop.hasLibTorchFp4Quantize()
+  let hasScaled = NativeInterop.hasLibTorchScaledMm()
+  if not (cuda && hasQuant && hasScaled) then
+    printfn "[TC-14] probe: cuda=%b quant=%b scaled=%b" cuda hasQuant hasScaled
+    printfn "[TC-14] skipped: CUDA or LibTorch FP4 exports unavailable."
+  else
+    use x = torch.randn([| 8L; 64L |], dtype = torch.float16, device = torch.CUDA)
+    let q, s = NativeInterop.fp4Quantize x
+    use qd = q
+    use sd = s
+    ensure (qd.shape = [| 8L; 32L |]) "TC-14 failed: qdata shape mismatch"
+    ensure (sd.shape = [| 8L; 4L |]) "TC-14 failed: scale shape mismatch"
+
+let tc15 () =
+  let cuda = torch.cuda_is_available()
+  let hasQuant = NativeInterop.hasLibTorchFp4Quantize()
+  let hasScaled = NativeInterop.hasLibTorchScaledMm()
+  if not (cuda && hasQuant && hasScaled) then
+    printfn "[TC-15] probe: cuda=%b quant=%b scaled=%b" cuda hasQuant hasScaled
+    printfn "[TC-15] skipped: CUDA or LibTorch FP4 exports unavailable."
+  else
+    use x = torch.randn([| 4L; 64L |], dtype = torch.float16, device = torch.CUDA)
+    use w = torch.randn([| 16L; 64L |], dtype = torch.float16, device = torch.CUDA)
+
+    let qxRaw, sxRaw = NativeInterop.fp4Quantize x
+    let qwRaw, swRaw = NativeInterop.fp4Quantize w
+    use qx = qxRaw
+    use sx = sxRaw
+    use qw = qwRaw
+    use sw = swRaw
+
+    use sxBlocked = toBlocked sx
+    use swBlocked = toBlocked sw
+    use y = NativeInterop.scaledMmFp4 qx (qw.t()) sxBlocked swBlocked torch.float16
+
+    ensure (y.shape = [| 4L; 16L |]) "TC-15 failed: output shape mismatch"
+
+    use anyNan = torch.isnan(y).any()
+    let hasNan = anyNan.cpu().item<bool>()
+    ensure (not hasNan) "TC-15 failed: output contains NaN"
+
+    use yF = y.to_type(torch.float32)
+    use xF = x.to_type(torch.float32)
+    use wF = w.to_type(torch.float32)
+    use refOut = torch.matmul(xF, wF.t())
+    use absErr = (yF - refOut).abs()
+    use errMean = absErr.mean()
+    use refMean = refOut.abs().mean() + 1e-6
+    use rel = errMean / refMean
+    let relValue = rel.cpu().item<float32>()
+    ensure (Single.IsFinite(relValue)) "TC-15 failed: relative error is not finite"
+    ensure (relValue < 1.5f) (sprintf "TC-15 failed: relative error too large (%f)" relValue)
+
 let cases =
   [
     "TC-01", tc01
@@ -225,6 +297,8 @@ let cases =
     "TC-11", tc11
     "TC-12", tc12
     "TC-13", tc13
+    "TC-14", tc14
+    "TC-15", tc15
   ]
 
 printfn "[TC] running %d tests" cases.Length
