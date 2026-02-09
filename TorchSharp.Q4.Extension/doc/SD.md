@@ -76,7 +76,7 @@ Diagnostics must include at least:
 - UM policy must be controllable by actor runtime.
 
 ### 7. Deliverables in This Version
-- Docs: `UseCase.md`, `TestCase.md`, `SD.md`, `WBS.md`
+- Docs: `doc/UseCase.md`, `doc/TestCase.md`, `doc/SD.md`, `doc/WBS.md`
 - Scripts: `UseCase.fsx`, `TestCase.fsx`
 - Project: `TorchSharp.Q4.Extension` F# skeleton + `.fsi` signatures
 - Excludes real kernel operator implementation
@@ -159,7 +159,7 @@ Diagnostics 必須至少包含:
 - UM policy 必須可被 actor runtime 控制。
 
 ## 7. 這一版交付內容
-- 文件: `UseCase.md`, `TestCase.md`, `SD.md`, `WBS.md`
+- 文件: `doc/UseCase.md`, `doc/TestCase.md`, `doc/SD.md`, `doc/WBS.md`
 - 腳本: `UseCase.fsx`, `TestCase.fsx`
 - 專案: `TorchSharp.Q4.Extension` F# skeleton + `.fsi` 簽名
 - 不含實際 kernel 算子實作

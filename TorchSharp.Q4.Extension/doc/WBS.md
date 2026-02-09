@@ -6,10 +6,10 @@
 
 | WBS ID | Work Item | Output | Related UseCase | Related TestCase | Status |
 |---|---|---|---|---|---|
-| WBS-01 | Define Use Cases | `UseCase.md` | UC-01..UC-07 | All | Done |
-| WBS-02 | Define Test Cases | `TestCase.md` | UC-01..UC-07 | TC-01..TC-13 | Done |
-| WBS-03 | System Design | `SD.md` | UC-01..UC-07 | All | Done |
-| WBS-04 | Work decomposition and acceptance mapping | `WBS.md` | UC-01..UC-07 | TC-01..TC-13 | Done |
+| WBS-01 | Define Use Cases | `doc/UseCase.md` | UC-01..UC-07 | All | Done |
+| WBS-02 | Define Test Cases | `doc/TestCase.md` | UC-01..UC-07 | TC-01..TC-13 | Done |
+| WBS-03 | System Design | `doc/SD.md` | UC-01..UC-07 | All | Done |
+| WBS-04 | Work decomposition and acceptance mapping | `doc/WBS.md` | UC-01..UC-07 | TC-01..TC-13 | Done |
 | WBS-05 | Build F# project skeleton | `TorchSharp.Q4.Extension.fsproj` | UC-03 | TC-06 | Done |
 | WBS-06 | Define public type signatures | `Types.fsi` | UC-01/02/04/05 | TC-01..TC-10 | Done |
 | WBS-07 | Define schema signatures | `Schema.fsi` | UC-01/06 | TC-01/02/03/11/12 | Done |
@@ -40,10 +40,10 @@
 
 | WBS ID | 工作項目 | 輸出 | 對應 UseCase | 對應 TestCase | 狀態 |
 |---|---|---|---|---|---|
-| WBS-01 | 定義 Use Cases | `UseCase.md` | UC-01..UC-07 | 全部 | Done |
-| WBS-02 | 定義 Test Cases | `TestCase.md` | UC-01..UC-07 | TC-01..TC-13 | Done |
-| WBS-03 | 系統設計 | `SD.md` | UC-01..UC-07 | 全部 | Done |
-| WBS-04 | 工作拆解與驗收映射 | `WBS.md` | UC-01..UC-07 | TC-01..TC-13 | Done |
+| WBS-01 | 定義 Use Cases | `doc/UseCase.md` | UC-01..UC-07 | 全部 | Done |
+| WBS-02 | 定義 Test Cases | `doc/TestCase.md` | UC-01..UC-07 | TC-01..TC-13 | Done |
+| WBS-03 | 系統設計 | `doc/SD.md` | UC-01..UC-07 | 全部 | Done |
+| WBS-04 | 工作拆解與驗收映射 | `doc/WBS.md` | UC-01..UC-07 | TC-01..TC-13 | Done |
 | WBS-05 | 建立 F# 專案骨架 | `TorchSharp.Q4.Extension.fsproj` | UC-03 | TC-06 | Done |
 | WBS-06 | 定義公開型別簽名 | `Types.fsi` | UC-01/02/04/05 | TC-01..TC-10 | Done |
 | WBS-07 | 定義 schema 簽名 | `Schema.fsi` | UC-01/06 | TC-01/02/03/11/12 | Done |

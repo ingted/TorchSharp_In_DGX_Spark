@@ -5,7 +5,7 @@
 ### Testing Principles
 - Verify schema and backend selection first, then verify linear-layer computation.
 - Verify deterministic correctness first, then performance and memory policy.
-- Test IDs map to `UseCase.md` and `WBS.md`.
+- Test IDs map to `doc/UseCase.md` and `doc/WBS.md`.
 
 ### Test Matrix
 
@@ -81,7 +81,7 @@
 ## 測試原則
 - 先驗證 schema 與 backend 選擇，再驗證線性層運算。
 - 先 deterministic correctness，再測性能與記憶體策略。
-- 測試編號對應 `UseCase.md` 與 `WBS.md`。
+- 測試編號對應 `doc/UseCase.md` 與 `doc/WBS.md`。
 
 ## Test Matrix
 
