@@ -312,6 +312,31 @@ let tc16 () =
     | Error err ->
       failwithf "TC-16 failed: %s" err
 
+let tc17 () =
+  let schema =
+    {
+      Format = NVFP4
+      WeightKey = "q"
+      ScaleKey = Some "s"
+      AbsmaxKey = None
+      QuantMapKey = None
+      ExtraKeys = []
+    }
+
+  let cfg =
+    {
+      BackendOverride = None
+      ComputePath = Q4ComputePath.KernelOnly
+      RuntimeTarget = Q4RuntimeTarget.Cpu
+      UnifiedMemoryPolicy = UnifiedMemoryPolicy.Disabled
+      EnableDiagnostics = true
+    }
+
+  match Backend.tryCreate schema cfg with
+  | Ok backend ->
+    failwithf "TC-17 failed: expected failure for CPU kernel-only path, got '%s'" backend.Name
+  | Error _ -> ()
+
 let cases =
   [
     "TC-01", tc01
@@ -330,6 +355,7 @@ let cases =
     "TC-14", tc14
     "TC-15", tc15
     "TC-16", tc16
+    "TC-17", tc17
   ]
 
 printfn "[TC] running %d tests" cases.Length

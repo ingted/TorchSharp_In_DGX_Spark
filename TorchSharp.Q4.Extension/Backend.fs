@@ -327,8 +327,13 @@ module private BackendImpl =
     interface IQ4Backend with
       member _.Name = name
 
-      member _.Supports(schema: Q4Schema, _config: Q4SessionConfig) =
-        schema.Format = QuantFormat.NVFP4
+      member _.Supports(schema: Q4Schema, config: Q4SessionConfig) =
+        let isCudaTarget =
+          match config.RuntimeTarget with
+          | Q4RuntimeTarget.Cuda _ -> true
+          | Q4RuntimeTarget.Cpu -> false
+          | Q4RuntimeTarget.Auto -> torch.cuda_is_available()
+        schema.Format = QuantFormat.NVFP4 && isCudaTarget
 
       member _.PrepareWeight(schema: Q4Schema, tensors: Q4TensorBundle, device: string) =
         if schema.Format <> QuantFormat.NVFP4 then
