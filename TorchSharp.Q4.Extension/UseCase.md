@@ -1,5 +1,79 @@
 # TorchSharp.Q4.Extension Use Cases
 
+## English Version
+
+### 0. Top Mission
+The top mission of this project is to support **Actor-based SNN** under limited budget, maximize the Unified Memory advantage on GB10, allow actors to read/write mutable tensors quickly, and then offload computation to GPU.
+
+### 1. Scope and Roles
+- User: F# developers (SNN/LLM/general TorchSharp users)
+- System: `TorchSharp.Q4.Extension`
+- Backends: `NF4` / `NVFP4` kernel paths and fallback paths
+
+### 2. Use Cases
+
+#### UC-01 Automatically detect Q4 format and select backend
+- Goal: The caller should not need to manually specify `NF4` or `NVFP4`.
+- Input: Weight tensor map (key + tensor)
+- Output: `Q4Schema` + selected backend
+- Acceptance:
+  - Detect `.absmax/.quant_map` -> `NF4`
+  - Detect `.qdata/.scale` -> `NVFP4`
+  - Return diagnosable errors when schema is missing
+- Related tests: `TC-01`, `TC-02`, `TC-03`
+
+#### UC-02 Manually override backend and compute path
+- Goal: Allow forcing backend or fallback during debugging/performance evaluation.
+- Acceptance:
+  - Support `KernelOnly` / `KernelOrFallback` / `DequantMatmulOnly`
+  - Provide clear errors or fallback messages when unsupported
+- Related tests: `TC-04`, `TC-05`
+
+#### UC-03 F# first, no hard C# dependency
+- Goal: Implement public API and main interop flow in F#.
+- Acceptance:
+  - API layer is pure F# (`.fsi/.fs`)
+  - Native interop is designed with F# P/Invoke first
+  - If runtime limits are encountered, C# is only a replaceable fallback adapter
+- Related tests: `TC-06`
+
+#### UC-04 Unified Memory policy management
+- Goal: Provide a consistent memory strategy for actor-mutable tensors.
+- Acceptance:
+  - Support `Disabled` / `PreferUnified` / `RequireUnified`
+  - Provide diagnostics when policy and backend capability are incompatible
+- Related tests: `TC-07`, `TC-08`
+
+#### UC-05 Build reusable Q4 linear component
+- Goal: Allow both SNN and LLM to use one Q4 linear abstraction.
+- Acceptance:
+  - `Q4Linear` supports `PrepareWeight` + `Forward`
+  - Fail fast on invalid input shape/dtype
+- Related tests: `TC-09`, `TC-10`
+
+#### UC-06 Alignment and boundary protection
+- Goal: Prevent silent corruption from format/alignment issues.
+- Acceptance:
+  - Perform required alignment/schema validation before kernel execution
+  - Generate traceable diagnostics
+- Related tests: `TC-11`, `TC-12`
+
+#### UC-07 Minimum guarantee for actor concurrency safety
+- Goal: In multi-actor environments, provide at least a predictable update contract.
+- Acceptance:
+  - Define explicit mutable tensor write contract
+  - Provide `session`-level resource lifecycle management
+- Related tests: `TC-13`
+
+### 3. Non-goals (this phase)
+- Do not implement a full training framework in this phase.
+- Do not guarantee all GPU/driver combinations in this phase.
+- Do not promise a single universal kernel for all Q4 formats in this phase.
+
+---
+
+## 中文版
+
 ## 0. 最高宗旨
 本專案最高宗旨是支援 **Actor-based SNN** 在有限預算下，最大化 GB10 平台的 Unified Memory 優勢，讓 actor 能快速讀寫可變 tensor，再交由 GPU 計算。
 

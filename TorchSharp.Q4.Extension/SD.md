@@ -1,5 +1,90 @@
 # TorchSharp.Q4.Extension System Design
 
+## English Version
+
+### 1. Design Goals
+- Unify NF4 / NVFP4 external API (`TorchSharp.Q4.Extension`).
+- Keep multi-backend strategy internally, instead of assuming one universal kernel.
+- Implement in F# first, with a replaceable C# adapter as fallback.
+- Prioritize Actor-based SNN + Unified Memory as the main design driver.
+
+### 2. Architecture Overview
+- Layer A: Public API (F#)
+  - Session, Schema, Q4Linear, Diagnostics
+- Layer B: Dispatcher
+  - Select backend/path by schema + policy + runtime capability
+- Layer C: Backends
+  - NF4 backend
+  - NVFP4 backend
+  - Dequant+Matmul fallback backend
+- Layer D: Native Interop
+  - F# P/Invoke bindings
+  - Native library loading / symbol checks
+- Layer E: Memory Policy
+  - Unified Memory policy / mutable tensor contract
+
+### 3. Core Components
+
+#### 3.1 Schema Detector
+- Input: `Map<string, Tensor>`
+- Output: `Q4Schema`
+- Rules:
+  - `.absmax/.quant_map` -> NF4
+  - `.qdata/.scale` -> NVFP4
+
+#### 3.2 Backend Registry + Dispatcher
+- Input: `Q4Schema`, `Q4SessionConfig`, runtime capabilities
+- Output: `IQ4Backend`
+- Policy:
+  - `KernelOnly`: fallback not allowed
+  - `KernelOrFallback`: degrade when unavailable
+  - `DequantMatmulOnly`: validate logic correctness only
+
+#### 3.3 Q4Linear Contract
+- `PrepareWeight`: convert schema/tensor into backend-ready state
+- `Forward`: execute Q4 inference path
+- `Dispose`: release prepared/native resources
+
+#### 3.4 Unified Memory Contract
+- `Disabled`: no UM specialization
+- `PreferUnified`: use UM if available, otherwise fallback
+- `RequireUnified`: fail when unavailable
+
+### 4. F# and C# Interaction Strategy
+
+#### 4.1 Preferred Strategy (project target)
+- F# directly P/Invokes native symbols.
+- F# directly handles required reflection (e.g., tensor handle bridge).
+
+#### 4.2 Fallback Strategy
+- If runtime limits make pure F# unstable, allow the thinnest C# adapter.
+- The adapter is replaceable backend glue only and must not own the public API.
+
+### 5. Failure Modes and Diagnostics
+- Incomplete schema
+- Kernel unavailable
+- Alignment mismatch
+- Unified Memory policy not satisfied
+- Forced backend override conflicts with real capability
+
+Diagnostics must include at least:
+- `format`, `backend`, `computePath`, `fallbackReason`, `nativeLoadState`
+
+### 6. Alignment with SNN/Actor
+- Session must have explicit resource lifecycle to avoid unknown cross-actor sharing.
+- Mutable tensors must define an update contract (single-writer multi-reader/version stamp/snapshot).
+- UM policy must be controllable by actor runtime.
+
+### 7. Deliverables in This Version
+- Docs: `UseCase.md`, `TestCase.md`, `SD.md`, `WBS.md`
+- Scripts: `UseCase.fsx`, `TestCase.fsx`
+- Project: `TorchSharp.Q4.Extension` F# skeleton + `.fsi` signatures
+- Excludes real kernel operator implementation
+
+---
+
+## 中文版
+
 ## 1. 設計目標
 - 統一 NF4 / NVFP4 對外 API（`TorchSharp.Q4.Extension`）。
 - 內部保持多 backend 策略，而非假設單一通用 kernel。

@@ -1,5 +1,41 @@
 # TorchSharp.Q4.Extension WBS
 
+## English Version
+
+### 1. Work Breakdown and Tracking
+
+| WBS ID | Work Item | Output | Related UseCase | Related TestCase | Status |
+|---|---|---|---|---|---|
+| WBS-01 | Define Use Cases | `UseCase.md` | UC-01..UC-07 | All | Done |
+| WBS-02 | Define Test Cases | `TestCase.md` | UC-01..UC-07 | TC-01..TC-13 | Done |
+| WBS-03 | System Design | `SD.md` | UC-01..UC-07 | All | Done |
+| WBS-04 | Work decomposition and acceptance mapping | `WBS.md` | UC-01..UC-07 | TC-01..TC-13 | Done |
+| WBS-05 | Build F# project skeleton | `TorchSharp.Q4.Extension.fsproj` | UC-03 | TC-06 | Done |
+| WBS-06 | Define public type signatures | `Types.fsi` | UC-01/02/04/05 | TC-01..TC-10 | Done |
+| WBS-07 | Define schema signatures | `Schema.fsi` | UC-01/06 | TC-01/02/03/11/12 | Done |
+| WBS-08 | Define backend signatures | `Backend.fsi` | UC-02/05/06 | TC-04/05/09/10/12 | Done |
+| WBS-09 | Define native interop signatures | `NativeInterop.fsi` | UC-03/06 | TC-05/06/12 | Done |
+| WBS-10 | Define UM policy signatures | `UnifiedMemory.fsi` | UC-04/07 | TC-07/08/13 | Done |
+| WBS-11 | Define session/linear signatures | `Session.fsi`, `Q4Linear.fsi` | UC-05/07 | TC-09/10/13 | Done |
+| WBS-12 | Write expected usage script | `UseCase.fsx` | UC-01..UC-07 | N/A | Done |
+| WBS-13 | Write expected test script | `TestCase.fsx` | UC-01..UC-07 | TC-01..TC-13 | Done |
+| WBS-14 | Implement Schema Detector | code | UC-01/06 | TC-01/02/03/11/12 | Pending |
+| WBS-15 | Implement Backend Dispatcher | code | UC-02/06 | TC-04/05/12 | Pending |
+| WBS-16 | Implement NF4 backend | code | UC-01/02/05 | TC-01/04/09/10 | Pending |
+| WBS-17 | Implement NVFP4 backend | code | UC-01/02/05 | TC-02/04/09/10 | Pending |
+| WBS-18 | Implement UM policy manager | code | UC-04/07 | TC-07/08/13 | Pending |
+| WBS-19 | Build actor-safe mutation contract | code+doc | UC-07 | TC-13 | Pending |
+| WBS-20 | E2E validation and performance baseline | report | UC-01..UC-07 | TC-01..TC-13 | Pending |
+
+### 2. Acceptance Criteria
+- All `Done` items must have readable and traceable documents.
+- All `Pending` items must map to at least one UseCase and one TestCase.
+- Before implementation starts, confirm no critical gaps across `UC/TC/SD/WBS`.
+
+---
+
+## 中文版
+
 ## 1. 任務分解與追蹤
 
 | WBS ID | 工作項目 | 輸出 | 對應 UseCase | 對應 TestCase | 狀態 |

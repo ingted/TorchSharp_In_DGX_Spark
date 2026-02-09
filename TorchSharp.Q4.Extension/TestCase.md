@@ -1,5 +1,83 @@
 # TorchSharp.Q4.Extension Test Cases
 
+## English Version
+
+### Testing Principles
+- Verify schema and backend selection first, then verify linear-layer computation.
+- Verify deterministic correctness first, then performance and memory policy.
+- Test IDs map to `UseCase.md` and `WBS.md`.
+
+### Test Matrix
+
+#### TC-01 NF4 schema detection
+- Preconditions: Provide `.weight/.absmax/.quant_map`
+- Expected: `Schema.detect` returns `NF4`
+- Related UC: `UC-01`
+
+#### TC-02 NVFP4 schema detection
+- Preconditions: Provide `.qdata/.scale`
+- Expected: `Schema.detect` returns `NVFP4`
+- Related UC: `UC-01`
+
+#### TC-03 Invalid schema diagnostics
+- Preconditions: Missing fields or mismatched shapes
+- Expected: `Schema.validate` returns complete error list
+- Related UC: `UC-01`
+
+#### TC-04 Manual backend override success
+- Preconditions: Valid schema
+- Expected: Backend + compute path can be forced successfully
+- Related UC: `UC-02`
+
+#### TC-05 Manual backend override failure path
+- Preconditions: Force NVFP4 while native backend is unavailable
+- Expected: Return error or fallback based on policy
+- Related UC: `UC-02`
+
+#### TC-06 No mandatory C# layer
+- Preconditions: Load only F# project
+- Expected: API can create session and pass basic path (mock/stub)
+- Related UC: `UC-03`
+
+#### TC-07 Unified memory policy: PreferUnified
+- Preconditions: `PreferUnified`
+- Expected: Run UM capability check and allow fallback
+- Related UC: `UC-04`
+
+#### TC-08 Unified memory policy: RequireUnified
+- Preconditions: `RequireUnified` with unsupported environment
+- Expected: Fail fast with explicit diagnostics
+- Related UC: `UC-04`
+
+#### TC-09 Q4Linear prepare + forward contract
+- Preconditions: Valid schema + tensor
+- Expected: `PrepareWeight` and `Forward` API contract holds
+- Related UC: `UC-05`
+
+#### TC-10 Shape/dtype guard
+- Preconditions: Invalid shape or dtype
+- Expected: Fail fast without silent incorrect output
+- Related UC: `UC-05`
+
+#### TC-11 Alignment validation
+- Preconditions: Intentionally misaligned dimensions
+- Expected: Rejected before kernel execution with diagnostics
+- Related UC: `UC-06`
+
+#### TC-12 Diagnostics completeness
+- Preconditions: Mixed backend-selection/fallback scenarios
+- Expected: Diagnostics include format/backend/path/fallback reason
+- Related UC: `UC-06`
+
+#### TC-13 Actor concurrent mutation contract
+- Preconditions: Simulate multiple actors racing on one tensor update
+- Expected: Behavior follows contract predictably (e.g., lock/version stamp/single-writer multi-reader)
+- Related UC: `UC-07`
+
+---
+
+## 中文版
+
 ## 測試原則
 - 先驗證 schema 與 backend 選擇，再驗證線性層運算。
 - 先 deterministic correctness，再測性能與記憶體策略。
