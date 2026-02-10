@@ -36,12 +36,12 @@
 
 | WBS ID | Work Item | Output | Related UseCase | Related TestCase | Status |
 |---|---|---|---|---|---|
-| WBS-21 | Fix tensor lifetime in `decodeToIndices` (`low/high` disposal) | `Nvfp4Training.fs` | UC-05/UC-07 | TC-18/TC-19 | Pending |
-| WBS-22 | Reduce temporary tensor leakage in `dequantizePacked` (`scale` conversion branch + intermediate disposal) | `Nvfp4Training.fs` | UC-05/UC-07 | TC-18 | Pending |
-| WBS-23 | Make `steWeight` explicit on intermediate disposal (`diff`, `diffDetached`) | `Nvfp4Training.fs` | UC-05 | TC-19 | Pending |
-| WBS-24 | Refactor fallback quantization chain into explicit `use` lifecycles | `Nvfp4Training.fs` | UC-05/UC-06 | TC-18 | Pending |
-| WBS-25 | Add NVFP4 codebook cache to reduce repeated allocation overhead | `Nvfp4Training.fs` | UC-05 | TC-18 | Pending |
-| WBS-26 | Add stress test for repeated `quantize/dequantize/linearSte` calls | `TestCase.fsx` | UC-05/UC-07 | TC-20 (new) | Pending |
+| WBS-21 | Fix tensor lifetime in `decodeToIndices` (`low/high` disposal) | `Nvfp4Training.fs` | UC-05/UC-07 | TC-18/TC-19 | Done |
+| WBS-22 | Reduce temporary tensor leakage in `dequantizePacked` (`scale` conversion branch + intermediate disposal) | `Nvfp4Training.fs` | UC-05/UC-07 | TC-18 | Done |
+| WBS-23 | Make `steWeight` explicit on intermediate disposal (`diff`, `diffDetached`) | `Nvfp4Training.fs` | UC-05 | TC-19 | Done |
+| WBS-24 | Refactor fallback quantization chain into explicit `use` lifecycles | `Nvfp4Training.fs` | UC-05/UC-06 | TC-18 | Done |
+| WBS-25 | Add NVFP4 codebook cache to reduce repeated allocation overhead | `Nvfp4Training.fs` | UC-05 | TC-18 | Done |
+| WBS-26 | Add stress test for repeated `quantize/dequantize/linearSte` calls | `TestCase.fsx` | UC-05/UC-07 | TC-20 (new) | Done |
 | WBS-27 | Track external integration issue: downstream trainer loss-temp disposal | `doc/DevLog.md` | UC-07 | N/A (external) | Pending |
 
 ---
@@ -82,10 +82,10 @@
 
 | WBS ID | 工作項目 | 輸出 | 對應 UseCase | 對應 TestCase | 狀態 |
 |---|---|---|---|---|---|
-| WBS-21 | 修正 `decodeToIndices` 的 tensor 生命週期（`low/high` 釋放） | `Nvfp4Training.fs` | UC-05/UC-07 | TC-18/TC-19 | Pending |
-| WBS-22 | 降低 `dequantizePacked` 暫存 tensor 洩漏風險（`scale` 分支與中間值釋放） | `Nvfp4Training.fs` | UC-05/UC-07 | TC-18 | Pending |
-| WBS-23 | `steWeight` 顯式管理中間值（`diff`、`diffDetached`） | `Nvfp4Training.fs` | UC-05 | TC-19 | Pending |
-| WBS-24 | 重構 fallback quantization 鏈式呼叫為顯式 `use` 生命週期 | `Nvfp4Training.fs` | UC-05/UC-06 | TC-18 | Pending |
-| WBS-25 | 加入 NVFP4 codebook 快取，降低重複配置成本 | `Nvfp4Training.fs` | UC-05 | TC-18 | Pending |
-| WBS-26 | 新增重複呼叫壓力測試（`quantize/dequantize/linearSte`） | `TestCase.fsx` | UC-05/UC-07 | TC-20（新增） | Pending |
+| WBS-21 | 修正 `decodeToIndices` 的 tensor 生命週期（`low/high` 釋放） | `Nvfp4Training.fs` | UC-05/UC-07 | TC-18/TC-19 | Done |
+| WBS-22 | 降低 `dequantizePacked` 暫存 tensor 洩漏風險（`scale` 分支與中間值釋放） | `Nvfp4Training.fs` | UC-05/UC-07 | TC-18 | Done |
+| WBS-23 | `steWeight` 顯式管理中間值（`diff`、`diffDetached`） | `Nvfp4Training.fs` | UC-05 | TC-19 | Done |
+| WBS-24 | 重構 fallback quantization 鏈式呼叫為顯式 `use` 生命週期 | `Nvfp4Training.fs` | UC-05/UC-06 | TC-18 | Done |
+| WBS-25 | 加入 NVFP4 codebook 快取，降低重複配置成本 | `Nvfp4Training.fs` | UC-05 | TC-18 | Done |
+| WBS-26 | 新增重複呼叫壓力測試（`quantize/dequantize/linearSte`） | `TestCase.fsx` | UC-05/UC-07 | TC-20（新增） | Done |
 | WBS-27 | 追蹤外部整合議題：下游 trainer loss 暫存釋放 | `doc/DevLog.md` | UC-07 | N/A（外部） | Pending |

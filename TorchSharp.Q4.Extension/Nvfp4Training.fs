@@ -1,9 +1,20 @@
 namespace TorchSharp.Q4.Extension
 
 open System
+open System.Collections.Concurrent
 open TorchSharp
 
 module Nvfp4TrainingImpl =
+  let private codebookValues =
+    [|
+      0.0f; 0.5f; 1.0f; 1.5f
+      2.0f; 3.0f; 4.0f; 6.0f
+      -0.0f; -0.5f; -1.0f; -1.5f
+      -2.0f; -3.0f; -4.0f; -6.0f
+    |]
+
+  let private codebookCache = ConcurrentDictionary<string, TorchSharp.torch.Tensor>(StringComparer.Ordinal)
+
   let isFloatingDtype (dtype: TorchSharp.torch.ScalarType) =
     dtype = torch.float16
     || dtype = torch.float32
@@ -20,26 +31,30 @@ module Nvfp4TrainingImpl =
       raise (InvalidOperationException(sprintf "%s requires in_features divisible by 16, got %d." name k))
 
   let nvfp4Codebook (device: TorchSharp.torch.Device) =
-    let values =
-      [|
-        0.0f; 0.5f; 1.0f; 1.5f
-        2.0f; 3.0f; 4.0f; 6.0f
-        -0.0f; -0.5f; -1.0f; -1.5f
-        -2.0f; -3.0f; -4.0f; -6.0f
-      |]
-    torch.tensor(values, dtype = torch.float32).``to``(device)
+    let key = device.ToString()
+    codebookCache.GetOrAdd(
+      key,
+      fun _ ->
+        torch
+          .tensor(codebookValues, dtype = torch.float32)
+          .``to``(device)
+          .contiguous()
+          .detach()
+    )
 
   let decodePacked (packed: TorchSharp.torch.Tensor) =
     let q = ensureMatrix "qdata" packed
-    let qU8 = q.to_type(torch.uint8)
-    let lowMask = torch.tensor(15uy, dtype = torch.uint8, device = q.device)
-    let shift4 = torch.tensor(4uy, dtype = torch.uint8, device = q.device)
+    use qU8 = q.to_type(torch.uint8)
+    use lowMask = torch.tensor(15uy, dtype = torch.uint8, device = q.device)
+    use shift4 = torch.tensor(4uy, dtype = torch.uint8, device = q.device)
     let low = torch.bitwise_and(qU8, lowMask)
     let high = torch.bitwise_right_shift(qU8, shift4)
     low, high
 
   let decodeToIndices (packed: TorchSharp.torch.Tensor) =
     let low, high = decodePacked packed
+    use lowD = low
+    use highD = high
     use stacked = torch.stack([| low; high |], dim = 2L)
     stacked.to_type(torch.int64)
 
@@ -49,22 +64,35 @@ module Nvfp4TrainingImpl =
     let inFeatures = x2d.shape.[1]
     ensureKAligned "NVFP4 quantize fallback" inFeatures
 
-    let x32 = if x2d.dtype = torch.float32 then x2d else x2d.to_type(torch.float32)
+    let x32Temp =
+      if x2d.dtype = torch.float32 then None else Some (x2d.to_type(torch.float32))
+    let x32 =
+      match x32Temp with
+      | Some t -> t
+      | None -> x2d
+
     use x3d = x32.reshape([| outFeatures; inFeatures / 16L; 16L |])
     use absmax = x3d.abs().amax([| 2L |], keepdim = true)
     use eps = torch.tensor(1e-6f, dtype = torch.float32, device = x2d.device)
     use scale = torch.maximum(absmax / 6.0, eps)
     use normalized = x3d / scale
     use codebook = nvfp4Codebook x2d.device
-    use diff = (normalized.unsqueeze(-1L) - codebook).abs()
+    use normalized3d = normalized.unsqueeze(-1L)
+    use diff = (normalized3d - codebook).abs()
     use idx = diff.argmin(-1L).to_type(torch.uint8)
 
     use idxPair = idx.reshape([| outFeatures; inFeatures / 2L; 2L |])
-    use low = idxPair.narrow(2L, 0L, 1L).squeeze(2L).to_type(torch.int16)
-    use high = idxPair.narrow(2L, 1L, 1L).squeeze(2L).to_type(torch.int16)
+    use lowNarrow = idxPair.narrow(2L, 0L, 1L)
+    use highNarrow = idxPair.narrow(2L, 1L, 1L)
+    use lowSqueezed = lowNarrow.squeeze(2L)
+    use highSqueezed = highNarrow.squeeze(2L)
+    use low = lowSqueezed.to_type(torch.int16)
+    use high = highSqueezed.to_type(torch.int16)
     use packedI16 = low + high * 16
     let packed = packedI16.to_type(torch.uint8)
-    let scale2d = scale.squeeze(-1L).contiguous().to_type(torch.float16)
+    use scaleSqueezed = scale.squeeze(-1L)
+    let scale2d = scaleSqueezed.contiguous().to_type(torch.float16)
+    x32Temp |> Option.iter (fun t -> t.Dispose())
     packed, scale2d
 
 module Nvfp4Training =
@@ -108,18 +136,30 @@ module Nvfp4Training =
 
     use idx = Nvfp4TrainingImpl.decodeToIndices q2d
     use flatIdx = idx.reshape(-1L)
-    use codebook = Nvfp4TrainingImpl.nvfp4Codebook q2d.device
+    let codebook = Nvfp4TrainingImpl.nvfp4Codebook q2d.device
     use flatVals = torch.index_select(codebook, 0L, flatIdx)
     use vals = flatVals.reshape([| outFeatures; inFeatures / 16L; 16L |])
 
+    let scaleTemp =
+      if s2d.dtype = torch.float32 then None else Some (s2d.to_type(torch.float32))
     let scaleForApply =
-      if s2d.dtype = torch.float32 then s2d else s2d.to_type(torch.float32)
+      match scaleTemp with
+      | Some t -> t
+      | None -> s2d
 
-    let scaled = vals * scaleForApply.unsqueeze(-1L)
-    let dense32 = scaled.reshape([| outFeatures; inFeatures |]).contiguous()
-    let dense =
-      if outDtype = torch.float32 then dense32 else dense32.to_type(outDtype)
-    dense.contiguous().clone()
+    use scaleForApply3d = scaleForApply.unsqueeze(-1L)
+    use scaled = vals * scaleForApply3d
+    use dense32 = scaled.reshape([| outFeatures; inFeatures |]).contiguous()
+
+    let result =
+      if outDtype = torch.float32 then
+        dense32.clone()
+      else
+        use denseOut = dense32.to_type(outDtype)
+        denseOut.contiguous().clone()
+
+    scaleTemp |> Option.iter (fun t -> t.Dispose())
+    result
 
   let steWeight (masterWeight: TorchSharp.torch.Tensor) =
     let w2d = Nvfp4TrainingImpl.ensureMatrix "masterWeight" masterWeight
@@ -130,7 +170,9 @@ module Nvfp4Training =
     use qd = q
     use sd = s
     use dq = dequantizePacked qd sd w2d.dtype
-    w2d + (dq - w2d).detach()
+    use diff = dq - w2d
+    use diffDetached = diff.detach()
+    w2d + diffDetached
 
   let linearSte
     (input: TorchSharp.torch.Tensor)

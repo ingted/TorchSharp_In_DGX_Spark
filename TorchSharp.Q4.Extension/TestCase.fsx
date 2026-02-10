@@ -363,6 +363,21 @@ let tc19 () =
   let gradNormValue = gradNorm.item<float32>()
   ensure (Single.IsFinite(gradNormValue) && gradNormValue > 0.0f) "TC-19 failed: grad norm invalid"
 
+let tc20 () =
+  use x = torch.randn([| 2L; 64L |], dtype = torch.float32, device = "cpu")
+  use w0 = torch.randn([| 16L; 64L |], dtype = torch.float32, device = "cpu")
+  use w = torch.nn.Parameter(w0.clone(), true)
+
+  for _ in 1 .. 128 do
+    use y = Nvfp4Training.linearSte x w torch.float32
+    use loss = (y * y).mean()
+    loss.backward()
+    ensure (not (isNull w.grad)) "TC-20 failed: grad is null"
+    use gradNorm = w.grad.abs().sum()
+    let gradNormValue = gradNorm.item<float32>()
+    ensure (Single.IsFinite(gradNormValue)) "TC-20 failed: grad norm not finite"
+    w.grad.zero_() |> ignore
+
 let cases =
   [
     "TC-01", tc01
@@ -384,6 +399,7 @@ let cases =
     "TC-17", tc17
     "TC-18", tc18
     "TC-19", tc19
+    "TC-20", tc20
   ]
 
 printfn "[TC] running %d tests" cases.Length

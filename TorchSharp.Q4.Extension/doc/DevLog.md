@@ -43,6 +43,23 @@
   - Initialized issue mapping from `notes/00001.txt`.
   - Added/updated planning docs (`WBS`, `SA`, `SD`).
   - Next: implement WBS-21..26 and run `TestCase.fsx`.
+- 2026-02-10T02:05:17Z
+  - Completed WBS-21..WBS-26 implementation in `Nvfp4Training.fs` and `TestCase.fsx`.
+  - Implementation details:
+    - Added explicit `use` ownership in `decodePacked`/`decodeToIndices`.
+    - Refactored fallback quantization path to reduce hidden chained temporaries.
+    - Added explicit temporary lifecycle control in `dequantizePacked`.
+    - Made `steWeight` intermediate tensors explicit (`diff`, `diffDetached`).
+    - Added per-device NVFP4 codebook cache (`ConcurrentDictionary`).
+    - Added `TC-20` repeated-call stress test.
+  - Validation:
+    - `dotnet build -c Release` (pass)
+    - `dotnet fsi TestCase.fsx` (TC-01..TC-20 pass; CUDA-specific tests skipped when CUDA unavailable)
+  - Warning observed:
+    - environment-level CUDA warning during test startup (`cudaGetDeviceCount` OS call issue), does not affect CPU test pass.
+- 2026-02-10T02:06:00Z
+  - External issue tracking kept as `WBS-27`:
+    - downstream trainer `scalarLoss` temp disposal belongs to app repo, not extension repo.
 
 ---
 
@@ -88,3 +105,20 @@
 - 2026-02-10T02:02:19Z
   - 完成 `notes/00001.txt` 的 issue 映射與文檔骨架更新。
   - 下一步：實作 WBS-21..26，執行 `TestCase.fsx` 驗證。
+- 2026-02-10T02:05:17Z
+  - 完成 WBS-21..WBS-26 的程式修正（`Nvfp4Training.fs`、`TestCase.fsx`）。
+  - 實作細節：
+    - 在 `decodePacked`/`decodeToIndices` 補上顯式 `use` 生命週期管理。
+    - 重構 fallback 量化路徑，降低鏈式暫存物件壓力。
+    - `dequantizePacked` 補齊轉型分支與中間值釋放控制。
+    - `steWeight` 顯式管理中間 tensor（`diff`、`diffDetached`）。
+    - 新增 per-device NVFP4 codebook 快取（`ConcurrentDictionary`）。
+    - 新增 `TC-20` 重複呼叫壓力測試。
+  - 驗證結果：
+    - `dotnet build -c Release` 通過。
+    - `dotnet fsi TestCase.fsx`（TC-01..TC-20 全通過；CUDA 不可用時 CUDA 相關 case 依設計 skip）。
+  - 觀測到警告：
+    - 測試啟動時有環境層 CUDA 警告（`cudaGetDeviceCount` OS call 問題），不影響 CPU 測試通過。
+- 2026-02-10T02:06:00Z
+  - 外部議題維持追蹤（`WBS-27`）：
+    - 下游 trainer `scalarLoss` 暫存釋放屬 app repo，不在 extension repo 實作。
