@@ -45,6 +45,17 @@
 - `Forward`: execute Q4 inference path
 - `Dispose`: release prepared/native resources
 
+#### 3.5 NVFP4 Training Utility Contract
+- `quantizePacked`: native FP4 quantize on CUDA; deterministic fallback on CPU.
+- `dequantizePacked`: decode packed FP4 + scale into dense compute tensor.
+- `steWeight`: preserve gradient to master weight via STE identity-gradient trick.
+- `linearSte`: training forward path for autograd-compatible quantized behavior.
+
+Lifecycle rules:
+- Any non-return intermediate tensor in hot path must be bound by `use`.
+- Avoid chained temporary-heavy expressions when fallback path is expected to run repeatedly.
+- Device/dtype conversion branches must dispose temporary converted tensors.
+
 #### 3.4 Unified Memory Contract
 - `Disabled`: no UM specialization
 - `PreferUnified`: use UM if available, otherwise fallback
@@ -66,6 +77,7 @@
 - Alignment mismatch
 - Unified Memory policy not satisfied
 - Forced backend override conflicts with real capability
+- Tensor lifecycle regression in repeated training calls (wrapper GC lag vs native pressure)
 
 Diagnostics must include at least:
 - `format`, `backend`, `computePath`, `fallbackReason`, `nativeLoadState`
@@ -76,10 +88,10 @@ Diagnostics must include at least:
 - UM policy must be controllable by actor runtime.
 
 ### 7. Deliverables in This Version
-- Docs: `doc/UseCase.md`, `doc/TestCase.md`, `doc/SD.md`, `doc/WBS.md`
+- Docs: `doc/UseCase.md`, `doc/TestCase.md`, `doc/SA.md`, `doc/SD.md`, `doc/WBS.md`, `doc/DevLog.md`
 - Scripts: `UseCase.fsx`, `TestCase.fsx`
 - Project: `TorchSharp.Q4.Extension` F# skeleton + `.fsi` signatures
-- Excludes real kernel operator implementation
+- Includes NVFP4 training utility and issue-driven hardening tasks (WBS-21+)
 
 ---
 
@@ -128,6 +140,17 @@ Diagnostics must include at least:
 - `Forward`：執行 Q4 路徑推理
 - `Dispose`：釋放 prepared/native 資源
 
+### 3.5 NVFP4 Training Utility Contract
+- `quantizePacked`：CUDA 走 native FP4 量化；CPU 走 deterministic fallback。
+- `dequantizePacked`：將 packed FP4 + scale 還原為 dense 計算 tensor。
+- `steWeight`：以 STE identity-gradient 技巧保留 master weight 梯度。
+- `linearSte`：提供訓練用、可 autograd 的量化前向路徑。
+
+生命週期規範：
+- 熱路徑中所有非回傳的中間 tensor 必須用 `use` 綁定。
+- fallback 路徑避免過多鏈式臨時物件。
+- device/dtype 轉換分支建立的暫存 tensor 必須顯式釋放。
+
 ### 3.4 Unified Memory Contract
 - `Disabled`: 不做 UM 特化
 - `PreferUnified`: 可用則使用 UM，不可用可 fallback
@@ -149,6 +172,7 @@ Diagnostics must include at least:
 - Alignment 不符
 - Unified Memory policy 不滿足
 - Backend 強制覆寫與實際能力衝突
+- 重複訓練呼叫下的 tensor 生命周期回歸（wrapper GC 落後導致 native 壓力）
 
 Diagnostics 必須至少包含:
 - `format`, `backend`, `computePath`, `fallbackReason`, `nativeLoadState`
@@ -159,7 +183,7 @@ Diagnostics 必須至少包含:
 - UM policy 必須可被 actor runtime 控制。
 
 ## 7. 這一版交付內容
-- 文件: `doc/UseCase.md`, `doc/TestCase.md`, `doc/SD.md`, `doc/WBS.md`
+- 文件: `doc/UseCase.md`, `doc/TestCase.md`, `doc/SA.md`, `doc/SD.md`, `doc/WBS.md`, `doc/DevLog.md`
 - 腳本: `UseCase.fsx`, `TestCase.fsx`
 - 專案: `TorchSharp.Q4.Extension` F# skeleton + `.fsi` 簽名
-- 不含實際 kernel 算子實作
+- 包含 NVFP4 training utility 與 issue 驅動強化任務（WBS-21+）
