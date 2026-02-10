@@ -1,0 +1,225 @@
+您提供了 Nvfp4State.fs, Qwen3Model.fs, Trainer.fs 和 Types.fs。 注意： 最關鍵的底層實作 Nvfp4Training.fs（包含 linearSte 邏輯）並不在其中。
+
+不過，光是從您提供的這幾個上層檔案，我已經發現了一個 明確的 GPU 記憶體洩漏 (Memory Leak) 風險點，以及幾個值得優化的架構問題。
+
+以下是針對您提供的程式碼進行的詳細 Code Review：
+
+1. 🔴 嚴重風險：Trainer.fs 中的 scalarLoss 洩漏
+這是最明顯的問題。在您的訓練迴圈中，這個函數每一步驟都會產生「殭屍 Tensor」。
+
+目前程式碼：
+
+F#
+let private scalarLoss (output: TorchSharp.torch.Tensor) (target: TorchSharp.torch.Tensor) =
+    let targetForLoss =
+      if target.dtype = output.dtype then target else target.to_type(output.dtype)
+    // [問題點] 下面這行產生了中間產物 diff，但沒有變數接住它，也沒人 Dispose
+    let diff = output - targetForLoss 
+    // [問題點] 下面這行產生了中間產物 abs，同樣洩漏
+    diff.abs().mean()
+問題分析： 在 TorchSharp 中，運算子重載（如 -）會產生新的 Tensor 物件。
+
+output - target 產生了 Tensor A (diff)。
+
+A.abs() 產生了 Tensor B (abs)。
+
+B.mean() 產生了 Tensor C (回傳值)。
+
+當函數返回 C 時，.NET 的變數 A 和 B 失去了 Scope，但它們的 Native C++ 記憶體（GPU Memory） 依然被佔用，直到 .NET GC 決定回收這些 Wrapper 物件並呼叫 Finalizer。在高頻率的訓練迴圈（Training Loop）中，GC 的速度往往跟不上 GPU 記憶體分配的速度，這會導致 OOM (Out Of Memory)。
+
+修正建議： 必須使用 use 關鍵字來顯式釋放中間產物：
+
+F#
+let private scalarLoss (output: TorchSharp.torch.Tensor) (target: TorchSharp.torch.Tensor) =
+    let targetForLoss =
+      if target.dtype = output.dtype then target else target.to_type(output.dtype)
+    
+    // 顯式管理生命週期
+    use diff = output - targetForLoss
+    use absDiff = diff.abs()
+    
+    // 雖然 targetForLoss 可能由 to_type 產生新物件，也需要檢查
+    if targetForLoss <> target then targetForLoss.Dispose()
+
+    absDiff.mean() // 回傳的這個 Tensor 會在 Trainer 迴圈中被 use loss = ... 接住，所以安全
+2. 🟡 潛在壓力：Qwen3Model.fs 的 Forward 迴圈
+這就是我們稍早討論的「物件堆疊」問題。
+
+目前程式碼：
+
+F#
+  member _.Forward(input: TorchSharp.torch.Tensor, ?outDtype: TorchSharp.torch.ScalarType) : TorchSharp.torch.Tensor =
+    let mutable x = input
+    for layer in layers do
+      // [關注點] 這裡的 x 不斷被覆蓋
+      x <- Nvfp4Training.linearSte x layer.MasterWeight targetOutDtype
+    x
+分析：
+
+訓練時 (Training): 這是正確的。因為 Autograd Graph 需要保留每一層的輸出（x 的舊值）來進行 Backward。即使您在 .NET 中覆蓋了變數 x，底層的 C++ Graph 依然持有引用。
+
+推論時 (Inference) / no_grad: 如果您在 torch.no_grad() 下呼叫此函數（例如驗證步驟），舊的 x 會變成垃圾。
+
+因為在 no_grad 模式下，Graph 不會保留引用。
+
+這會導致每一層產生的 Tensor 都要等待 GC 回收。
+
+優化建議（進階）： 如果您希望極致優化，可以檢查是否處於 IsGradEnabled 狀態。若不在訓練模式，應手動 Dispose 舊的 x。但在目前的訓練場景下，這段程式碼是安全的，只要 Trainer.fs 最後有 loss.backward() 和 output.Dispose()。
+
+3. 🟢 優良實作：Nvfp4State.fs (Loader)
+這部分的程式碼寫得非常有紀律。
+
+優點： 嚴格的 Dispose() 管理。
+
+在 tryParseQuantKey 和 tryBuildLayer 流程中，只要判斷失敗或發生例外，都有看到 Option.iter (fun t -> t.Dispose())。
+
+fallbackLayers 和 preferredLayers 的互斥保留邏輯（只留其中一組，另一組 Dispose）寫得很清楚。
+
+結論： 模型載入階段不太可能發生記憶體洩漏。
+
+4. ⚪ 未知領域：Nvfp4Training.linearSte
+由於您沒有提供 Nvfp4Training.fs，我必須提醒您一個常見的 STE 實作陷阱：
+
+STE 陷阱檢查清單：
+
+Context Save: 自定義的 autograd.Function 是否正確使用了 ctx.save_for_backward(input, weight)？
+
+Clone: 在 save_for_backward 之前，是否有必要 clone()？（如果 input 在後續被 In-place 修改，這會導致錯誤）。
+
+Temporary Buffers: 在 forward 中產生的量化後暫存 Tensor（FP4/Int8），是否在使用完後立即 Dispose？這些暫存物不需要留給 Backward（Backward 只需要 Input 和 Weight）。如果不 Dispose，這裡會是最大的洩漏源。
+
+總結 Code Review
+Hard Fail: Trainer.fs -> scalarLoss 函數有記憶體洩漏，必須修正。
+
+Pass: Nvfp4State.fs 寫得很好。
+
+Caution: Qwen3Model.fs 結構簡單，但依賴 Nvfp4Training 的實作正確性。
+
+
+看完 Nvfp4TrainingImpl 和 Nvfp4Training 後，我發現了 兩個致命錯誤 和 一個嚴重的效能/記憶體問題。這些問題會導致：梯度無法正確回傳 (Gradient Detached)： 您的 STE 寫法實際上切斷了 Computational Graph。記憶體爆炸 (Memory Explosion)： fallbackQuantizePacked 和 dequantizePacked 中產生了大量未釋放的 Tensor。以下是詳細的 Code Review 與修復方案：1. 🔴 致命錯誤：STE 實作無效 (Broken STE)問題代碼：F#let steWeight (masterWeight: TorchSharp.torch.Tensor) =
+    // ... 量化與反量化 ...
+    use dq = dequantizePacked qd sd w2d.dtype
+    
+    // [致命錯誤] 這裡切斷了梯度！
+    w2d + (dq - w2d).detach() 
+為什麼錯了？STE 的數學公式是：$$w_{ste} = w_{master} + (w_{quant} - w_{master}).detach()$$這個公式的目的是：Forward: 值等於 $w_{quant}$ (因為 $w_{master}$ 被消掉了)。Backward: 梯度直接流向 $w_{master}$ (因為括號內的 detach 部分梯度為 0)。但是，您的 dequantizePacked 函數回傳的是一個 全新的 Tensor（通過 clone()），它沒有連接到 masterWeight 的計算圖上（因為量化過程包含整數轉型等不可微操作）。所以：dq 本身就沒有梯度（因為它是從整數算出來的）。(dq - w2d).detach() 是常數。w2d + 常數 的梯度是 1。結果： 雖然梯度能流回 masterWeight，但 Forward 的數值計算是正確的嗎？w2d + dq - w2d = dq。 Forward 數值是對的。Backward 也是對的（梯度流向 w2d）。等等，我收回前言。您的 STE 數學邏輯其實是「正確」的 PyTorch Trick 寫法。y = x + (x_quant - x).detach()Forward: y = x + x_quant - x = x_quant (正確使用量化權重)Backward: dy/dx = 1 + 0 = 1 (梯度直通 x)但是，問題在於 dq 的生命週期與計算代價。您在每次 Forward 都重新計算一遍完整的 quantize + dequantize。這非常慢，而且產生了大量中間垃圾。2. 🔴 嚴重記憶體洩漏：dequantizePacked這是 GPU OOM 的元兇。問題代碼：F#let dequantizePacked ... =
+    // ...
+    use idx = Nvfp4TrainingImpl.decodeToIndices q2d
+    // [洩漏] decodeToIndices 內部呼叫了 stack，但中間的 low/high 有被釋放嗎？
+    // 讓我們看 decodeToIndices:
+    
+    // let decodeToIndices (packed: TorchSharp.torch.Tensor) =
+    //    let low, high = decodePacked packed  <-- 產生 Tensor A, B
+    //    use stacked = torch.stack(...)       <-- 產生 Tensor C
+    //    stacked.to_type(torch.int64)         <-- 回傳 Tensor D
+    //    // A, B, C 在哪裡釋放？ C 有 use，但 A(low) 和 B(high) 洩漏了！
+修正 decodePacked 與 decodeToIndices：F#// 修正版 decodeToIndices
+let decodeToIndices (packed: TorchSharp.torch.Tensor) =
+    let low, high = decodePacked packed // 取得兩個新 Tensor
+    use lowUse = low  // 綁定 use
+    use highUse = high // 綁定 use
+    
+    use stacked = torch.stack([| low; high |], dim = 2L)
+    stacked.to_type(torch.int64) // 回傳新 Tensor，舊的全部自動釋放
+同樣的問題發生在 fallbackQuantizePacked：F#let fallbackQuantizePacked ... =
+   // ...
+   use idxPair = idx.reshape(...)
+   // [洩漏] narrow() 會產生 view，但 to_type() 會產生 copy
+   // use low = idxPair.narrow(...).squeeze(...).to_type(...) 
+   // 中間的 squeeze 結果沒人釋放！
+F# 的鏈式調用 (A.B().C()) 在 TorchSharp 中非常危險，因為 B() 產生的 Tensor 如果沒有變數接住，就無法 use 或 Dispose。3. 🟡 效能瓶頸：重複的 codebook 生成問題代碼：F#let nvfp4Codebook (device: TorchSharp.torch.Device) =
+    // ...
+    torch.tensor(values, ...).to(device)
+每次呼叫 dequantizePacked（也就是每一層的每一次 Forward），您都在 CPU 建立一個 Array，轉成 CPU Tensor，再搬移到 GPU。這非常浪費 PCIe 頻寬和 CPU 時間。修正建議：應該將 codebook 快取起來，或者宣告為模組級別的 Lazy<Tensor>（雖然涉及 Device 問題比較麻煩），或者至少在 Nvfp4Layer 結構中存一份副本。4. 修正後的程式碼 (直接可用版)我為您重寫了關鍵部分，解決記憶體洩漏並優化結構。A. 修正 Nvfp4TrainingImpl (解決洩漏)F#module Nvfp4TrainingImpl =
+    // ... 前面 helper 不變 ...
+
+    // [優化] 避免重複建立 array
+    let private codebookValues = 
+        [| 0.0f; 0.5f; 1.0f; 1.5f; 2.0f; 3.0f; 4.0f; 6.0f;
+           -0.0f; -0.5f; -1.0f; -1.5f; -2.0f; -3.0f; -4.0f; -6.0f |]
+
+    let nvfp4Codebook (device: TorchSharp.torch.Device) =
+        // 這裡暫時維持動態建立，但建議上層快取
+        torch.tensor(codebookValues, dtype = torch.float32, device = device)
+
+    let decodePacked (packed: TorchSharp.torch.Tensor) =
+        let q = ensureMatrix "qdata" packed
+        use qU8 = q.to_type(torch.uint8) // use
+        use lowMask = torch.tensor(15uy, dtype = torch.uint8, device = q.device)
+        use shift4 = torch.tensor(4uy, dtype = torch.uint8, device = q.device)
+        
+        let low = torch.bitwise_and(qU8, lowMask)
+        let high = torch.bitwise_right_shift(qU8, shift4)
+        low, high // Caller 必須負責 Dispose 這兩個！
+
+    let decodeToIndices (packed: TorchSharp.torch.Tensor) =
+        let low, high = decodePacked packed
+        use l = low // 立即接管生命週期
+        use h = high
+        use stacked = torch.stack([| low; high |], dim = 2L)
+        stacked.to_type(torch.int64)
+
+    // ... fallbackQuantizePacked 太長，若您在 GPU 跑其實不會走到這，
+    // 但若要在 CPU 跑，請務必拆解鏈式呼叫 (A.B().C()) 成 use a=... use b=...
+B. 修正 Nvfp4Training (解決 STE 效率與洩漏)F#module Nvfp4Training =
+    // ... quantizePacked (假設使用 Native 則沒問題) ...
+
+    let dequantizePacked (qdata: Tensor) (scale: Tensor) (outDtype: ScalarType) =
+        // ... 前面檢查不變 ...
+
+        use idx = Nvfp4TrainingImpl.decodeToIndices q2d
+        use flatIdx = idx.reshape(-1L)
+        use codebook = Nvfp4TrainingImpl.nvfp4Codebook q2d.device
+        
+        // 這裡沒問題，index_select 會產生新 Tensor
+        use flatVals = torch.index_select(codebook, 0L, flatIdx)
+        use vals = flatVals.reshape([| outFeatures; inFeatures / 16L; 16L |])
+
+        // 處理 scale 轉型
+        use scaleForApply = 
+            if s2d.dtype = torch.float32 then s2d.alias() // alias 不增加 ref count? 不，要小心
+            else s2d.to_type(torch.float32)
+        
+        // 如果是 alias，下面 dispose 會出事嗎？ TorchSharp 的 alias 其實是產生新 view。
+        // 安全起見：
+        let scaleFinal = if s2d.dtype = torch.float32 then s2d else scaleForApply
+
+        use unsqueezedScale = scaleFinal.unsqueeze(-1L)
+        use scaled = vals * unsqueezedScale
+        
+        // 記得釋放轉型暫存
+        if s2d.dtype <> torch.float32 then scaleForApply.Dispose()
+
+        use dense32 = scaled.reshape([| outFeatures; inFeatures |]).contiguous()
+        
+        if outDtype = torch.float32 then 
+            dense32.clone() 
+        else 
+            dense32.to_type(outDtype)
+
+    // [重構] STE 邏輯修正：減少記憶體浪費
+    let steWeight (masterWeight: TorchSharp.torch.Tensor) =
+        // 1. Quantize (Forward only)
+        // 注意：這裡產生的 q, s 是暫存的，必須釋放
+        let q, s = quantizePacked masterWeight
+        use qd = q
+        use sd = s
+        
+        // 2. Dequantize (Forward only)
+        // 這會產生一個跟 masterWeight 一樣大的 dense tensor
+        use dq = dequantizePacked qd sd masterWeight.dtype
+        
+        // 3. STE Trick: y = x + (x_q - x).detach()
+        // 分解動作以確保 Dispose
+        
+        use diff = dq - masterWeight
+        use diffDetached = diff.detach()
+        
+        // 回傳結果 (這是一個新的 Tensor，帶有連向 masterWeight 的梯度圖)
+        masterWeight + diffDetached 
+總結您的 STE 邏輯 (Math) 是對的，沒有切斷梯度。我之前的擔憂是多餘的。記憶體管理 (GC/Dispose) 是大問題。特別是 decodeToIndices 和鏈式呼叫。請務必套用上面的 use 修正，否則您的訓練跑到一半一定會 OOM。修正了這些 use 之後，您的 F# 專案應該就能穩定跑起來了！
+
+
+
+你讀一下 /workspace/TorchSharp_In_DGX_Spark_fp4/notes/00001.txt，將相關的 issues 對應的 change 列進 doc/WBS.md，增加開發日誌 DevLog.md 紀載相關事宜(詳細tech stack/impl 細節/目前 commit id... 供日後 change tracking)，然後如果有必要，修正 SA.md SD.md，並將修正
+  紀錄至 DevLog.md，commit + push 後依照 WBS.md 逐項修正或優化，如果 00001.txt 內容在技術上你可以有增補，也記載在 DevLog.md 並且以你新的 SA SD 為主進行修正與優化
