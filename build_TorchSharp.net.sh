@@ -2,7 +2,7 @@
 set -e
 
 # 1. Environment Setup
-export REPO_ROOT="/workspace/TorchSharp_In_DGX_Spark"
+export REPO_ROOT="/workspace/TorchSharp_In_DGX_Spark_fp4"
 export PATH=$PATH:/usr/local/bin/dotnet-sdk
 
 # Ensure we use the local SDK

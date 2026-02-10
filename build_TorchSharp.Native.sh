@@ -2,7 +2,7 @@
 set -e
 
 # 1. Environment Setup
-export REPO_ROOT="/workspace/TorchSharp_In_DGX_Spark"
+export REPO_ROOT="/workspace/TorchSharp_In_DGX_Spark_fp4"
 export TORCH_CMAKE_PATH="/usr/local/lib/python3.12/dist-packages/torch/share/cmake/Torch"
 
 echo "Building Native LibTorchSharp..."
