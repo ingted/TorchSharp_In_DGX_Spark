@@ -42,7 +42,7 @@
 | WBS-24 | Refactor fallback quantization chain into explicit `use` lifecycles | `Nvfp4Training.fs` | UC-05/UC-06 | TC-18 | Done |
 | WBS-25 | Add NVFP4 codebook cache to reduce repeated allocation overhead | `Nvfp4Training.fs` | UC-05 | TC-18 | Done |
 | WBS-26 | Add stress test for repeated `quantize/dequantize/linearSte` calls | `TestCase.fsx` | UC-05/UC-07 | TC-20 (new) | Done |
-| WBS-27 | Track external integration issue: downstream trainer loss-temp disposal | `doc/DevLog.md` | UC-07 | N/A (external) | Pending |
+| WBS-27 | Fix cross-repo integration issue: downstream trainer loss-temp disposal and contract sync | `doc/SD.md`, `doc/DevLog.md`, downstream `Trainer.fs` | UC-07 | Integration validation (`scripts/Tests.fsx` in downstream repo) | Done |
 
 ---
 
@@ -88,4 +88,4 @@
 | WBS-24 | 重構 fallback quantization 鏈式呼叫為顯式 `use` 生命週期 | `Nvfp4Training.fs` | UC-05/UC-06 | TC-18 | Done |
 | WBS-25 | 加入 NVFP4 codebook 快取，降低重複配置成本 | `Nvfp4Training.fs` | UC-05 | TC-18 | Done |
 | WBS-26 | 新增重複呼叫壓力測試（`quantize/dequantize/linearSte`） | `TestCase.fsx` | UC-05/UC-07 | TC-20（新增） | Done |
-| WBS-27 | 追蹤外部整合議題：下游 trainer loss 暫存釋放 | `doc/DevLog.md` | UC-07 | N/A（外部） | Pending |
+| WBS-27 | 修正跨 repo 整合議題：下游 trainer loss 暫存釋放並同步契約 | `doc/SD.md`、`doc/DevLog.md`、下游 `Trainer.fs` | UC-07 | 整合驗證（下游 repo `scripts/Tests.fsx`） | Done |

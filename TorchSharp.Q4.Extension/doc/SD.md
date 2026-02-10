@@ -56,6 +56,13 @@ Lifecycle rules:
 - Avoid chained temporary-heavy expressions when fallback path is expected to run repeatedly.
 - Device/dtype conversion branches must dispose temporary converted tensors.
 
+#### 3.6 Cross-Repo Integration Contract (Training Apps)
+- Downstream training apps that consume `Nvfp4Training.linearSte` must enforce explicit tensor lifecycle control in loss computation helpers.
+- Minimum rule:
+  - Any `target.to_type(...)` temporary must be disposed when not reused.
+  - Any intermediate tensor from arithmetic/activation (`diff`, `abs`, etc.) must use explicit scoped disposal.
+- This requirement is part of extension-level reliability because integration leaks invalidate lifecycle assumptions established in Layer C utility code.
+
 #### 3.4 Unified Memory Contract
 - `Disabled`: no UM specialization
 - `PreferUnified`: use UM if available, otherwise fallback
@@ -78,6 +85,7 @@ Lifecycle rules:
 - Unified Memory policy not satisfied
 - Forced backend override conflicts with real capability
 - Tensor lifecycle regression in repeated training calls (wrapper GC lag vs native pressure)
+- Cross-repo lifecycle mismatch (extension fixed, downstream training loop still leaking temporaries)
 
 Diagnostics must include at least:
 - `format`, `backend`, `computePath`, `fallbackReason`, `nativeLoadState`
@@ -92,6 +100,7 @@ Diagnostics must include at least:
 - Scripts: `UseCase.fsx`, `TestCase.fsx`
 - Project: `TorchSharp.Q4.Extension` F# skeleton + `.fsi` signatures
 - Includes NVFP4 training utility and issue-driven hardening tasks (WBS-21+)
+- Includes cross-repo lifecycle contract and integration fix tracking (WBS-27)
 
 ---
 
@@ -151,6 +160,13 @@ Diagnostics must include at least:
 - fallback 路徑避免過多鏈式臨時物件。
 - device/dtype 轉換分支建立的暫存 tensor 必須顯式釋放。
 
+### 3.6 跨 Repo 整合契約（Training Apps）
+- 下游訓練應用若使用 `Nvfp4Training.linearSte`，其 loss 計算輔助函式必須採用顯式 tensor 生命週期管理。
+- 最低要求：
+  - `target.to_type(...)` 產生的暫存 tensor，在不重用時必須釋放。
+  - 算術/活化中間值（`diff`、`abs` 等）必須在局部作用域內顯式釋放。
+- 這是 extension 層可靠性的一部分；若下游洩漏，會破壞 Layer C 已建立的生命週期假設。
+
 ### 3.4 Unified Memory Contract
 - `Disabled`: 不做 UM 特化
 - `PreferUnified`: 可用則使用 UM，不可用可 fallback
@@ -173,6 +189,7 @@ Diagnostics must include at least:
 - Unified Memory policy 不滿足
 - Backend 強制覆寫與實際能力衝突
 - 重複訓練呼叫下的 tensor 生命周期回歸（wrapper GC 落後導致 native 壓力）
+- 跨 repo 生命周期不一致（extension 已修，downstream training loop 仍有暫存洩漏）
 
 Diagnostics 必須至少包含:
 - `format`, `backend`, `computePath`, `fallbackReason`, `nativeLoadState`
@@ -187,3 +204,4 @@ Diagnostics 必須至少包含:
 - 腳本: `UseCase.fsx`, `TestCase.fsx`
 - 專案: `TorchSharp.Q4.Extension` F# skeleton + `.fsi` 簽名
 - 包含 NVFP4 training utility 與 issue 驅動強化任務（WBS-21+）
+- 包含跨 repo 生命週期契約與整合修正追蹤（WBS-27）

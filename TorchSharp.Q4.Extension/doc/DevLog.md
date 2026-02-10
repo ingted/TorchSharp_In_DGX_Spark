@@ -59,7 +59,30 @@
     - environment-level CUDA warning during test startup (`cudaGetDeviceCount` OS call issue), does not affect CPU test pass.
 - 2026-02-10T02:06:00Z
   - External issue tracking kept as `WBS-27`:
-    - downstream trainer `scalarLoss` temp disposal belongs to app repo, not extension repo.
+  - downstream trainer `scalarLoss` temp disposal belongs to app repo, not extension repo.
+- 2026-02-10T02:29:00Z
+  - WBS-27 closed by cross-repo integration fix.
+  - Downstream repo fix:
+    - Repo: `/workspace/Qwen3-4B-Instruct-2507-TorchSharp.fs`
+    - Commit: `1bbb8d4`
+    - Change: `Trainer.fs` `scalarLoss` now disposes temporary tensors explicitly (`target.to_type` temp + `diff` + `abs` intermediate).
+  - Validation (downstream):
+    - `dotnet build -c Release` (pass)
+    - `dotnet fsi scripts/Tests.fsx` (all pass)
+  - Extension docs synced:
+    - `doc/SD.md` added cross-repo lifecycle integration contract.
+    - `doc/WBS.md` WBS-27 status changed to `Done`.
+
+### Line-by-Line Mapping (notes/00001)
+| Note Topic | Action | Status | Evidence |
+|---|---|---|---|
+| `decodeToIndices` low/high lifetime risk | Added explicit scoped disposal | Done | `ac45cab` |
+| `dequantizePacked` temporary branch pressure | Added explicit conversion-branch lifecycle control | Done | `ac45cab` |
+| `steWeight` intermediate temp clarity | Added explicit `diff` / `diffDetached` scoped disposal | Done | `ac45cab` |
+| fallback quantization chain temporary pressure | Refactored chained ops into explicit scoped temps | Done | `ac45cab` |
+| codebook recreation overhead | Added per-device codebook cache | Done | `ac45cab` |
+| missing repeated-call lifecycle regression test | Added `TC-20` stress test | Done | `ac45cab` |
+| downstream `scalarLoss` temporary leak risk | Patched downstream trainer and validated tests | Done | `1bbb8d4` |
 
 ---
 
@@ -121,4 +144,27 @@
     - 測試啟動時有環境層 CUDA 警告（`cudaGetDeviceCount` OS call 問題），不影響 CPU 測試通過。
 - 2026-02-10T02:06:00Z
   - 外部議題維持追蹤（`WBS-27`）：
-    - 下游 trainer `scalarLoss` 暫存釋放屬 app repo，不在 extension repo 實作。
+  - 下游 trainer `scalarLoss` 暫存釋放屬 app repo，不在 extension repo 實作。
+- 2026-02-10T02:29:00Z
+  - WBS-27 已完成（跨 repo 整合修正）。
+  - 下游 repo 修正：
+    - Repo：`/workspace/Qwen3-4B-Instruct-2507-TorchSharp.fs`
+    - Commit：`1bbb8d4`
+    - 變更：`Trainer.fs` 的 `scalarLoss` 顯式釋放暫存 tensor（`target.to_type` 暫存 + `diff` + `abs` 中間值）。
+  - 下游驗證：
+    - `dotnet build -c Release` 通過
+    - `dotnet fsi scripts/Tests.fsx` 全通過
+  - extension 文檔同步：
+    - `doc/SD.md` 新增跨 repo 生命周期整合契約。
+    - `doc/WBS.md` 將 WBS-27 改為 `Done`。
+
+### 逐條對照（notes/00001）
+| 00001 主題 | 措施 | 狀態 | 證據 |
+|---|---|---|---|
+| `decodeToIndices` low/high 生命周期風險 | 補顯式釋放 | Done | `ac45cab` |
+| `dequantizePacked` 暫存分支壓力 | 補顯式轉型分支生命周期控制 | Done | `ac45cab` |
+| `steWeight` 中間值清晰化 | 補 `diff` / `diffDetached` 顯式釋放 | Done | `ac45cab` |
+| fallback quantization 鏈式暫存壓力 | 拆分鏈式為顯式 scoped 暫存 | Done | `ac45cab` |
+| codebook 重複建立成本 | 新增 per-device 快取 | Done | `ac45cab` |
+| 缺少重複呼叫生命周期回歸測試 | 新增 `TC-20` 壓測 | Done | `ac45cab` |
+| 下游 `scalarLoss` 暫存洩漏風險 | 修正下游 trainer 並驗證測試 | Done | `1bbb8d4` |
