@@ -76,7 +76,7 @@ module Nvfp4TrainingImpl =
     use eps = torch.tensor(1e-6f, dtype = torch.float32, device = x2d.device)
     use scale = torch.maximum(absmax / 6.0, eps)
     use normalized = x3d / scale
-    use codebook = nvfp4Codebook x2d.device
+    let codebook = nvfp4Codebook x2d.device
     use normalized3d = normalized.unsqueeze(-1L)
     use diff = (normalized3d - codebook).abs()
     use idx = diff.argmin(-1L).to_type(torch.uint8)
