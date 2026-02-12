@@ -48,6 +48,7 @@
 | WBS-30 | Implement UM promotion policy in extension (`applyPolicy`/`applyMutablePolicy`) | `UnifiedMemory.fs`, `Q4Linear.fs` | UC-04/UC-07 | TC-07/TC-08/TC-13/TC-22 | Done |
 | WBS-31 | Extend test coverage for managed path | `TestCase.fsx` | UC-04/UC-07 | TC-21/TC-22 | Done |
 | WBS-32 | Zero-copy hardening for activation path (avoid per-forward implicit UM conversion) | `UnifiedMemory.fs`, `Q4Linear.fs` | UC-04/UC-05/UC-07 | TC-23 | Done |
+| WBS-33 | Remove dual residency + extra copy in UM path (Q4Linear source ownership + managed zero-copy prepare + UM CPU-load path) | `Q4Linear.fs`, `Backend.fs`, downstream `InferenceBridge.fs`, `nvfp4_native/libNVFP4.cpp` | UC-04/UC-05/UC-07 | Integration run (`run-training2.fsx`) + build validation | Done |
 
 ---
 
@@ -99,3 +100,4 @@
 | WBS-30 | 實作 extension 端 UM 升級策略（`applyPolicy`/`applyMutablePolicy`） | `UnifiedMemory.fs`、`Q4Linear.fs` | UC-04/UC-07 | TC-07/TC-08/TC-13/TC-22 | Done |
 | WBS-31 | 擴充 managed 路徑測試覆蓋 | `TestCase.fsx` | UC-04/UC-07 | TC-21/TC-22 | Done |
 | WBS-32 | Activation 路徑 zero-copy 強化（避免每次 forward 隱式 UM 轉換） | `UnifiedMemory.fs`、`Q4Linear.fs` | UC-04/UC-05/UC-07 | TC-23 | Done |
+| WBS-33 | 消除 UM 路徑雙份駐留與額外拷貝（Q4Linear source 所有權釋放 + managed zero-copy prepare + UM CPU 載入路徑） | `Q4Linear.fs`、`Backend.fs`、下游 `InferenceBridge.fs`、`nvfp4_native/libNVFP4.cpp` | UC-04/UC-05/UC-07 | 整合執行（`run-training2.fsx`）+ build 驗證 | Done |

@@ -270,3 +270,39 @@
 - 驗證：
   - `dotnet build -c Release TorchSharp.Q4.Extension.fsproj` 通過
   - `dotnet fsi TestCase.fsx` 通過（`TC-01..TC-23`）
+
+### 2026-02-12T21:05:00Z
+- Follow-up zero-copy/UM stability hardening for GB10 freeze reports:
+  - `Q4Linear.fs`
+    - after `PrepareWeight` success, release source bundle tensors (`Weight/Scale/Absmax/QuantMap`) to avoid dual residency.
+  - `Backend.fs`
+    - `Nvfp4KernelBackend.PrepareWeight` now uses zero-copy-first on managed tensors (skip unconditional clone on managed inputs).
+  - downstream `Qwen3-4B-Instruct-2507-TorchSharp.fs/InferenceBridge.fs`
+    - UM-enabled path now loads weight/raw tensors on CPU first, then promotes once via UM policy (avoid CPU->CUDA then managed re-copy chain).
+  - `nvfp4_native/libNVFP4.cpp`
+    - `NVFP4_to_managed` now:
+      - short-circuits if input pointer is already managed.
+      - supports CPU input without intermediate `src.to(cuda)` hop (host copy into managed allocation, then CUDA-view tensor).
+- Technical rationale:
+  - eliminate avoidable copy/migration pressure and reduce memory amplification during no-KVC full prompt replay.
+- Verification:
+  - rebuild `libNVFP4.so`.
+  - `dotnet build -c Release` for Q4 extension and downstream F# Qwen project.
+
+### 2026-02-12T21:05:00Z（中文）
+- 針對 GB10 當機回報，補強 zero-copy/UM 穩定性：
+  - `Q4Linear.fs`
+    - `PrepareWeight` 成功後立即釋放 source bundle（`Weight/Scale/Absmax/QuantMap`），避免 source+prepared 雙份長駐。
+  - `Backend.fs`
+    - `Nvfp4KernelBackend.PrepareWeight` 對 managed tensor 改為 zero-copy 優先（不再對 managed 輸入無條件 clone）。
+  - 下游 `Qwen3-4B-Instruct-2507-TorchSharp.fs/InferenceBridge.fs`
+    - UM 啟用時，權重/raw tensor 先用 CPU 載入，再由 UM policy 一次升級（避免 CPU->CUDA 再 managed 重複拷貝）。
+  - `nvfp4_native/libNVFP4.cpp`
+    - `NVFP4_to_managed`：
+      - 若輸入已是 managed pointer，直接短路返回。
+      - 支援 CPU tensor 直升 managed（不再先 `src.to(cuda)`）。
+- 技術目的：
+  - 降低可避免的 copy/migration 壓力，減少 no-KVC full prompt replay 的記憶體放大與不穩定。
+- 驗證：
+  - 重編 `libNVFP4.so`。
+  - Q4 extension 與下游 F# Qwen 專案 `dotnet build -c Release` 通過。

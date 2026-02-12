@@ -401,7 +401,15 @@ module BackendImpl =
 
         let qOnTarget = if q.device.ToString() = device then q else q.``to``(device)
         let scaleOnTarget = if scale.device.ToString() = device then scale else scale.``to``(device)
-        let packed = qOnTarget.detach().contiguous().clone()
+        let packedDetached =
+          let detached = qOnTarget.detach()
+          if detached.is_contiguous() then detached else detached.contiguous()
+        // Zero-copy first for UM tensors: avoid extra clone if storage is already managed.
+        let packed =
+          if NativeInterop.isManagedTensor packedDetached then
+            packedDetached
+          else
+            packedDetached.clone()
         let scaleBlocked = toBlockedScale (scaleOnTarget.detach().contiguous())
         new PreparedNvfp4KernelWeight(device, sprintf "%s:%s" name schema.WeightKey, packed, scaleBlocked, inFeatures, outFeatures)
         :> IQ4PreparedWeight

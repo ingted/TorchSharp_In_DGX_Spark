@@ -1,5 +1,5 @@
 #if INTERACTIVE
-#r "nuget: FAkka.TorchSharp.DGX, 26.1.0-py3.6"
+#r "nuget: FAkka.TorchSharp.DGX, 26.1.0-py3.7"
 #r "./bin/Release/net10.0/TorchSharp.Q4.Extension.dll"
 #endif
 

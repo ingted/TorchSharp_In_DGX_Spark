@@ -162,7 +162,7 @@ module NativeInteropImpl =
       if String.IsNullOrWhiteSpace(home) then
         None
       else
-        let p = Path.Combine(home, ".nuget/packages/fakka.torchsharp.dgx/26.1.0-py3.6/runtimes/linux-arm64/native/libLibTorchSharp.so")
+        let p = Path.Combine(home, ".nuget/packages/fakka.torchsharp.dgx/26.1.0-py3.7/runtimes/linux-arm64/native/libLibTorchSharp.so")
         if File.Exists(p) then Some p else None
     match nugetCandidate with
     | Some p -> p :: defaultCandidates

@@ -86,6 +86,10 @@ Managed path details (2026-02-12):
 - `Q4Linear.Forward`:
   - uses `applyInputPolicy` for activation path (PreferUnified is zero-copy-first).
   - disposes temporary input tensor only when a new tensor is actually allocated (e.g., RequireUnified conversion).
+- `Q4Linear`:
+  - releases source bundle tensors (`Weight/Scale/Absmax/QuantMap`) after successful `PrepareWeight` to avoid dual long-lived residency (source + prepared).
+- `Nvfp4KernelBackend.PrepareWeight`:
+  - follows zero-copy-first for managed tensors and avoids unconditional clone on managed inputs.
 
 ### 4. F# and C# Interaction Strategy
 
@@ -209,6 +213,8 @@ managed 路徑細節（2026-02-12）：
 - `Q4Linear.Forward`：
   - activation 路徑改用 `applyInputPolicy`（PreferUnified 採 zero-copy 優先）。
   - 僅在真的產生新 tensor（例如 RequireUnified 轉換）時，forward 結束後顯式釋放暫存輸入。
+  - `Q4Linear` 在 `PrepareWeight` 成功後，釋放 source bundle（`Weight/Scale/Absmax/QuantMap`），避免 source+prepared 雙份長駐。
+  - `Nvfp4KernelBackend.PrepareWeight` 對 managed tensor 採 zero-copy 優先，不再無條件 clone。
 
 ## 4. F# 與 C# 的互動策略
 

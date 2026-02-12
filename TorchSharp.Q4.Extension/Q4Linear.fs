@@ -6,6 +6,7 @@ open TorchSharp
 type Q4Linear(config: Q4SessionConfig, schema: Q4Schema, tensors: Q4TensorBundle, ?backend: IQ4Backend) =
   let resolvedBackend = defaultArg backend (Backend.create schema config)
   let mutable preparedWeight : IQ4PreparedWeight option = None
+  let mutable sourceDisposed = false
   let mutable disposed = false
 
   let resolveTargetDevice () =
@@ -28,6 +29,12 @@ type Q4Linear(config: Q4SessionConfig, schema: Q4Schema, tensors: Q4TensorBundle
         }
       let prepared = resolvedBackend.PrepareWeight(schema, bundle, resolveTargetDevice())
       preparedWeight <- Some prepared
+      if not sourceDisposed then
+        sourceDisposed <- true
+        tensors.Weight.Dispose()
+        tensors.Scale |> Option.iter (fun t -> t.Dispose())
+        tensors.Absmax |> Option.iter (fun t -> t.Dispose())
+        tensors.QuantMap |> Option.iter (fun t -> t.Dispose())
       prepared
 
   member _.BackendName : string =
@@ -50,6 +57,12 @@ type Q4Linear(config: Q4SessionConfig, schema: Q4Schema, tensors: Q4TensorBundle
     member _.Dispose() =
       if not disposed then
         disposed <- true
+        if not sourceDisposed then
+          sourceDisposed <- true
+          tensors.Weight.Dispose()
+          tensors.Scale |> Option.iter (fun t -> t.Dispose())
+          tensors.Absmax |> Option.iter (fun t -> t.Dispose())
+          tensors.QuantMap |> Option.iter (fun t -> t.Dispose())
         match preparedWeight with
         | Some p ->
           p.Dispose()
