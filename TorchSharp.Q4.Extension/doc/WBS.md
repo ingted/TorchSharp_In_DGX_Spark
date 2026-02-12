@@ -44,6 +44,9 @@
 | WBS-26 | Add stress test for repeated `quantize/dequantize/linearSte` calls | `TestCase.fsx` | UC-05/UC-07 | TC-20 (new) | Done |
 | WBS-27 | Fix cross-repo integration issue: downstream trainer loss-temp disposal and contract sync | `doc/SD.md`, `doc/DevLog.md`, downstream `Trainer.fs` | UC-07 | Integration validation (`scripts/Tests.fsx` in downstream repo) | Done |
 | WBS-28 | Align NVFP4 native interop to direct `libNVFP4.so` exports (`NVFP4_quantize`, `NVFP4_scaled_mm`) | `NativeInterop.fs`, `doc/SD.md`, `doc/DevLog.md` | UC-02/UC-03/UC-05 | TC-02/TC-05/TC-09 | Done |
+| WBS-29 | Add managed-memory native exports (`NVFP4_to_managed`, capability/probe/prefetch) | `nvfp4_native/libNVFP4.cpp`, `NativeInterop.fs` | UC-03/UC-04/UC-07 | TC-21/TC-22 | Done |
+| WBS-30 | Implement UM promotion policy in extension (`applyPolicy`/`applyMutablePolicy`) | `UnifiedMemory.fs`, `Q4Linear.fs` | UC-04/UC-07 | TC-07/TC-08/TC-13/TC-22 | Done |
+| WBS-31 | Extend test coverage for managed path | `TestCase.fsx` | UC-04/UC-07 | TC-21/TC-22 | Done |
 
 ---
 
@@ -91,3 +94,6 @@
 | WBS-26 | 新增重複呼叫壓力測試（`quantize/dequantize/linearSte`） | `TestCase.fsx` | UC-05/UC-07 | TC-20（新增） | Done |
 | WBS-27 | 修正跨 repo 整合議題：下游 trainer loss 暫存釋放並同步契約 | `doc/SD.md`、`doc/DevLog.md`、下游 `Trainer.fs` | UC-07 | 整合驗證（下游 repo `scripts/Tests.fsx`） | Done |
 | WBS-28 | 對齊 NVFP4 native interop 為直接 `libNVFP4.so` 匯出（`NVFP4_quantize`、`NVFP4_scaled_mm`） | `NativeInterop.fs`、`doc/SD.md`、`doc/DevLog.md` | UC-02/UC-03/UC-05 | TC-02/TC-05/TC-09 | Done |
+| WBS-29 | 新增 managed-memory native 匯出（`NVFP4_to_managed`、能力探測、prefetch） | `nvfp4_native/libNVFP4.cpp`、`NativeInterop.fs` | UC-03/UC-04/UC-07 | TC-21/TC-22 | Done |
+| WBS-30 | 實作 extension 端 UM 升級策略（`applyPolicy`/`applyMutablePolicy`） | `UnifiedMemory.fs`、`Q4Linear.fs` | UC-04/UC-07 | TC-07/TC-08/TC-13/TC-22 | Done |
+| WBS-31 | 擴充 managed 路徑測試覆蓋 | `TestCase.fsx` | UC-04/UC-07 | TC-21/TC-22 | Done |

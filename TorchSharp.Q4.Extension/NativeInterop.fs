@@ -43,8 +43,32 @@ module NativeInteropImpl =
   [<DllImport(Nvfp4LibAbsolute)>]
   extern void NVFP4_empty_cache()
 
+  [<DllImport(Nvfp4LibAbsolute)>]
+  extern int32 NVFP4_can_use_managed()
+
+  [<DllImport(Nvfp4LibAbsolute)>]
+  extern int32 NVFP4_is_managed_tensor(nativeint tensor)
+
+  [<DllImport(Nvfp4LibAbsolute)>]
+  extern nativeint NVFP4_to_managed(nativeint input, int32 prefetchDevice, int32 readMostly)
+
+  [<DllImport(Nvfp4LibAbsolute)>]
+  extern void NVFP4_managed_prefetch(nativeint tensor, int32 deviceIndex)
+
   let emptyNvfp4CacheRaw () =
     NVFP4_empty_cache()
+
+  let canUseManagedRaw () =
+    NVFP4_can_use_managed() <> 0
+
+  let isManagedTensorRaw (tensor: torch.Tensor) =
+    if isNull tensor then
+      false
+    else
+      NVFP4_is_managed_tensor(tensor.Handle) <> 0
+
+  let prefetchManagedRaw (tensor: torch.Tensor) (deviceIndex: int) =
+    NVFP4_managed_prefetch(tensor.Handle, int32 deviceIndex)
 
   let configurePaths (nvfp4Path: string option) (nf4Path: string option) =
     nvfp4OverridePath <- nvfp4Path
@@ -157,6 +181,18 @@ module NativeInteropImpl =
       | Some ctor ->
         ctor.Invoke([| box (IntPtr(int64 handle)); box true |]) :?> torch.Tensor
 
+  let toManagedRaw (input: torch.Tensor) (prefetchDevice: int option) (readMostly: bool) =
+    let prefetch = defaultArg prefetchDevice -1
+    let outHandle = NVFP4_to_managed(input.Handle, int32 prefetch, if readMostly then 1 else 0)
+    if outHandle = 0n then
+      torch.CheckForErrors()
+      raise (InvalidOperationException("NVFP4_to_managed returned null tensor pointer."))
+    torch.CheckForErrors()
+    let output = fromTensorPointer outHandle
+    if isNull output then
+      raise (InvalidOperationException("NVFP4_to_managed returned invalid tensor pointer."))
+    output
+
   let fp4QuantizeRaw (input: torch.Tensor) : torch.Tensor * torch.Tensor =
     let mutable qdataHandle = 0n
     let mutable scaleHandle = 0n
@@ -232,6 +268,11 @@ module NativeInterop =
   let hasNvfp4EmptyCache () : bool =
     NativeInteropImpl.tryGetExportFromCandidates (NativeInteropImpl.nvfp4Candidates ()) "NVFP4_empty_cache"
 
+  let hasManagedSupport () : bool =
+    NativeInteropImpl.tryGetExportFromCandidates (NativeInteropImpl.nvfp4Candidates ()) "NVFP4_to_managed"
+    && NativeInteropImpl.tryGetExportFromCandidates (NativeInteropImpl.nvfp4Candidates ()) "NVFP4_is_managed_tensor"
+    && NativeInteropImpl.tryGetExportFromCandidates (NativeInteropImpl.nvfp4Candidates ()) "NVFP4_can_use_managed"
+
   let fp4Quantize (input: torch.Tensor) : torch.Tensor * torch.Tensor =
     if not (hasLibTorchFp4Quantize()) then
       raise (InvalidOperationException("NVFP4 export NVFP4_quantize is unavailable."))
@@ -255,3 +296,24 @@ module NativeInterop =
     else
       NativeInteropImpl.emptyNvfp4CacheRaw()
       true
+
+  let canUseManaged () : bool =
+    if not (hasManagedSupport()) then
+      false
+    else
+      NativeInteropImpl.canUseManagedRaw()
+
+  let isManagedTensor (tensor: torch.Tensor) : bool =
+    if not (hasManagedSupport()) then
+      false
+    else
+      NativeInteropImpl.isManagedTensorRaw tensor
+
+  let toManagedTensor (tensor: torch.Tensor) (prefetchDevice: int option) (readMostly: bool) : torch.Tensor =
+    if not (hasManagedSupport()) then
+      raise (InvalidOperationException("NVFP4 managed tensor exports are unavailable."))
+    NativeInteropImpl.toManagedRaw tensor prefetchDevice readMostly
+
+  let prefetchManagedTensor (tensor: torch.Tensor) (deviceIndex: int) : unit =
+    if hasManagedSupport() then
+      NativeInteropImpl.prefetchManagedRaw tensor deviceIndex

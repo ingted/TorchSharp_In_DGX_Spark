@@ -527,12 +527,16 @@ module Backend =
     let nvfp4 = NativeInterop.loadNvfp4()
     let hasFp4Quantize = NativeInterop.hasLibTorchFp4Quantize()
     let hasScaledMm = NativeInterop.hasLibTorchScaledMm()
+    let hasManaged = NativeInterop.hasManagedSupport()
+    let canManaged = NativeInterop.canUseManaged()
     let nativeState =
       [
         renderLoadResult "nf4" nf4
         renderLoadResult "nvfp4" nvfp4
         renderBoolState "libtorch_fp4_quantize" hasFp4Quantize
         renderBoolState "libtorch_scaled_mm" hasScaledMm
+        renderBoolState "managed_export" hasManaged
+        renderBoolState "managed_capable" canManaged
       ]
       |> String.concat "; "
 

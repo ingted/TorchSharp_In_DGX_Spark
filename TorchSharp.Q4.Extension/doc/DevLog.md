@@ -198,3 +198,43 @@
 - 下游整合驗證：
   - `dotnet build -c Release /workspace/Qwen3-4B-Instruct-2507-TorchSharp.fs/...` 通過。
   - `run-training.fsx` 同 prompt 測試已回復可讀、語意合理英文句子。
+
+### 2026-02-12T19:30:00Z
+- UM path expansion completed (managed allocator integration).
+- Native bridge updates (`/workspace/nvfp4_native/libNVFP4.cpp`):
+  - added `NVFP4_can_use_managed`
+  - added `NVFP4_is_managed_tensor`
+  - added `NVFP4_to_managed`
+  - added `NVFP4_managed_prefetch`
+  - rebuilt `/workspace/nvfp4_native/libNVFP4.so`
+- Extension updates:
+  - `NativeInterop.fs/.fsi` expose managed capability/probe/conversion APIs.
+  - `UnifiedMemory.fs/.fsi` now promotes tensors to managed memory when policy allows.
+  - `Q4Linear.fs` disposes policy-created temporary input tensors after forward.
+  - `Backend.diagnose` includes managed export/capability state.
+- Validation:
+  - `dotnet build -c Release TorchSharp.Q4.Extension.fsproj` pass
+  - `dotnet fsi TestCase.fsx` pass (TC-01..TC-22)
+  - New tests:
+    - `TC-21`: direct managed conversion path
+    - `TC-22`: `applyMutablePolicy` promotion under `TS_Q4_DISABLE_UM=0`
+
+### 2026-02-12T19:30:00Z（中文）
+- 完成 UM 路徑擴展（managed allocator 整合）。
+- Native bridge 更新（`/workspace/nvfp4_native/libNVFP4.cpp`）：
+  - 新增 `NVFP4_can_use_managed`
+  - 新增 `NVFP4_is_managed_tensor`
+  - 新增 `NVFP4_to_managed`
+  - 新增 `NVFP4_managed_prefetch`
+  - 已重編 `/workspace/nvfp4_native/libNVFP4.so`
+- Extension 端更新：
+  - `NativeInterop.fs/.fsi` 暴露 managed 能力探測與轉換 API。
+  - `UnifiedMemory.fs/.fsi` 在策略允許下會將 tensor 升級為 managed memory。
+  - `Q4Linear.fs` 在 forward 後釋放 policy 產生的暫存輸入 tensor。
+  - `Backend.diagnose` 新增 managed export/capability 狀態。
+- 驗證：
+  - `dotnet build -c Release TorchSharp.Q4.Extension.fsproj` 通過
+  - `dotnet fsi TestCase.fsx` 通過（TC-01..TC-22）
+  - 新增測試：
+    - `TC-21`：直接 managed 轉換路徑
+    - `TC-22`：`TS_Q4_DISABLE_UM=0` 下 `applyMutablePolicy` 升級驗證

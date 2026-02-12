@@ -19,6 +19,11 @@ module NativeInterop =
   val hasLibTorchFp4Quantize : unit -> bool
   val hasLibTorchScaledMm : unit -> bool
   val hasNvfp4EmptyCache : unit -> bool
+  val hasManagedSupport : unit -> bool
+  val canUseManaged : unit -> bool
+  val isManagedTensor : tensor:TorchSharp.torch.Tensor -> bool
+  val toManagedTensor : tensor:TorchSharp.torch.Tensor -> prefetchDevice:int option -> readMostly:bool -> TorchSharp.torch.Tensor
+  val prefetchManagedTensor : tensor:TorchSharp.torch.Tensor -> deviceIndex:int -> unit
   val fp4Quantize : input:TorchSharp.torch.Tensor -> TorchSharp.torch.Tensor * TorchSharp.torch.Tensor
   val scaledMmFp4 : mat1:TorchSharp.torch.Tensor -> mat2:TorchSharp.torch.Tensor -> scaleA:TorchSharp.torch.Tensor -> scaleB:TorchSharp.torch.Tensor -> outDtype:TorchSharp.torch.ScalarType -> TorchSharp.torch.Tensor
   val tryEmptyNvfp4Cache : unit -> bool

@@ -33,6 +33,15 @@
 - RA-03: Add repeat-call stress test to catch regression early.
 - RA-04: Record every change with commit IDs in `DevLog.md`.
 
+### 6. UM Expansion (2026-02-12)
+- SA-06: Baseline UM policy existed, but did not allocate managed tensors explicitly.
+- SA-07: `TS_Q4_DISABLE_UM=0` should not only toggle policy; it must drive real managed-memory tensor creation for reusable model tensors.
+- SA-08: Need native capability probes (`can_use_managed`, pointer-type check) to avoid silent pseudo-UM behavior.
+- Required outcomes:
+  - RA-05: Add native managed allocator bridge and expose it in `NativeInterop`.
+  - RA-06: Promote mutable model tensors to managed memory in UM-enabled policy path.
+  - RA-07: Add deterministic tests for managed conversion path.
+
 ---
 
 ## 中文版
@@ -67,3 +76,12 @@
 - RA-02：保持既有行為與梯度正確性（`linearSte` 必須維持對 master weight 的梯度路徑）。
 - RA-03：新增 repeat-call 壓力測試以提前發現回歸。
 - RA-04：所有變更與 commit ID 必須紀錄於 `DevLog.md`。
+
+## 6. UM 擴展（2026-02-12）
+- SA-06：原本已有 UM policy，但沒有真正用 managed allocator 建 tensor。
+- SA-07：`TS_Q4_DISABLE_UM=0` 不該只是策略開關，需驅動可重用模型 tensor 的 managed-memory 建立。
+- SA-08：需補 native 能力探測（`can_use_managed`、pointer 類型檢查），避免偽 UM 行為。
+- 目標補充：
+  - RA-05：新增 native managed allocator bridge，並在 `NativeInterop` 暴露。
+  - RA-06：在 UM 啟用策略路徑中，將 mutable model tensors 升級為 managed memory。
+  - RA-07：補齊 managed conversion 的可重現測試。

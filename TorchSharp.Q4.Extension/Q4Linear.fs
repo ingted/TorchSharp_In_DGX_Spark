@@ -38,8 +38,13 @@ type Q4Linear(config: Q4SessionConfig, schema: Q4Schema, tensors: Q4TensorBundle
       raise (ObjectDisposedException("Q4Linear"))
     let prepared = ensurePrepared ()
     let policyAppliedInput = UnifiedMemory.applyPolicy config.UnifiedMemoryPolicy input
+    let ownsInput = not (Object.ReferenceEquals(policyAppliedInput, input))
     let targetOutDtype = defaultArg outDtype policyAppliedInput.dtype
-    resolvedBackend.Linear(policyAppliedInput, prepared, targetOutDtype)
+    try
+      resolvedBackend.Linear(policyAppliedInput, prepared, targetOutDtype)
+    finally
+      if ownsInput then
+        policyAppliedInput.Dispose()
 
   interface IDisposable with
     member _.Dispose() =

@@ -110,6 +110,7 @@ let tc05 () =
   match r with
   | Error _ -> ()
   | Ok backend -> failwithf "TC-05 failed: expected NF4 kernel error but got backend '%s'" backend.Name
+  NativeInterop.configure(None, None)
 
 let tc06 () =
   let cfg = mkCfg Q4ComputePath.DequantMatmulOnly (Some "dequant-matmul")
@@ -378,6 +379,38 @@ let tc20 () =
     ensure (Single.IsFinite(gradNormValue)) "TC-20 failed: grad norm not finite"
     w.grad.zero_() |> ignore
 
+let tc21 () =
+  let cuda = torch.cuda_is_available()
+  let hasManaged = NativeInterop.hasManagedSupport()
+  let canManaged = NativeInterop.canUseManaged()
+  if not (cuda && hasManaged && canManaged) then
+    printfn "[TC-21] skipped: managed support unavailable (cuda=%b hasManaged=%b canManaged=%b)." cuda hasManaged canManaged
+  else
+    use x = torch.randn([| 8L; 64L |], dtype = torch.float16, device = "cuda")
+    use managed = NativeInterop.toManagedTensor x (Some 0) false
+    ensure (managed.shape = x.shape) "TC-21 failed: shape mismatch"
+    ensure (managed.dtype = x.dtype) "TC-21 failed: dtype mismatch"
+    ensure (NativeInterop.isManagedTensor managed) "TC-21 failed: tensor is not managed memory"
+    use diff = (managed.to_type(torch.float32) - x.to_type(torch.float32)).abs().mean()
+    let err = diff.cpu().item<float32>()
+    ensure (Single.IsFinite(err) && err < 1e-6f) (sprintf "TC-21 failed: data mismatch (%f)" err)
+
+let tc22 () =
+  let cuda = torch.cuda_is_available()
+  let hasManaged = NativeInterop.hasManagedSupport()
+  let canManaged = NativeInterop.canUseManaged()
+  if not (cuda && hasManaged && canManaged) then
+    printfn "[TC-22] skipped: managed support unavailable (cuda=%b hasManaged=%b canManaged=%b)." cuda hasManaged canManaged
+  else
+    let old = Environment.GetEnvironmentVariable("TS_Q4_DISABLE_UM")
+    Environment.SetEnvironmentVariable("TS_Q4_DISABLE_UM", "0")
+    try
+      use w = torch.randn([| 16L; 64L |], dtype = torch.float16, device = "cuda")
+      use promoted = UnifiedMemory.applyMutablePolicy UnifiedMemoryPolicy.PreferUnified w
+      ensure (NativeInterop.isManagedTensor promoted) "TC-22 failed: applyMutablePolicy did not promote to managed tensor"
+    finally
+      Environment.SetEnvironmentVariable("TS_Q4_DISABLE_UM", old)
+
 let cases =
   [
     "TC-01", tc01
@@ -400,6 +433,8 @@ let cases =
     "TC-18", tc18
     "TC-19", tc19
     "TC-20", tc20
+    "TC-21", tc21
+    "TC-22", tc22
   ]
 
 printfn "[TC] running %d tests" cases.Length

@@ -73,6 +73,19 @@ Lifecycle rules:
 - `PreferUnified`: use UM if available, otherwise fallback
 - `RequireUnified`: fail when unavailable
 
+Managed path details (2026-02-12):
+- Native exports in `libNVFP4.so`:
+  - `NVFP4_can_use_managed`
+  - `NVFP4_is_managed_tensor`
+  - `NVFP4_to_managed`
+  - `NVFP4_managed_prefetch`
+- `UnifiedMemory.applyPolicy`:
+  - promotes tensors to managed memory when UM is available and policy allows.
+- `UnifiedMemory.applyMutablePolicy`:
+  - clone+detach first (actor-safe), then promote to managed memory.
+- `Q4Linear.Forward`:
+  - disposes temporary input tensor when policy promotion returns a newly allocated tensor.
+
 ### 4. F# and C# Interaction Strategy
 
 #### 4.1 Preferred Strategy (project target)
@@ -181,6 +194,19 @@ Diagnostics must include at least:
 - `Disabled`: 不做 UM 特化
 - `PreferUnified`: 可用則使用 UM，不可用可 fallback
 - `RequireUnified`: 不可用即 fail
+
+managed 路徑細節（2026-02-12）：
+- `libNVFP4.so` 新增匯出：
+  - `NVFP4_can_use_managed`
+  - `NVFP4_is_managed_tensor`
+  - `NVFP4_to_managed`
+  - `NVFP4_managed_prefetch`
+- `UnifiedMemory.applyPolicy`：
+  - 在 UM 可用且策略允許時，將 tensor 升級為 managed memory。
+- `UnifiedMemory.applyMutablePolicy`：
+  - 先 `clone+detach`（維持 actor-safe），再升級為 managed memory。
+- `Q4Linear.Forward`：
+  - 若 policy 造成輸入被升級為新 tensor，forward 結束時顯式釋放暫存輸入。
 
 ## 4. F# 與 C# 的互動策略
 
