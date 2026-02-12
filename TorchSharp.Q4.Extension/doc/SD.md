@@ -63,6 +63,11 @@ Lifecycle rules:
   - Any intermediate tensor from arithmetic/activation (`diff`, `abs`, etc.) must use explicit scoped disposal.
 - This requirement is part of extension-level reliability because integration leaks invalidate lifecycle assumptions established in Layer C utility code.
 
+#### 3.7 NVFP4 Native Interop Contract
+- NVFP4 kernel path must call `libNVFP4.so` exports directly (`NVFP4_quantize`, `NVFP4_scaled_mm`) as the source-of-truth runtime path.
+- `LibTorchSharp` THS FP4 wrappers are treated as optional compatibility probes only, not the canonical execution path.
+- Backend capability check for NVFP4 kernel must validate NVFP4 export visibility from configured NVFP4 library candidates.
+
 #### 3.4 Unified Memory Contract
 - `Disabled`: no UM specialization
 - `PreferUnified`: use UM if available, otherwise fallback
@@ -166,6 +171,11 @@ Diagnostics must include at least:
   - `target.to_type(...)` 產生的暫存 tensor，在不重用時必須釋放。
   - 算術/活化中間值（`diff`、`abs` 等）必須在局部作用域內顯式釋放。
 - 這是 extension 層可靠性的一部分；若下游洩漏，會破壞 Layer C 已建立的生命週期假設。
+
+### 3.7 NVFP4 Native Interop 契約
+- NVFP4 kernel 路徑必須直接呼叫 `libNVFP4.so` 匯出（`NVFP4_quantize`、`NVFP4_scaled_mm`），作為實際運行主路徑。
+- `LibTorchSharp` 的 THS FP4 包裝僅作為相容性探測，不作為 canonical 執行路徑。
+- NVFP4 kernel backend 的能力檢查，必須檢驗已配置 NVFP4 library 候選路徑上的匯出可見性。
 
 ### 3.4 Unified Memory Contract
 - `Disabled`: 不做 UM 特化

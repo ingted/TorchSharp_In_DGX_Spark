@@ -168,3 +168,33 @@
 | codebook 重複建立成本 | 新增 per-device 快取 | Done | `ac45cab` |
 | 缺少重複呼叫生命周期回歸測試 | 新增 `TC-20` 壓測 | Done | `ac45cab` |
 | 下游 `scalarLoss` 暫存洩漏風險 | 修正下游 trainer 並驗證測試 | Done | `1bbb8d4` |
+
+### 2026-02-12T02:10:00Z
+- Root cause found for NVFP4 inference quality drift in downstream pure F# path:
+  - downstream `run-training.fsx` using `TorchSharp.Q4.Extension` produced gibberish while `run2.fsx` stayed coherent.
+  - interop path mismatch confirmed:
+    - old Q4 extension path: `LibTorchSharp` THS wrappers (`THSFP4_quantize`, `THSTensor_scaled_mm`)
+    - known-good path: direct `libNVFP4.so` (`NVFP4_quantize`, `NVFP4_scaled_mm`)
+- Implemented in `TorchSharp.Q4.Extension/NativeInterop.fs`:
+  - switched FP4 quantize/scaled-mm calls to direct NVFP4 exports.
+  - backend capability probe now checks NVFP4 export symbols on NVFP4 library candidates.
+  - diagnostics/error text updated from THS/LibTorch wording to NVFP4 export wording.
+- Integration validation (downstream):
+  - `dotnet build -c Release /workspace/Qwen3-4B-Instruct-2507-TorchSharp.fs/...` pass
+  - `dotnet fsi /workspace/fsann/alpha/runner-arm64-fp4/run-training.fsx --max-tokens 32 --temp 0 --top-p 1 --seed 123 --prompt "Write one short sentence about UFO and you."`
+    - output recovered to coherent English sentence quality.
+
+### 2026-02-12T02:10:00Z（中文）
+- 已定位下游 pure F# 推論語意劣化的根因：
+  - 下游 `run-training.fsx`（走 `TorchSharp.Q4.Extension`）輸出亂碼；
+  - `run2.fsx`（既有路徑）輸出正常。
+  - 差異在 native interop 路徑：
+    - 舊版 Q4 extension：走 `LibTorchSharp` THS 包裝（`THSFP4_quantize`、`THSTensor_scaled_mm`）
+    - 可用路徑：直接走 `libNVFP4.so`（`NVFP4_quantize`、`NVFP4_scaled_mm`）
+- 已在 `TorchSharp.Q4.Extension/NativeInterop.fs` 實作修正：
+  - FP4 量化與 scaled-mm 改為直接呼叫 NVFP4 匯出。
+  - backend 能力探測改為檢查 NVFP4 library 候選路徑上的匯出符號。
+  - 診斷/錯誤訊息同步更新為 NVFP4 匯出語意。
+- 下游整合驗證：
+  - `dotnet build -c Release /workspace/Qwen3-4B-Instruct-2507-TorchSharp.fs/...` 通過。
+  - `run-training.fsx` 同 prompt 測試已回復可讀、語意合理英文句子。

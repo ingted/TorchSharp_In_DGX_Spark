@@ -43,6 +43,7 @@
 | WBS-25 | Add NVFP4 codebook cache to reduce repeated allocation overhead | `Nvfp4Training.fs` | UC-05 | TC-18 | Done |
 | WBS-26 | Add stress test for repeated `quantize/dequantize/linearSte` calls | `TestCase.fsx` | UC-05/UC-07 | TC-20 (new) | Done |
 | WBS-27 | Fix cross-repo integration issue: downstream trainer loss-temp disposal and contract sync | `doc/SD.md`, `doc/DevLog.md`, downstream `Trainer.fs` | UC-07 | Integration validation (`scripts/Tests.fsx` in downstream repo) | Done |
+| WBS-28 | Align NVFP4 native interop to direct `libNVFP4.so` exports (`NVFP4_quantize`, `NVFP4_scaled_mm`) | `NativeInterop.fs`, `doc/SD.md`, `doc/DevLog.md` | UC-02/UC-03/UC-05 | TC-02/TC-05/TC-09 | Done |
 
 ---
 
@@ -89,3 +90,4 @@
 | WBS-25 | 加入 NVFP4 codebook 快取，降低重複配置成本 | `Nvfp4Training.fs` | UC-05 | TC-18 | Done |
 | WBS-26 | 新增重複呼叫壓力測試（`quantize/dequantize/linearSte`） | `TestCase.fsx` | UC-05/UC-07 | TC-20（新增） | Done |
 | WBS-27 | 修正跨 repo 整合議題：下游 trainer loss 暫存釋放並同步契約 | `doc/SD.md`、`doc/DevLog.md`、下游 `Trainer.fs` | UC-07 | 整合驗證（下游 repo `scripts/Tests.fsx`） | Done |
+| WBS-28 | 對齊 NVFP4 native interop 為直接 `libNVFP4.so` 匯出（`NVFP4_quantize`、`NVFP4_scaled_mm`） | `NativeInterop.fs`、`doc/SD.md`、`doc/DevLog.md` | UC-02/UC-03/UC-05 | TC-02/TC-05/TC-09 | Done |

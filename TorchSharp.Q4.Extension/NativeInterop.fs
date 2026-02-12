@@ -20,6 +20,9 @@ module private NativeInteropImpl =
   [<Literal>]
   let private LibTorchSharp = "LibTorchSharp"
 
+  [<Literal>]
+  let private Nvfp4LibAbsolute = "/workspace/nvfp4_native/libNVFP4.so"
+
   let private tensorCtor : ConstructorInfo option Lazy =
     lazy
       let t = typeof<torch.Tensor>
@@ -31,11 +34,11 @@ module private NativeInteropImpl =
       )
       |> Option.ofObj
 
-  [<DllImport(LibTorchSharp)>]
-  extern void private THSFP4_quantize(nativeint input, nativeint& qdata, nativeint& scale)
+  [<DllImport(Nvfp4LibAbsolute)>]
+  extern void private NVFP4_quantize(nativeint input, nativeint& qdata, nativeint& scale)
 
-  [<DllImport(LibTorchSharp)>]
-  extern nativeint private THSTensor_scaled_mm(nativeint mat1, nativeint mat2, nativeint scaleA, nativeint scaleB, sbyte outDtype)
+  [<DllImport(Nvfp4LibAbsolute)>]
+  extern nativeint private NVFP4_scaled_mm(nativeint mat1, nativeint mat2, nativeint scaleA, nativeint scaleB, sbyte outDtype)
 
   let configurePaths (nvfp4Path: string option) (nf4Path: string option) =
     nvfp4OverridePath <- nvfp4Path
@@ -95,6 +98,27 @@ module private NativeInteropImpl =
     let candidates = candidatePaths nf4OverridePath "NF4_LIB_PATH" [ "libbitsandbytes.so"; "libNF4.so" ]
     loadFirst candidates
 
+  let tryGetExportFromCandidates (candidates: string list) (symbolName: string) : bool =
+    candidates
+    |> List.exists (fun candidate ->
+      try
+        let mutable handle = IntPtr.Zero
+        if not (NativeLibrary.TryLoad(candidate, &handle)) then
+          false
+        else
+          let mutable symbol = IntPtr.Zero
+          let ok = NativeLibrary.TryGetExport(handle, symbolName, &symbol)
+          NativeLibrary.Free(handle)
+          ok
+      with _ ->
+        false)
+
+  let nvfp4Candidates () =
+    candidatePaths
+      nvfp4OverridePath
+      "NVFP4_LIB_PATH"
+      [ "/workspace/nvfp4_native/libNVFP4.so"; "libNVFP4.so" ]
+
   let private libTorchSharpCandidates () =
     let baseDir = AppContext.BaseDirectory
     let defaultCandidates =
@@ -115,19 +139,7 @@ module private NativeInteropImpl =
     | None -> defaultCandidates
 
   let tryGetExport (symbolName: string) : bool =
-    libTorchSharpCandidates ()
-    |> List.exists (fun candidate ->
-      try
-        let mutable handle = IntPtr.Zero
-        if not (NativeLibrary.TryLoad(candidate, &handle)) then
-          false
-        else
-          let mutable symbol = IntPtr.Zero
-          let ok = NativeLibrary.TryGetExport(handle, symbolName, &symbol)
-          NativeLibrary.Free(handle)
-          ok
-      with _ ->
-        false)
+    tryGetExportFromCandidates (libTorchSharpCandidates ()) symbolName
 
   let fromTensorPointer (handle: nativeint) : torch.Tensor =
     if handle = 0n then
@@ -142,14 +154,14 @@ module private NativeInteropImpl =
   let fp4QuantizeRaw (input: torch.Tensor) : torch.Tensor * torch.Tensor =
     let mutable qdataHandle = 0n
     let mutable scaleHandle = 0n
-    THSFP4_quantize(input.Handle, &qdataHandle, &scaleHandle)
+    NVFP4_quantize(input.Handle, &qdataHandle, &scaleHandle)
     torch.CheckForErrors()
 
     let qdata = fromTensorPointer qdataHandle
     let scale = fromTensorPointer scaleHandle
 
     if isNull qdata || isNull scale then
-      raise (InvalidOperationException("THSFP4_quantize returned null tensor pointer."))
+      raise (InvalidOperationException("NVFP4_quantize returned null tensor pointer."))
 
     qdata, scale
 
@@ -161,17 +173,17 @@ module private NativeInteropImpl =
     (outDtype: torch.ScalarType)
     : torch.Tensor
     =
-    let outHandle = THSTensor_scaled_mm(mat1.Handle, mat2.Handle, scaleA.Handle, scaleB.Handle, sbyte outDtype)
+    let outHandle = NVFP4_scaled_mm(mat1.Handle, mat2.Handle, scaleA.Handle, scaleB.Handle, sbyte outDtype)
 
     if outHandle = 0n then
       torch.CheckForErrors()
-      raise (InvalidOperationException("THSTensor_scaled_mm returned null tensor pointer."))
+      raise (InvalidOperationException("NVFP4_scaled_mm returned null tensor pointer."))
 
     torch.CheckForErrors()
 
     let output = fromTensorPointer outHandle
     if isNull output then
-      raise (InvalidOperationException("THSTensor_scaled_mm returned invalid tensor pointer."))
+      raise (InvalidOperationException("NVFP4_scaled_mm returned invalid tensor pointer."))
 
     output
 
@@ -206,14 +218,14 @@ module NativeInterop =
     (loadNf4 ()).Loaded
 
   let hasLibTorchFp4Quantize () : bool =
-    NativeInteropImpl.tryGetExport "THSFP4_quantize"
+    NativeInteropImpl.tryGetExportFromCandidates (NativeInteropImpl.nvfp4Candidates ()) "NVFP4_quantize"
 
   let hasLibTorchScaledMm () : bool =
-    NativeInteropImpl.tryGetExport "THSTensor_scaled_mm"
+    NativeInteropImpl.tryGetExportFromCandidates (NativeInteropImpl.nvfp4Candidates ()) "NVFP4_scaled_mm"
 
   let fp4Quantize (input: torch.Tensor) : torch.Tensor * torch.Tensor =
     if not (hasLibTorchFp4Quantize()) then
-      raise (InvalidOperationException("LibTorchSharp export THSFP4_quantize is unavailable."))
+      raise (InvalidOperationException("NVFP4 export NVFP4_quantize is unavailable."))
     NativeInteropImpl.fp4QuantizeRaw input
 
   let scaledMmFp4
@@ -225,5 +237,5 @@ module NativeInterop =
     : torch.Tensor
     =
     if not (hasLibTorchScaledMm()) then
-      raise (InvalidOperationException("LibTorchSharp export THSTensor_scaled_mm is unavailable."))
+      raise (InvalidOperationException("NVFP4 export NVFP4_scaled_mm is unavailable."))
     NativeInteropImpl.scaledMmRaw mat1 mat2 scaleA scaleB outDtype
