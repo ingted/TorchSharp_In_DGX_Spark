@@ -9,7 +9,7 @@ type Q4Session =
   abstract member Backend : IQ4Backend
   abstract member CreateLinear : tensors:Q4TensorBundle -> Q4Linear
 
-type private RuntimeSession(config: Q4SessionConfig, schema: Q4Schema, backend: IQ4Backend) =
+type RuntimeSession(config: Q4SessionConfig, schema: Q4Schema, backend: IQ4Backend) =
   interface Q4Session with
     member _.Config = config
     member _.Schema = schema

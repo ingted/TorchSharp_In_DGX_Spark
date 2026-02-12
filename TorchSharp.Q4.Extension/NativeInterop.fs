@@ -6,7 +6,7 @@ open System.Reflection
 open System.Runtime.InteropServices
 open TorchSharp
 
-module private NativeInteropImpl =
+module NativeInteropImpl =
   type NativeLoadResultInternal =
     {
       LibraryPath: string
@@ -14,16 +14,16 @@ module private NativeInteropImpl =
       Error: string option
     }
 
-  let mutable private nvfp4OverridePath : string option = None
-  let mutable private nf4OverridePath : string option = None
+  let mutable nvfp4OverridePath : string option = None
+  let mutable nf4OverridePath : string option = None
 
   [<Literal>]
-  let private LibTorchSharp = "LibTorchSharp"
+  let LibTorchSharp = "LibTorchSharp"
 
   [<Literal>]
-  let private Nvfp4LibAbsolute = "/workspace/nvfp4_native/libNVFP4.so"
+  let Nvfp4LibAbsolute = "/workspace/nvfp4_native/libNVFP4.so"
 
-  let private tensorCtor : ConstructorInfo option Lazy =
+  let tensorCtor : ConstructorInfo option Lazy =
     lazy
       let t = typeof<torch.Tensor>
       t.GetConstructor(
@@ -35,13 +35,13 @@ module private NativeInteropImpl =
       |> Option.ofObj
 
   [<DllImport(Nvfp4LibAbsolute)>]
-  extern void private NVFP4_quantize(nativeint input, nativeint& qdata, nativeint& scale)
+  extern void NVFP4_quantize(nativeint input, nativeint& qdata, nativeint& scale)
 
   [<DllImport(Nvfp4LibAbsolute)>]
-  extern nativeint private NVFP4_scaled_mm(nativeint mat1, nativeint mat2, nativeint scaleA, nativeint scaleB, sbyte outDtype)
+  extern nativeint NVFP4_scaled_mm(nativeint mat1, nativeint mat2, nativeint scaleA, nativeint scaleB, sbyte outDtype)
 
   [<DllImport(Nvfp4LibAbsolute)>]
-  extern void private NVFP4_empty_cache()
+  extern void NVFP4_empty_cache()
 
   let emptyNvfp4CacheRaw () =
     NVFP4_empty_cache()
@@ -125,7 +125,7 @@ module private NativeInteropImpl =
       "NVFP4_LIB_PATH"
       [ "/workspace/nvfp4_native/libNVFP4.so"; "libNVFP4.so" ]
 
-  let private libTorchSharpCandidates () =
+  let libTorchSharpCandidates () =
     let baseDir = AppContext.BaseDirectory
     let defaultCandidates =
       [
@@ -201,7 +201,7 @@ module NativeInterop =
       Error: string option
     }
 
-  let private toPublicResult (r: NativeInteropImpl.NativeLoadResultInternal) : NativeLoadResult =
+  let toPublicResult (r: NativeInteropImpl.NativeLoadResultInternal) : NativeLoadResult =
     {
       LibraryPath = r.LibraryPath
       Loaded = r.Loaded

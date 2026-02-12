@@ -4,7 +4,7 @@ open System
 open System.IO
 open TorchSharp
 
-module private UnifiedMemoryImpl =
+module UnifiedMemoryImpl =
   let envFlag (name: string) =
     Environment.GetEnvironmentVariable(name)
     |> Option.ofObj

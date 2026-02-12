@@ -5,10 +5,18 @@
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
+    <AssemblyName>TorchSharp.Q4.Extension</AssemblyName>
+    <RootNamespace>TorchSharp.Q4.Extension</RootNamespace>
     <PackageId>FAkka.TorchSharp.Q4.Extension</PackageId>
     <Version>0.1.0-alpha.1</Version>
     <Authors>FAkka</Authors>
     <Description>F#-first Q4 extension for TorchSharp with NF4/NVFP4 dispatch and optional native NVFP4 bridge.</Description>
+    <PackageProjectUrl>https://github.com/ingted/TorchSharp_In_DGX_Spark</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ingted/TorchSharp_In_DGX_Spark</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>TorchSharp;NVFP4;NF4;Q4;FSharp;CUDA;Blackwell</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
     <None Include="../../nvfp4_native/libNVFP4.so"
           Pack="true"
           PackagePath="runtimes/linux-arm64/native"

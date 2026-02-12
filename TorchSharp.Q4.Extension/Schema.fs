@@ -3,11 +3,11 @@ namespace TorchSharp.Q4.Extension
 open System
 open TorchSharp
 
-module private SchemaImpl =
-  let private hasSuffix (suffix: string) (key: string) =
+module SchemaImpl =
+  let hasSuffix (suffix: string) (key: string) =
     key.EndsWith(suffix, StringComparison.Ordinal)
 
-  let private prefixOf (suffix: string) (key: string) =
+  let prefixOf (suffix: string) (key: string) =
     key.Substring(0, key.Length - suffix.Length)
 
   let prefixesBySuffix (suffix: string) (keys: string list) =
@@ -19,7 +19,7 @@ module private SchemaImpl =
         None)
     |> Set.ofList
 
-  let private knownKeysFor (prefix: string) (format: QuantFormat) =
+  let knownKeysFor (prefix: string) (format: QuantFormat) =
     match format with
     | NF4 -> Set.ofList [ prefix + ".weight"; prefix + ".absmax"; prefix + ".quant_map" ]
     | NVFP4 -> Set.ofList [ prefix + ".qdata"; prefix + ".scale" ]

@@ -3,7 +3,7 @@ namespace TorchSharp.Q4.Extension
 open System
 open TorchSharp
 
-module private BackendImpl =
+module BackendImpl =
   [<Literal>]
   let Nf4KernelName = "nf4-kernel"
 
@@ -139,7 +139,7 @@ module private BackendImpl =
     | NF4 -> materializeNf4Weight bundle
     | NVFP4 -> materializeNvfp4Weight bundle
 
-  type private PreparedWeight(format: QuantFormat, device: string, debugName: string, denseWeight: TorchSharp.torch.Tensor) =
+  type PreparedWeight(format: QuantFormat, device: string, debugName: string, denseWeight: TorchSharp.torch.Tensor) =
     let mutable isDisposed = false
 
     member _.DenseWeight =
@@ -187,7 +187,7 @@ module private BackendImpl =
     use rearranged = blocks.reshape([| -1L; 4L; 32L; 4L |]).transpose(1L, 2L).reshape([| -1L; 32L; 16L |])
     rearranged.reshape([| -1L |]).contiguous()
 
-  let private runLinearFallback
+  let runLinearFallback
     (input: TorchSharp.torch.Tensor)
     (prepared: PreparedWeight)
     (outDtype: TorchSharp.torch.ScalarType)
@@ -214,7 +214,7 @@ module private BackendImpl =
     let output = torch.nn.functional.linear(inputForCompute, weightForCompute)
     if output.dtype = outDtype then output else output.to_type(outDtype)
 
-  type private PreparedNvfp4KernelWeight
+  type PreparedNvfp4KernelWeight
     (
       device: string,
       debugName: string,
@@ -249,7 +249,7 @@ module private BackendImpl =
           qweight.Dispose()
           scaleBlocked.Dispose()
 
-  let private runLinearNvfp4Kernel
+  let runLinearNvfp4Kernel
     (input: TorchSharp.torch.Tensor)
     (prepared: PreparedNvfp4KernelWeight)
     (outDtype: TorchSharp.torch.ScalarType)
@@ -301,7 +301,7 @@ module private BackendImpl =
       if shouldDisposeInput then
         inputOnDevice.Dispose()
 
-  type private RuntimeBackend
+  type RuntimeBackend
     (
       name: string,
       supportsFormat: QuantFormat -> bool,
@@ -336,7 +336,7 @@ module private BackendImpl =
         | _ ->
           raise (InvalidOperationException("Prepared weight type mismatch for backend implementation."))
 
-  type private Nvfp4KernelBackend(name: string) =
+  type Nvfp4KernelBackend(name: string) =
     interface IQ4Backend with
       member _.Name = name
 
@@ -479,10 +479,10 @@ module private BackendImpl =
       Ok [ kernelNameByFormat schema.Format; DequantFallbackName ]
 
 module Backend =
-  let private renderBoolState (name: string) (ok: bool) =
+  let renderBoolState (name: string) (ok: bool) =
     if ok then sprintf "%s=ok" name else sprintf "%s=fail" name
 
-  let private renderLoadResult (name: string) (r: NativeInterop.NativeLoadResult) =
+  let renderLoadResult (name: string) (r: NativeInterop.NativeLoadResult) =
     if r.Loaded then
       sprintf "%s=ok(%s)" name r.LibraryPath
     else

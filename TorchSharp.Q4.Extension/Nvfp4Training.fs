@@ -5,7 +5,7 @@ open System.Collections.Concurrent
 open TorchSharp
 
 module Nvfp4TrainingImpl =
-  let private codebookValues =
+  let codebookValues =
     [|
       0.0f; 0.5f; 1.0f; 1.5f
       2.0f; 3.0f; 4.0f; 6.0f
@@ -13,7 +13,7 @@ module Nvfp4TrainingImpl =
       -2.0f; -3.0f; -4.0f; -6.0f
     |]
 
-  let private codebookCache = ConcurrentDictionary<string, TorchSharp.torch.Tensor>(StringComparer.Ordinal)
+  let codebookCache = ConcurrentDictionary<string, TorchSharp.torch.Tensor>(StringComparer.Ordinal)
 
   let isFloatingDtype (dtype: TorchSharp.torch.ScalarType) =
     dtype = torch.float16
