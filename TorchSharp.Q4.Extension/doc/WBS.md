@@ -47,6 +47,7 @@
 | WBS-29 | Add managed-memory native exports (`NVFP4_to_managed`, capability/probe/prefetch) | `nvfp4_native/libNVFP4.cpp`, `NativeInterop.fs` | UC-03/UC-04/UC-07 | TC-21/TC-22 | Done |
 | WBS-30 | Implement UM promotion policy in extension (`applyPolicy`/`applyMutablePolicy`) | `UnifiedMemory.fs`, `Q4Linear.fs` | UC-04/UC-07 | TC-07/TC-08/TC-13/TC-22 | Done |
 | WBS-31 | Extend test coverage for managed path | `TestCase.fsx` | UC-04/UC-07 | TC-21/TC-22 | Done |
+| WBS-32 | Zero-copy hardening for activation path (avoid per-forward implicit UM conversion) | `UnifiedMemory.fs`, `Q4Linear.fs` | UC-04/UC-05/UC-07 | TC-23 | Done |
 
 ---
 
@@ -97,3 +98,4 @@
 | WBS-29 | 新增 managed-memory native 匯出（`NVFP4_to_managed`、能力探測、prefetch） | `nvfp4_native/libNVFP4.cpp`、`NativeInterop.fs` | UC-03/UC-04/UC-07 | TC-21/TC-22 | Done |
 | WBS-30 | 實作 extension 端 UM 升級策略（`applyPolicy`/`applyMutablePolicy`） | `UnifiedMemory.fs`、`Q4Linear.fs` | UC-04/UC-07 | TC-07/TC-08/TC-13/TC-22 | Done |
 | WBS-31 | 擴充 managed 路徑測試覆蓋 | `TestCase.fsx` | UC-04/UC-07 | TC-21/TC-22 | Done |
+| WBS-32 | Activation 路徑 zero-copy 強化（避免每次 forward 隱式 UM 轉換） | `UnifiedMemory.fs`、`Q4Linear.fs` | UC-04/UC-05/UC-07 | TC-23 | Done |

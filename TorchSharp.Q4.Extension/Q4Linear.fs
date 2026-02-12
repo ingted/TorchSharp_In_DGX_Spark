@@ -37,7 +37,7 @@ type Q4Linear(config: Q4SessionConfig, schema: Q4Schema, tensors: Q4TensorBundle
     if disposed then
       raise (ObjectDisposedException("Q4Linear"))
     let prepared = ensurePrepared ()
-    let policyAppliedInput = UnifiedMemory.applyPolicy config.UnifiedMemoryPolicy input
+    let policyAppliedInput = UnifiedMemory.applyInputPolicy config.UnifiedMemoryPolicy input
     let ownsInput = not (Object.ReferenceEquals(policyAppliedInput, input))
     let targetOutDtype = defaultArg outDtype policyAppliedInput.dtype
     try

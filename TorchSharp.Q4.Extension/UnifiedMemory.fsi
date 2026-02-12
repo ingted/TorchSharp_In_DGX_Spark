@@ -8,4 +8,5 @@ module UnifiedMemory =
   val isPolicyEnabledByEnv : unit -> bool
   val tryPromoteToManaged : tensor:TorchSharp.torch.Tensor -> readMostly:bool -> prefetchDevice:int option -> TorchSharp.torch.Tensor
   val applyPolicy : policy:UnifiedMemoryPolicy -> tensor:TorchSharp.torch.Tensor -> TorchSharp.torch.Tensor
+  val applyInputPolicy : policy:UnifiedMemoryPolicy -> tensor:TorchSharp.torch.Tensor -> TorchSharp.torch.Tensor
   val applyMutablePolicy : policy:UnifiedMemoryPolicy -> tensor:TorchSharp.torch.Tensor -> TorchSharp.torch.Tensor

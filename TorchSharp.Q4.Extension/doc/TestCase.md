@@ -119,6 +119,11 @@
 - Expected: `applyMutablePolicy PreferUnified` promotes tensor to managed memory
 - Related UC: `UC-04`, `UC-07`
 
+#### TC-23 PreferUnified activation zero-copy behavior
+- Preconditions: call input policy on activation tensor under `PreferUnified`
+- Expected: no implicit allocation/copy for non-managed activation input
+- Related UC: `UC-04`, `UC-05`, `UC-07`
+
 ---
 
 ## 中文版
@@ -239,3 +244,8 @@
 - 前置: 設定 `TS_Q4_DISABLE_UM=0` 後套用 mutable policy
 - 期望: `applyMutablePolicy PreferUnified` 能升級為 managed memory
 - 對應 UC: `UC-04`, `UC-07`
+
+### TC-23 PreferUnified activation zero-copy 行為
+- 前置: 在 `PreferUnified` 下對 activation tensor 套用 input policy
+- 期望: 對 non-managed activation 輸入不產生隱式配置/拷貝
+- 對應 UC: `UC-04`, `UC-05`, `UC-07`

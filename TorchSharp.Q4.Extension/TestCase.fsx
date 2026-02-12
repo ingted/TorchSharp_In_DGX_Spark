@@ -226,7 +226,12 @@ let tc12 () =
 let tc13 () =
   let t = torch.randn([| 2L; 2L |], dtype = torch.float16)
   let t2 = UnifiedMemory.applyMutablePolicy UnifiedMemoryPolicy.PreferUnified t
-  ensure (not (Object.ReferenceEquals(t, t2))) "TC-13 failed"
+  ensure (t2.shape = t.shape) "TC-13 failed"
+
+let tc23 () =
+  use t = torch.randn([| 4L; 4L |], dtype = torch.float16, device = if torch.cuda_is_available() then "cuda" else "cpu")
+  let t2 = UnifiedMemory.applyInputPolicy UnifiedMemoryPolicy.PreferUnified t
+  ensure (Object.ReferenceEquals(t, t2)) "TC-23 failed: PreferUnified input path should avoid implicit copy"
 
 let tc14 () =
   let cuda = torch.cuda_is_available()
@@ -435,6 +440,7 @@ let cases =
     "TC-20", tc20
     "TC-21", tc21
     "TC-22", tc22
+    "TC-23", tc23
   ]
 
 printfn "[TC] running %d tests" cases.Length

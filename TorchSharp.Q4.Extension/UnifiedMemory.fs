@@ -78,14 +78,27 @@ module UnifiedMemory =
       else
         raise (InvalidOperationException("Unified Memory required but managed conversion was not applied."))
 
+  let applyInputPolicy (policy: UnifiedMemoryPolicy) (tensor: TorchSharp.torch.Tensor) : TorchSharp.torch.Tensor =
+    match policy with
+    | Disabled -> tensor
+    | PreferUnified ->
+      // Zero-copy first: avoid implicit per-forward conversion for ephemeral activations.
+      // If already managed, optionally prefetch toward current CUDA device.
+      if isManagedTensor tensor && tensor.device_type = DeviceType.CUDA then
+        NativeInterop.prefetchManagedTensor tensor tensor.device_index
+      tensor
+    | RequireUnified ->
+      UnifiedMemoryImpl.requireSupported policy
+      let managed = tryPromoteToManaged tensor false None
+      if isManagedTensor managed then
+        managed
+      else
+        raise (InvalidOperationException("Unified Memory required but input tensor is not managed."))
+
   let applyMutablePolicy (policy: UnifiedMemoryPolicy) (tensor: TorchSharp.torch.Tensor) : TorchSharp.torch.Tensor =
     match policy with
     | Disabled -> tensor
     | PreferUnified
     | RequireUnified ->
-      // Mutable paths should not alias caller tensors; clone+detach first, then promote.
-      let cloned = tensor.clone().detach()
-      let promoted = applyPolicy policy cloned
-      if not (Object.ReferenceEquals(cloned, promoted)) then
-        cloned.Dispose()
-      promoted
+      // Zero-copy first: no implicit clone. Caller controls aliasing at a higher layer.
+      applyPolicy policy tensor

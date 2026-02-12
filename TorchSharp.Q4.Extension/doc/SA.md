@@ -37,10 +37,12 @@
 - SA-06: Baseline UM policy existed, but did not allocate managed tensors explicitly.
 - SA-07: `TS_Q4_DISABLE_UM=0` should not only toggle policy; it must drive real managed-memory tensor creation for reusable model tensors.
 - SA-08: Need native capability probes (`can_use_managed`, pointer-type check) to avoid silent pseudo-UM behavior.
+- SA-09: Avoid implicit per-forward activation conversion to managed memory under `PreferUnified`; this is a hidden copy anti-pattern on unified-memory systems.
 - Required outcomes:
   - RA-05: Add native managed allocator bridge and expose it in `NativeInterop`.
   - RA-06: Promote mutable model tensors to managed memory in UM-enabled policy path.
   - RA-07: Add deterministic tests for managed conversion path.
+  - RA-08: Add zero-copy-first activation policy and regression test.
 
 ---
 
@@ -81,7 +83,9 @@
 - SA-06：原本已有 UM policy，但沒有真正用 managed allocator 建 tensor。
 - SA-07：`TS_Q4_DISABLE_UM=0` 不該只是策略開關，需驅動可重用模型 tensor 的 managed-memory 建立。
 - SA-08：需補 native 能力探測（`can_use_managed`、pointer 類型檢查），避免偽 UM 行為。
+- SA-09：在 `PreferUnified` 下，必須避免每次 forward 將 activation 隱式轉 managed；這是 unified-memory 平台的隱藏拷貝反模式。
 - 目標補充：
   - RA-05：新增 native managed allocator bridge，並在 `NativeInterop` 暴露。
   - RA-06：在 UM 啟用策略路徑中，將 mutable model tensors 升級為 managed memory。
   - RA-07：補齊 managed conversion 的可重現測試。
+  - RA-08：補齊 activation zero-copy-first 策略與回歸測試。

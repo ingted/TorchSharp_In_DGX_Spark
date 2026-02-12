@@ -84,7 +84,8 @@ Managed path details (2026-02-12):
 - `UnifiedMemory.applyMutablePolicy`:
   - clone+detach first (actor-safe), then promote to managed memory.
 - `Q4Linear.Forward`:
-  - disposes temporary input tensor when policy promotion returns a newly allocated tensor.
+  - uses `applyInputPolicy` for activation path (PreferUnified is zero-copy-first).
+  - disposes temporary input tensor only when a new tensor is actually allocated (e.g., RequireUnified conversion).
 
 ### 4. F# and C# Interaction Strategy
 
@@ -206,7 +207,8 @@ managed 路徑細節（2026-02-12）：
 - `UnifiedMemory.applyMutablePolicy`：
   - 先 `clone+detach`（維持 actor-safe），再升級為 managed memory。
 - `Q4Linear.Forward`：
-  - 若 policy 造成輸入被升級為新 tensor，forward 結束時顯式釋放暫存輸入。
+  - activation 路徑改用 `applyInputPolicy`（PreferUnified 採 zero-copy 優先）。
+  - 僅在真的產生新 tensor（例如 RequireUnified 轉換）時，forward 結束後顯式釋放暫存輸入。
 
 ## 4. F# 與 C# 的互動策略
 

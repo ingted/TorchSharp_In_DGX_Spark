@@ -235,6 +235,38 @@
 - 驗證：
   - `dotnet build -c Release TorchSharp.Q4.Extension.fsproj` 通過
   - `dotnet fsi TestCase.fsx` 通過（TC-01..TC-22）
-  - 新增測試：
-    - `TC-21`：直接 managed 轉換路徑
-    - `TC-22`：`TS_Q4_DISABLE_UM=0` 下 `applyMutablePolicy` 升級驗證
+- 新增測試：
+  - `TC-21`：直接 managed 轉換路徑
+  - `TC-22`：`TS_Q4_DISABLE_UM=0` 下 `applyMutablePolicy` 升級驗證
+
+### 2026-02-12T20:40:00Z
+- Zero-copy audit triggered by `notes/00002.txt` and GB10 freeze report.
+- Key anti-pattern found in runtime path:
+  - `Q4Linear.Forward` used `UnifiedMemory.applyPolicy` on every input tensor.
+  - Under `PreferUnified`, this could invoke managed conversion repeatedly on ephemeral activations (per-layer/per-step), causing avoidable copies and migration pressure.
+- Fixes:
+  - Added `UnifiedMemory.applyInputPolicy` (zero-copy-first for activations).
+    - `PreferUnified`: no implicit conversion for non-managed input.
+    - `RequireUnified`: still enforces managed input.
+  - `Q4Linear.Forward` switched to `applyInputPolicy`.
+  - `applyMutablePolicy` changed to no implicit clone (remove hidden large copies).
+  - Added `TC-23` to assert `PreferUnified` input path does not allocate implicit copies.
+- Validation:
+  - `dotnet build -c Release TorchSharp.Q4.Extension.fsproj` pass
+  - `dotnet fsi TestCase.fsx` pass (`TC-01..TC-23`)
+
+### 2026-02-12T20:40:00Z（中文）
+- 依 `notes/00002.txt` 與 GB10 當機回報，完成 zero-copy 稽核。
+- 發現主要反模式：
+  - `Q4Linear.Forward` 每次都對輸入做 `UnifiedMemory.applyPolicy`。
+  - 在 `PreferUnified` 下，會對短生命週期 activation 重複做 managed 轉換，導致每層/每步額外拷貝與 migration 壓力。
+- 修正：
+  - 新增 `UnifiedMemory.applyInputPolicy`（activation 路徑 zero-copy 優先）：
+    - `PreferUnified`：不對 non-managed 輸入做隱式轉換。
+    - `RequireUnified`：仍強制 managed 條件。
+  - `Q4Linear.Forward` 改用 `applyInputPolicy`。
+  - `applyMutablePolicy` 改為不做隱式 clone（移除隱藏大拷貝）。
+  - 新增 `TC-23` 驗證 `PreferUnified` 輸入路徑不產生隱式複本。
+- 驗證：
+  - `dotnet build -c Release TorchSharp.Q4.Extension.fsproj` 通過
+  - `dotnet fsi TestCase.fsx` 通過（`TC-01..TC-23`）
