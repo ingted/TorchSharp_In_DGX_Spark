@@ -40,6 +40,12 @@ module private NativeInteropImpl =
   [<DllImport(Nvfp4LibAbsolute)>]
   extern nativeint private NVFP4_scaled_mm(nativeint mat1, nativeint mat2, nativeint scaleA, nativeint scaleB, sbyte outDtype)
 
+  [<DllImport(Nvfp4LibAbsolute)>]
+  extern void private NVFP4_empty_cache()
+
+  let emptyNvfp4CacheRaw () =
+    NVFP4_empty_cache()
+
   let configurePaths (nvfp4Path: string option) (nf4Path: string option) =
     nvfp4OverridePath <- nvfp4Path
     nf4OverridePath <- nf4Path
@@ -223,6 +229,9 @@ module NativeInterop =
   let hasLibTorchScaledMm () : bool =
     NativeInteropImpl.tryGetExportFromCandidates (NativeInteropImpl.nvfp4Candidates ()) "NVFP4_scaled_mm"
 
+  let hasNvfp4EmptyCache () : bool =
+    NativeInteropImpl.tryGetExportFromCandidates (NativeInteropImpl.nvfp4Candidates ()) "NVFP4_empty_cache"
+
   let fp4Quantize (input: torch.Tensor) : torch.Tensor * torch.Tensor =
     if not (hasLibTorchFp4Quantize()) then
       raise (InvalidOperationException("NVFP4 export NVFP4_quantize is unavailable."))
@@ -239,3 +248,10 @@ module NativeInterop =
     if not (hasLibTorchScaledMm()) then
       raise (InvalidOperationException("NVFP4 export NVFP4_scaled_mm is unavailable."))
     NativeInteropImpl.scaledMmRaw mat1 mat2 scaleA scaleB outDtype
+
+  let tryEmptyNvfp4Cache () : bool =
+    if not (hasNvfp4EmptyCache()) then
+      false
+    else
+      NativeInteropImpl.emptyNvfp4CacheRaw()
+      true

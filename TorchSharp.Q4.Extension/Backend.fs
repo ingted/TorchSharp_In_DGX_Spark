@@ -260,33 +260,46 @@ module private BackendImpl =
     let qweight = prepared.Qweight
     let scaleBlocked = prepared.ScaleBlocked
 
-    let inputOnDevice =
-      if sameDevice input qweight then input else input.``to``(qweight.device)
+    let inputOnDevice, shouldDisposeInput =
+      if sameDevice input qweight then
+        input, false
+      else
+        input.``to``(qweight.device), true
 
-    let inFeatures = inputOnDevice.shape.[inputOnDevice.shape.Length - 1]
-    if inFeatures <> prepared.InFeatures then
-      raise (
-        InvalidOperationException(
-          sprintf "NVFP4 kernel input feature size mismatch: input=%d, weight.in=%d." inFeatures prepared.InFeatures
+    try
+      let inFeatures = inputOnDevice.shape.[inputOnDevice.shape.Length - 1]
+      if inFeatures <> prepared.InFeatures then
+        raise (
+          InvalidOperationException(
+            sprintf "NVFP4 kernel input feature size mismatch: input=%d, weight.in=%d." inFeatures prepared.InFeatures
+          )
         )
-      )
 
-    if inFeatures % 16L <> 0L then
-      raise (InvalidOperationException(sprintf "NVFP4 kernel requires input feature size divisible by 16, got %d." inFeatures))
+      if inFeatures % 16L <> 0L then
+        raise (InvalidOperationException(sprintf "NVFP4 kernel requires input feature size divisible by 16, got %d." inFeatures))
 
-    let m = inputOnDevice.numel() / inFeatures
-    use input2d = inputOnDevice.reshape([| m; inFeatures |])
+      let m = inputOnDevice.numel() / inFeatures
+      use input2d = inputOnDevice.reshape([| m; inFeatures |])
 
-    let qInputRaw, inputScaleRaw = NativeInterop.fp4Quantize input2d
-    use qInput = qInputRaw
-    use inputScale = inputScaleRaw
-    use inputScaleBlocked = toBlockedScale inputScale
-    use out2d = NativeInterop.scaledMmFp4 qInput (qweight.t()) inputScaleBlocked scaleBlocked outDtype
+      let qInputRaw, inputScaleRaw = NativeInterop.fp4Quantize input2d
+      use qInput = qInputRaw
+      use inputScale = inputScaleRaw
+      use inputScaleBlocked = toBlockedScale inputScale
+      use qweightT = qweight.t()
+      use out2d = NativeInterop.scaledMmFp4 qInput qweightT inputScaleBlocked scaleBlocked outDtype
 
-    let outShape = inputOnDevice.shape |> Array.copy
-    outShape.[outShape.Length - 1] <- prepared.OutFeatures
-    let reshaped = out2d.reshape(outShape)
-    if reshaped.dtype = outDtype then reshaped else reshaped.to_type(outDtype)
+      let outShape = inputOnDevice.shape |> Array.copy
+      outShape.[outShape.Length - 1] <- prepared.OutFeatures
+      let reshaped = out2d.reshape(outShape)
+      if reshaped.dtype = outDtype then
+        reshaped
+      else
+        let converted = reshaped.to_type(outDtype)
+        reshaped.Dispose()
+        converted
+    finally
+      if shouldDisposeInput then
+        inputOnDevice.Dispose()
 
   type private RuntimeBackend
     (
