@@ -1,5 +1,5 @@
 #if INTERACTIVE
-#r "nuget: FAkka.TorchSharp.DGX, 26.1.0-py3.7"
+#r "nuget: FAkka.TorchSharp.DGX, 26.1.0-py3.9"
 // 預期未來改為編譯後 DLL 引用
 // #r "./bin/Debug/net10.0/TorchSharp.Q4.Extension.dll"
 #endif

@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FAkka.TorchSharp.DGX" Version="26.1.0-py3.7" />
+    <PackageReference Include="FAkka.TorchSharp.DGX" Version="26.1.0-py3.9" />
   </ItemGroup>
 
   <ItemGroup>

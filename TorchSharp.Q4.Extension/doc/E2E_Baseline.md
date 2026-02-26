@@ -9,7 +9,7 @@
 ### Environment
 - Date: 2026-02-09
 - Runtime: `.NET FSI`
-- Package: `FAkka.TorchSharp.DGX 26.1.0-py3.5`
+- Package: `FAkka.TorchSharp.DGX 26.1.0-py3.9`
 - Script: `TestCase.fsx`
 
 ### Commands
@@ -40,7 +40,7 @@ dotnet fsi TestCase.fsx
 ## 環境
 - 日期: 2026-02-09
 - Runtime: `.NET FSI`
-- 套件: `FAkka.TorchSharp.DGX 26.1.0-py3.5`
+- 套件: `FAkka.TorchSharp.DGX 26.1.0-py3.9`
 - 測試腳本: `TestCase.fsx`
 
 ## 指令
