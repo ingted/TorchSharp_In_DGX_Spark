@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TorchSharp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("0.105.2.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.105.2+f21dad26a98d5174ddf4ad8ec01d5c166159815d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.105.2+bdd0e38343aeb086b021e6d948f6c46809af459e")]
 [assembly: System.Reflection.AssemblyProductAttribute("TorchSharp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TorchSharp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("0.105.2.0")]

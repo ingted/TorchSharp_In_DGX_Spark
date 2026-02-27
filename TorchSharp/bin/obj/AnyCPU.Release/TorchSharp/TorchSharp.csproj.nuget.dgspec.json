@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/src/TorchSharp/TorchSharp.csproj": {}
+    "/workspace/TorchSharp_In_DGX_Spark_fp4/TorchSharp/src/TorchSharp/TorchSharp.csproj": {}
   },
   "projects": {
-    "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/src/TorchSharp/TorchSharp.csproj": {
+    "/workspace/TorchSharp_In_DGX_Spark_fp4/TorchSharp/src/TorchSharp/TorchSharp.csproj": {
       "version": "0.105.2",
       "restore": {
-        "projectUniqueName": "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/src/TorchSharp/TorchSharp.csproj",
+        "projectUniqueName": "/workspace/TorchSharp_In_DGX_Spark_fp4/TorchSharp/src/TorchSharp/TorchSharp.csproj",
         "projectName": "TorchSharp",
-        "projectPath": "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/src/TorchSharp/TorchSharp.csproj",
+        "projectPath": "/workspace/TorchSharp_In_DGX_Spark_fp4/TorchSharp/src/TorchSharp/TorchSharp.csproj",
         "packagesPath": "/root/.nuget/packages/",
-        "outputPath": "/workspace/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/",
+        "outputPath": "/workspace/TorchSharp_In_DGX_Spark_fp4/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "configFilePaths": [

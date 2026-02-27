@@ -96,19 +96,60 @@ module Nvfp4TrainingImpl =
     packed, scale2d
 
 module Nvfp4Training =
+  let steEvalWeightCache = ConcurrentDictionary<string, TorchSharp.torch.Tensor>(StringComparer.Ordinal)
+
+  let private getBoolEnv (name: string) (defaultValue: bool) =
+    let raw = Environment.GetEnvironmentVariable(name)
+    if String.IsNullOrWhiteSpace(raw) then
+      defaultValue
+    else
+      match raw.Trim().ToLowerInvariant() with
+      | "1"
+      | "true"
+      | "yes" -> true
+      | "0"
+      | "false"
+      | "no" -> false
+      | _ -> defaultValue
+
+  let private shouldUseEvalWeightCache () =
+    // Cache is only safe in eval/no-grad style execution.
+    let isEvalMode = torch.is_inference_mode_enabled() || not (torch.is_grad_enabled())
+    isEvalMode && getBoolEnv "TS_Q4_STE_CACHE_EVAL_WEIGHT" true
+
+  let private evalCacheKey (w2d: TorchSharp.torch.Tensor) =
+    $"{w2d.Handle.ToInt64()}|{w2d.device}|{w2d.dtype}|{w2d.shape.[0]}x{w2d.shape.[1]}"
+
+  let clearEvalWeightCache () =
+    for kv in steEvalWeightCache do
+      kv.Value.Dispose()
+    steEvalWeightCache.Clear()
+
   let quantizePacked (input: TorchSharp.torch.Tensor) =
     let x2d = Nvfp4TrainingImpl.ensureMatrix "input" input
     let inFeatures = x2d.shape.[1]
     Nvfp4TrainingImpl.ensureKAligned "NVFP4 quantize" inFeatures
 
+    let useNativeEnv =
+      let raw = Environment.GetEnvironmentVariable("TS_Q4_STE_USE_NATIVE_QUANTIZE")
+      if String.IsNullOrWhiteSpace(raw) then false
+      else
+        match raw.Trim().ToLowerInvariant() with
+        | "1"
+        | "true"
+        | "yes" -> true
+        | _ -> false
+
     let useNative =
-      x2d.device_type = DeviceType.CUDA
+      useNativeEnv
+      && x2d.device_type = DeviceType.CUDA
       && NativeInterop.hasLibTorchFp4Quantize()
 
     if useNative then
       NativeInterop.fp4Quantize x2d
     else
       Nvfp4TrainingImpl.fallbackQuantizePacked x2d
+
 
   let dequantizePacked
     (qdata: TorchSharp.torch.Tensor)
@@ -174,6 +215,18 @@ module Nvfp4Training =
     use diffDetached = diff.detach()
     w2d + diffDetached
 
+  let private getOrBuildEvalWeight (masterWeight2d: TorchSharp.torch.Tensor) =
+    let key = evalCacheKey masterWeight2d
+    steEvalWeightCache.GetOrAdd(
+      key,
+      fun _ ->
+        let q, s = quantizePacked masterWeight2d
+        use qd = q
+        use sd = s
+        use dq = dequantizePacked qd sd masterWeight2d.dtype
+        dq.detach().contiguous().clone()
+    )
+
   let linearSte
     (input: TorchSharp.torch.Tensor)
     (masterWeight: TorchSharp.torch.Tensor)
@@ -188,8 +241,23 @@ module Nvfp4Training =
         )
       )
 
-    use wSte = steWeight w
-    let computeInput =
-      if input.dtype = wSte.dtype then input else input.to_type(wSte.dtype)
-    let output = torch.nn.functional.linear(computeInput, wSte)
-    if output.dtype = outDtype then output else output.to_type(outDtype)
+    let useEvalCache = shouldUseEvalWeightCache()
+    let wSte, ownWSte =
+      if useEvalCache then
+        getOrBuildEvalWeight w, false
+      else
+        steWeight w, true
+
+    try
+      let computeInput, ownComputeInput =
+        if input.dtype = wSte.dtype then input, false else input.to_type(wSte.dtype), true
+
+      try
+        let output = torch.nn.functional.linear(computeInput, wSte)
+        if output.dtype = outDtype then output else output.to_type(outDtype)
+      finally
+        if ownComputeInput then
+          computeInput.Dispose()
+    finally
+      if ownWSte then
+        wSte.Dispose()
