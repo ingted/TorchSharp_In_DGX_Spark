@@ -23,6 +23,37 @@ docker run --rm --gpus all \
   ./install_and_run.sh
 ```
 
+## Recommended Build Path (Helper Scripts)
+
+For this repository, the simplest and most reproducible build flow is to use:
+- `build_TorchSharp.Native.sh`
+- `build_TorchSharp.net.sh`
+
+Run in order:
+
+```bash
+cd /workspace/TorchSharp_In_DGX_Spark_fp4
+bash build_TorchSharp.Native.sh
+bash build_TorchSharp.net.sh
+```
+
+What they do:
+- `build_TorchSharp.Native.sh`:
+  - builds `libLibTorchSharp.so` against container PyTorch CMake path
+  - output: `TorchSharp/bin/arm64.Release/Native/libLibTorchSharp.so`
+- `build_TorchSharp.net.sh`:
+  - builds managed TorchSharp assemblies (`SkipNative=true`)
+  - outputs include:
+    - `TorchSharp/bin/AnyCPU.Release/TorchSharp/net8.0/TorchSharp.dll`
+    - `TorchSharp/bin/AnyCPU.Release/TorchSharp/net10.0/TorchSharp.dll`
+
+If you also need FP4 extension artifacts:
+
+```bash
+cd /workspace/TorchSharp_In_DGX_Spark_fp4
+dotnet build TorchSharp.Q4.Extension/TorchSharp.Q4.Extension.fsproj -c Release
+```
+
 ## Key Components
 
 - **TestApp/**: A C# console application demonstrating CUDA availability and basic GPU tensor operations.
@@ -102,3 +133,34 @@ docker run --rm --gpus all \
    ```
 
 編譯產物將位於 `TorchSharp/bin/arm64.Release/Native/libLibTorchSharp.so`。
+
+## 建議編譯流程（使用腳本）
+
+在這個 repo，建議直接用以下兩個腳本完成建置：
+- `build_TorchSharp.Native.sh`
+- `build_TorchSharp.net.sh`
+
+依序執行：
+
+```bash
+cd /workspace/TorchSharp_In_DGX_Spark_fp4
+bash build_TorchSharp.Native.sh
+bash build_TorchSharp.net.sh
+```
+
+兩者作用：
+- `build_TorchSharp.Native.sh`：
+  - 以容器內 PyTorch CMake 路徑編譯 `libLibTorchSharp.so`
+  - 產物：`TorchSharp/bin/arm64.Release/Native/libLibTorchSharp.so`
+- `build_TorchSharp.net.sh`：
+  - 編譯 managed TorchSharp（`SkipNative=true`）
+  - 主要產物：
+    - `TorchSharp/bin/AnyCPU.Release/TorchSharp/net8.0/TorchSharp.dll`
+    - `TorchSharp/bin/AnyCPU.Release/TorchSharp/net10.0/TorchSharp.dll`
+
+若你還需要 FP4 擴展：
+
+```bash
+cd /workspace/TorchSharp_In_DGX_Spark_fp4
+dotnet build TorchSharp.Q4.Extension/TorchSharp.Q4.Extension.fsproj -c Release
+```
