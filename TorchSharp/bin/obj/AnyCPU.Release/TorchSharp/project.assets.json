@@ -1120,11 +1120,11 @@
   "project": {
     "version": "0.105.2",
     "restore": {
-      "projectUniqueName": "/workspace/TorchSharp_In_DGX_Spark_fp4/TorchSharp/src/TorchSharp/TorchSharp.csproj",
+      "projectUniqueName": "/workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark/TorchSharp/src/TorchSharp/TorchSharp.csproj",
       "projectName": "TorchSharp",
-      "projectPath": "/workspace/TorchSharp_In_DGX_Spark_fp4/TorchSharp/src/TorchSharp/TorchSharp.csproj",
+      "projectPath": "/workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark/TorchSharp/src/TorchSharp/TorchSharp.csproj",
       "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/workspace/TorchSharp_In_DGX_Spark_fp4/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/",
+      "outputPath": "/workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark/TorchSharp/bin/obj/AnyCPU.Release/TorchSharp/",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "configFilePaths": [
@@ -1221,7 +1221,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/bin/dotnet-sdk/sdk/10.0.102/RuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/root/.dotnet/sdk/10.0.103/RuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.3.32767]",
@@ -1545,7 +1545,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/bin/dotnet-sdk/sdk/10.0.102/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/root/.dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.3.32767]",
@@ -1869,7 +1869,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/bin/dotnet-sdk/sdk/10.0.102/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/root/.dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -2186,7 +2186,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "/usr/local/bin/dotnet-sdk/sdk/10.0.102/RuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/root/.dotnet/sdk/10.0.103/RuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.Win32.Primitives": "(,4.3.0]",
           "System.AppContext": "(,4.3.0]",
