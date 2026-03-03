@@ -1,0 +1,152 @@
+› root@gemini4:/workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark$ bash
+  build_TorchSharp.Native.sh
+  Building Native LibTorchSharp...
+  Using PyTorch CMake: /usr/local/lib/python3.12/dist-packages/torch/share/cmake/Torch
+  build_TorchSharp.Native.sh: line 12: cd: /workspace/TorchSharp_In_DGX_Spark_fp4/
+  TorchSharp/src/Native: No such file or directory
+
+  怎樣讓 CMake 更新那些路徑
+
+
+• 我先看 build_TorchSharp.Native.sh 與相關 CMakeLists.txt，確認是哪一層路徑被硬編碼成舊
+  目錄，再給你一個可直接用的修正方式。
+
+• Ran pwd; ls -la /workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark; ls
+  │ -la /workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark | sed -n
+  │ '1,120p'
+  └ /workspace
+    total 140
+    … +63 lines
+    -rw-rw-r--+  1 root root 1546 Mar  3 03:58 setup_libtorch_x64.py
+    -rwxrwxr-x+  1 root root  835 Mar  3 03:58 test.sh
+
+• Explored
+  └ Read build_TorchSharp.Native.sh
+    Search TorchSharp_In_DGX_Spark_fp4|src/Native|Torch_DIR|CMAKE_PREFIX_PATH|
+           TorchSharp.Native in TorchSharp_In_DGX_Spark
+
+───────────────────────────────────────────────────────────────────────────────────────
+
+• 問題點已找到：你的腳本把 REPO_ROOT 寫死成舊路徑。
+  我再看 TorchSharp/src/Native/build.sh 的 CMake 產出路徑，確認要清掉哪些 cache 才能讓
+  CMake 重新吃新路徑。
+
+• Ran find /workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark/TorchSharp/src/
+  │ Native -maxdepth 3 -type f \( -name CMakeCache.txt -o -name 'CMakeFiles' \) 2>/
+  │ dev/null | sed -n '1,120p'
+  └ (no output)
+
+• Explored
+  └ Read build.sh
+    Search build in Native
+
+───────────────────────────────────────────────────────────────────────────────────────
+
+• 這次其實還沒進到 CMake，就先被 REPO_ROOT 舊路徑卡住了。
+  我先把主要 build 腳本改成「自動抓腳本所在目錄」，再給你清 cache 的命令，這樣之後搬路
+  徑不會再炸。
+
+• Explored
+  └ Read build_TorchSharp.net.sh, publish_local_nuget.sh, pack.sh
+
+───────────────────────────────────────────────────────────────────────────────────────
+
+• 我會直接把三個會踩到同一問題的腳本改成「預設使用腳本所在目錄」，並加上可選的 CMake
+  cache 清理開關，這樣搬路徑後不用再手改。接著我會做語法檢查。
+
+• Edited home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark/build_TorchSharp.Native.sh
+(+14 -2)
+     4  # 1. Environment Setup
+     5 -export REPO_ROOT="/workspace/TorchSharp_In_DGX_Spark_fp4"
+     6 -export TORCH_CMAKE_PATH="/usr/local/lib/python3.12/dist-packages/torch/share/cm
+        ake/Torch"
+     5 +SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+     6 +export REPO_ROOT="${REPO_ROOT:-$SCRIPT_DIR}"
+     7 +export TORCH_CMAKE_PATH="${TORCH_CMAKE_PATH:-/usr/local/lib/python3.12/dist-pac
+        kages/torch/share/cmake/Torch}"
+     8
+       ⋮
+    11
+    12 +if [[ ! -d "$REPO_ROOT/TorchSharp/src/Native" ]]; then
+    13 +  echo "Error: Native source directory not found: $REPO_ROOT/TorchSharp/src/Nat
+        ive" >&2
+    14 +  echo "Hint: export REPO_ROOT=<your-repo-path> before running this script." >&
+        2
+    15 +  exit 1
+    16 +fi
+    17 +
+    18 +# If CLEAN_CMAKE_CACHE=1, remove previous CMake cache to refresh source/binary
+        paths.
+    19 +if [[ "${CLEAN_CMAKE_CACHE:-0}" == "1" ]]; then
+    20 +  rm -rf "$REPO_ROOT/TorchSharp/bin/obj/arm64.Release/Native"
+    21 +fi
+    22 +
+    23  # 2. Build
+
+• Edited home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark/build_TorchSharp.net.sh (+2
+-1)
+    4  # 1. Environment Setup
+    5 -export REPO_ROOT="/workspace/TorchSharp_In_DGX_Spark_fp4"
+    5 +SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+    6 +export REPO_ROOT="${REPO_ROOT:-$SCRIPT_DIR}"
+    7  export PATH=$PATH:/usr/local/bin/dotnet-sdk
+
+• Edited home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark/publish_local_nuget.sh (+2
+-1)
+    4  # 1. Environment Setup
+    5 -export REPO_ROOT="/workspace/TorchSharp_In_DGX_Spark_fp4"
+    5 +SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+    6 +export REPO_ROOT="${REPO_ROOT:-$SCRIPT_DIR}"
+    7  export PATH=$PATH:/usr/local/bin/dotnet-sdk
+
+• Edited home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark/pack.sh (+2 -1)
+    4  # 1. 環境設定
+    5 -REPO_ROOT="${REPO_ROOT:-/workspace/TorchSharp_In_DGX_Spark_fp4}"
+    5 +SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+    6 +REPO_ROOT="${REPO_ROOT:-$SCRIPT_DIR}"
+    7  DOTNET_SDK_PATH="${DOTNET_SDK_PATH:-/usr/local/bin/dotnet-sdk}"
+
+───────────────────────────────────────────────────────────────────────────────────────
+
+• 我已改完腳本，接著做快速驗證（bash -n 語法檢查 + diff）給你確認。
+
+• Ran git -C /workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark diff --
+  │ build_TorchSharp.Native.sh build_TorchSharp.net.sh publish_local_nuget.sh pack.sh
+  │ | sed -n '1,260p'
+  └ diff --git a/build_TorchSharp.Native.sh b/build_TorchSharp.Native.sh
+    index 2586f0c..1216ae5 100755
+    … +69 lines
+     export DOTNET_ROOT=/usr/local/bin/dotnet-sdk
+
+
+• Ran bash -n /workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark/
+  │ build_TorchSharp.Native.sh && bash -n /workspace/home/qwen3.fs.experiments/
+  │ TorchSharp_In_DGX_Spark/build_TorchSharp.net.sh && bash -n /workspace/home/
+  │ … +3 lines
+  └ shell syntax OK
+
+───────────────────────────────────────────────────────────────────────────────────────
+
+• 你這個錯誤其實是「腳本硬編碼舊路徑」，還沒進到 CMake 就先 cd 失敗了。
+
+  我已幫你改好，改成預設使用腳本所在目錄：
+
+  - build_TorchSharp.Native.sh
+  - build_TorchSharp.net.sh
+  - publish_local_nuget.sh
+  - pack.sh
+
+  另外在 native 腳本加了 CLEAN_CMAKE_CACHE=1 開關，會清掉舊 CMake 中間目錄（TorchSharp/
+  bin/obj/arm64.Release/Native）讓路徑重算。
+
+  你現在直接跑：
+
+  cd /workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark
+  CLEAN_CMAKE_CACHE=1 bash build_TorchSharp.Native.sh
+
+  如果你要手動清再跑也可以：
+
+  rm -rf /workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark/TorchSharp/bin/
+  obj/arm64.Release/Native
+  bash /workspace/home/qwen3.fs.experiments/TorchSharp_In_DGX_Spark/
+  build_TorchSharp.Native.sh

@@ -2,7 +2,8 @@
 set -e
 
 # 1. Environment Setup
-export REPO_ROOT="/workspace/TorchSharp_In_DGX_Spark_fp4"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+export REPO_ROOT="${REPO_ROOT:-$SCRIPT_DIR}"
 export PATH=$PATH:/usr/local/bin/dotnet-sdk
 export DOTNET_ROOT=/usr/local/bin/dotnet-sdk
 

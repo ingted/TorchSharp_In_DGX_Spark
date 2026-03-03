@@ -2,7 +2,8 @@
 set -euo pipefail
 
 # 1. 環境設定
-REPO_ROOT="${REPO_ROOT:-/workspace/TorchSharp_In_DGX_Spark_fp4}"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="${REPO_ROOT:-$SCRIPT_DIR}"
 DOTNET_SDK_PATH="${DOTNET_SDK_PATH:-/usr/local/bin/dotnet-sdk}"
 export PATH="$PATH:$DOTNET_SDK_PATH"
 
